@@ -16,9 +16,10 @@ import javax.swing.ImageIcon;
  */
 public class MainWindow extends javax.swing.JFrame {
 
+    CitiesIFrame citiesIFrame = new CitiesIFrame();
     
     
-     //NewConnection newConnection = new NewConnection();
+    LoginIFrame loginIFrame = new LoginIFrame();
 
     /**
      * Creates new form MainWindow
@@ -29,12 +30,13 @@ public class MainWindow extends javax.swing.JFrame {
         ImageIcon imgicon = new ImageIcon(url);
         super.setIconImage(imgicon.getImage());
         
+        
         initComponents();       
        
-        newConnection1.setVisible(false);
+        //newConnection1.setVisible(false);
         //position oin screen
         this.setLocationRelativeTo(null);
-        this.logged();
+       // this.logged();
     }
 
     /**
@@ -49,7 +51,6 @@ public class MainWindow extends javax.swing.JFrame {
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jSplitPane1 = new javax.swing.JSplitPane();
         mainPanel = new javax.swing.JPanel();
-        newConnection1 = new pl.com.bizpol.wspolnota.ui.NewConnection();
         footerPanel = new javax.swing.JPanel();
         ststusLabel = new javax.swing.JLabel();
         status = new javax.swing.JLabel();
@@ -63,6 +64,7 @@ public class MainWindow extends javax.swing.JFrame {
         settingsMenu = new javax.swing.JMenu();
         countriesItem = new javax.swing.JMenuItem();
         zonesItem = new javax.swing.JMenuItem();
+        citiesItem = new javax.swing.JMenuItem();
 
         jInternalFrame1.setVisible(true);
 
@@ -81,23 +83,15 @@ public class MainWindow extends javax.swing.JFrame {
         setTitle("Moja wspólnota");
         setPreferredSize(new java.awt.Dimension(800, 600));
 
-        newConnection1.setEnabled(false);
-
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(newConnection1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 579, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(newConnection1, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 329, Short.MAX_VALUE)
         );
 
         footerPanel.setBackground(java.awt.SystemColor.controlLtHighlight);
@@ -200,6 +194,17 @@ public class MainWindow extends javax.swing.JFrame {
         zonesItem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         settingsMenu.add(zonesItem);
 
+        citiesItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/info_icon&16.png"))); // NOI18N
+        citiesItem.setText("Miasta");
+        citiesItem.setToolTipText("");
+        citiesItem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        citiesItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                citiesItemActionPerformed(evt);
+            }
+        });
+        settingsMenu.add(citiesItem);
+
         mainMenu.add(settingsMenu);
 
         setJMenuBar(mainMenu);
@@ -236,7 +241,9 @@ public class MainWindow extends javax.swing.JFrame {
         
         System.out.println("przycisk connect");        
         
-        newConnection1.setVisible(true);
+        loginIFrame.setVisible(true);
+        mainPanel.add(loginIFrame);       
+        
         
         //conect.main(['archii','lewiss']);
     }//GEN-LAST:event_connectItemActionPerformed
@@ -252,6 +259,15 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void citiesItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_citiesItemActionPerformed
+        // TODO add your handling code here:
+        // 
+        System.out.println("przycisk cities");
+        citiesIFrame.setVisible(true);
+        
+        mainPanel.add(citiesIFrame);
+    }//GEN-LAST:event_citiesItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -290,6 +306,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel author;
+    private javax.swing.JMenuItem citiesItem;
     private javax.swing.JMenuItem connectItem;
     private javax.swing.JMenuItem countriesItem;
     private javax.swing.JMenu fileMenu;
@@ -299,7 +316,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JMenuBar mainMenu;
     private javax.swing.JPanel mainPanel;
-    private pl.com.bizpol.wspolnota.ui.NewConnection newConnection1;
     private javax.swing.JMenuItem propertiesItem;
     private javax.swing.JMenu recordsMenu;
     private javax.swing.JMenu settingsMenu;
