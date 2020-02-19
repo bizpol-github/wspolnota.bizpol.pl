@@ -29,6 +29,8 @@ public class CitiesIFrame extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
 
+        setResizable(true);
+
         jPanel1.setBackground(new java.awt.Color(239, 29, 32));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

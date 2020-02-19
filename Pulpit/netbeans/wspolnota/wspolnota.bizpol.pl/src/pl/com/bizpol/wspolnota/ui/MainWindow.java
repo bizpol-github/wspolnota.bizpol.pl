@@ -239,10 +239,12 @@ public class MainWindow extends javax.swing.JFrame {
     private void connectItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectItemActionPerformed
         // TODO add your handling code here:
         
-        System.out.println("przycisk connect");        
+        System.out.println("przycisk connect");
         
         loginIFrame.setVisible(true);
-        mainPanel.add(loginIFrame);       
+        loginIFrame.setLocation(150, 100);
+        mainPanel.add(loginIFrame);
+        mainPanel.repaint();
         
         
         //conect.main(['archii','lewiss']);
