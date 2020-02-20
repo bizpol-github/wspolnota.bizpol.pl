@@ -1,7 +1,11 @@
 package pl.com.bizpol.wspolnota.ui;
 
 
+import java.awt.Rectangle;
+import java.beans.PropertyVetoException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /*
@@ -20,6 +24,13 @@ public class MainWindow extends javax.swing.JFrame {
     
     
     LoginIFrame loginIFrame = new LoginIFrame();
+    
+   // LoginIFrame internalPanel = new InternalPanel();
+    
+    PropertyPanel propertyPanel = new PropertyPanel();
+    
+    
+    InternalPanel internalPanel = new InternalPanel();
 
     /**
      * Creates new form MainWindow
@@ -31,11 +42,11 @@ public class MainWindow extends javax.swing.JFrame {
         super.setIconImage(imgicon.getImage());
         
         
-        initComponents();       
+        initComponents();
        
         //newConnection1.setVisible(false);
         //position oin screen
-        this.setLocationRelativeTo(null);
+//        this.setLocationRelativeTo(null);
        // this.logged();
     }
 
@@ -83,15 +94,17 @@ public class MainWindow extends javax.swing.JFrame {
         setTitle("Moja wspólnota");
         setPreferredSize(new java.awt.Dimension(800, 600));
 
+        mainPanel.setBackground(new java.awt.Color(224, 125, 26));
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 579, Short.MAX_VALUE)
+            .addGap(0, 800, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 329, Short.MAX_VALUE)
+            .addGap(0, 552, Short.MAX_VALUE)
         );
 
         footerPanel.setBackground(java.awt.SystemColor.controlLtHighlight);
@@ -115,7 +128,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(ststusLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(status)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 339, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 560, Short.MAX_VALUE)
                 .addComponent(author))
         );
         footerPanelLayout.setVerticalGroup(
@@ -239,15 +252,21 @@ public class MainWindow extends javax.swing.JFrame {
     private void connectItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectItemActionPerformed
         // TODO add your handling code here:
         
+        
+         Rectangle i = mainPanel.getBounds();
+        
         System.out.println("przycisk connect");
-        
-        loginIFrame.setVisible(true);
-        loginIFrame.setLocation(150, 100);
-        mainPanel.add(loginIFrame);
-        mainPanel.repaint();
-        
-        
-        //conect.main(['archii','lewiss']);
+//              internalPanel.setBounds(i);
+//              mainPanel.add(internalPanel);
+//              
+//              internalPanel.setVisible(true);
+            mainPanel.add(loginIFrame);
+            loginIFrame.setVisible(true);
+              this.validate();
+              this.repaint();
+
+
+//conect.main(['archii','lewiss']);
     }//GEN-LAST:event_connectItemActionPerformed
 
     private void countriesItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countriesItemActionPerformed
@@ -268,7 +287,6 @@ public class MainWindow extends javax.swing.JFrame {
         System.out.println("przycisk cities");
         citiesIFrame.setVisible(true);
         
-        mainPanel.add(citiesIFrame);
     }//GEN-LAST:event_citiesItemActionPerformed
 
     /**
@@ -328,26 +346,26 @@ public class MainWindow extends javax.swing.JFrame {
     
     public void logged() {
         //setup new window with tree and database content
-        PropertyPanel propPanel = new PropertyPanel();
-        
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(propPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(propPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        
+//        PropertyPanel propPanel = new PropertyPanel();
+//        
+//        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(jDesktopPane1);
+//        jDesktopPane1.setLayout(mainPanelLayout);
+//        mainPanelLayout.setHorizontalGroup(
+//            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+//                .addContainerGap()
+//                .addComponent(propPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+//                .addContainerGap())
+//        );
+//        
+//        mainPanelLayout.setVerticalGroup(
+//            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+//                .addContainerGap()
+//                .addComponent(propPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+//                .addContainerGap())
+//        );
+//        
         
     }
 }

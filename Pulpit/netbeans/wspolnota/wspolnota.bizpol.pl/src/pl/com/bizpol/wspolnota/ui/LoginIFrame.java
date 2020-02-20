@@ -19,7 +19,7 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
      */
     public LoginIFrame() {
         initComponents();
-        remove_title_bar();
+        //remove_title_bar();
     }
 
     /**
@@ -54,6 +54,8 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
             e1.printStackTrace();
         }
         setVisible(true);
+
+        jPanel1.setBorder(null);
 
         loginPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -172,15 +174,15 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
         boolean connected = false;
         String login = loginField.getText();
         try {
-            connected = userDAO.checkLogin(login);
-
-            if(connected) {
-                info = "Pomyślnie połączono użytkownika - " + login;
-                System.out.println("Pomyślnie połączono użytkownika - " + login);
-            } else {
-                info = "Użytkownik nie istnieje: " + login;
-                System.out.println("Użytkownik nie istnieje: " + login);
-            }
+//            connected = userDAO.checkLogin(login);
+//
+//            if(connected) {
+//                info = "Pomyślnie połączono użytkownika - " + login;
+//                System.out.println("Pomyślnie połączono użytkownika - " + login);
+//            } else {
+//                info = "Użytkownik nie istnieje: " + login;
+//                System.out.println("Użytkownik nie istnieje: " + login);
+//            }
             msgLabel.setText(info);
             loginPanel.setVisible(false);
             msgPanel.setVisible(true);
@@ -211,15 +213,15 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+        setVisible(false);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     
     void remove_title_bar(){
-        putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
-        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
-        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
-        this.setBorder(null);
+//        putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+//        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+//        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+//        this.setBorder(null);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
