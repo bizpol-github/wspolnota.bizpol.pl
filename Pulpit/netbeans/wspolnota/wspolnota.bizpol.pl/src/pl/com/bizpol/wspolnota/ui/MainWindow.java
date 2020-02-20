@@ -253,17 +253,15 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
-         Rectangle i = mainPanel.getBounds();
+        Rectangle i = mainPanel.getBounds();
         
         System.out.println("przycisk connect");
-//              internalPanel.setBounds(i);
-//              mainPanel.add(internalPanel);
-//              
-//              internalPanel.setVisible(true);
-            mainPanel.add(loginIFrame);
-            loginIFrame.setVisible(true);
-              this.validate();
-              this.repaint();
+        internalPanel.setBounds(i);
+        mainPanel.add(internalPanel);
+              
+        internalPanel.setVisible(true);
+        this.validate();
+        this.repaint();
 
 
 //conect.main(['archii','lewiss']);
@@ -284,8 +282,15 @@ public class MainWindow extends javax.swing.JFrame {
     private void citiesItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_citiesItemActionPerformed
         // TODO add your handling code here:
         // 
-        System.out.println("przycisk cities");
-        citiesIFrame.setVisible(true);
+         //Rectangle i = mainPanel.getBounds();
+        
+        System.out.println("przycisk internal");
+        //loginIFrame.setBounds(i);
+        mainPanel.add(loginIFrame);
+              
+        loginIFrame.setVisible(true);
+        this.validate();
+        this.repaint();
         
     }//GEN-LAST:event_citiesItemActionPerformed
 

@@ -5,9 +5,6 @@
  */
 package pl.com.bizpol.wspolnota.ui;
 
-import javax.swing.JRootPane;
-import javax.swing.plaf.basic.BasicInternalFrameUI;
-
 /**
  *
  * @author netcom
@@ -44,6 +41,9 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
         setBackground(new java.awt.Color(41, 41, 41));
         setBorder(null);
         setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setToolTipText("test");
         setComponentPopupMenu(null);
         setFocusTraversalPolicyProvider(true);
@@ -137,9 +137,9 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(75, Short.MAX_VALUE)
+                .addContainerGap(69, Short.MAX_VALUE)
                 .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,41 +170,41 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_loginFieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        String info;
-        boolean connected = false;
-        String login = loginField.getText();
-        try {
-//            connected = userDAO.checkLogin(login);
+//        String info;
+//        boolean connected = false;
+//        String login = loginField.getText();
+//        try {
+////            connected = userDAO.checkLogin(login);
+////
+////            if(connected) {
+////                info = "Pomyślnie połączono użytkownika - " + login;
+////                System.out.println("Pomyślnie połączono użytkownika - " + login);
+////            } else {
+////                info = "Użytkownik nie istnieje: " + login;
+////                System.out.println("Użytkownik nie istnieje: " + login);
+////            }
+//            //msgLabel.setText(info);
+//            loginPanel.setVisible(false);
+//            //msgPanel.setVisible(true);
 //
-//            if(connected) {
-//                info = "Pomyślnie połączono użytkownika - " + login;
-//                System.out.println("Pomyślnie połączono użytkownika - " + login);
-//            } else {
-//                info = "Użytkownik nie istnieje: " + login;
-//                System.out.println("Użytkownik nie istnieje: " + login);
+//        } catch (Exception ex) {
+//            //Logger.getLogger(NewConnection.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        Runnable runnable = () -> {
+//            try {
+//                for (int i = 0; i <= 100; i++) {
+//                    Thread.sleep(15);
+//                    msgProgressBar.setValue(i);
+//                }
+//
+//            } catch (InterruptedException e) {
+//                throw new IllegalStateException(e);
 //            }
-            msgLabel.setText(info);
-            loginPanel.setVisible(false);
-            msgPanel.setVisible(true);
-
-        } catch (Exception ex) {
-            Logger.getLogger(NewConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Runnable runnable = () -> {
-            try {
-                for (int i = 0; i <= 100; i++) {
-                    Thread.sleep(15);
-                    msgProgressBar.setValue(i);
-                }
-
-            } catch (InterruptedException e) {
-                throw new IllegalStateException(e);
-            }
-            msgPanel.setVisible(false);
-            //loginPanel.setVisible(true);
-        };
-        Thread thread = new Thread(runnable);
-        thread.start();
+//            msgPanel.setVisible(false);
+//            //loginPanel.setVisible(true);
+//        };
+//        Thread thread = new Thread(runnable);
+//        thread.start();
 
         //open msg
         //msgPanel.setVisible(true);
