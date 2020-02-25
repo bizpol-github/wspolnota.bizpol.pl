@@ -62,6 +62,7 @@ public class MainWindow extends javax.swing.JFrame {
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jSplitPane1 = new javax.swing.JSplitPane();
         mainPanel = new javax.swing.JPanel();
+        mainDesktopPane = new javax.swing.JDesktopPane();
         footerPanel = new javax.swing.JPanel();
         ststusLabel = new javax.swing.JLabel();
         status = new javax.swing.JLabel();
@@ -96,15 +97,17 @@ public class MainWindow extends javax.swing.JFrame {
 
         mainPanel.setBackground(new java.awt.Color(224, 125, 26));
 
+        mainDesktopPane.setBackground(new java.awt.Color(202, 34, 205));
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addComponent(mainDesktopPane)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 552, Short.MAX_VALUE)
+            .addComponent(mainDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
         );
 
         footerPanel.setBackground(java.awt.SystemColor.controlLtHighlight);
@@ -128,7 +131,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(ststusLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(status)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 560, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 422, Short.MAX_VALUE)
                 .addComponent(author))
         );
         footerPanelLayout.setVerticalGroup(
@@ -282,11 +285,11 @@ public class MainWindow extends javax.swing.JFrame {
     private void citiesItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_citiesItemActionPerformed
         // TODO add your handling code here:
         // 
-         //Rectangle i = mainPanel.getBounds();
+        //Rectangle i = mainPanel.getBounds();
         
         System.out.println("przycisk internal");
         //loginIFrame.setBounds(i);
-        mainPanel.add(loginIFrame);
+        mainDesktopPane.add(loginIFrame);    
               
         loginIFrame.setVisible(true);
         this.validate();
@@ -339,6 +342,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JDesktopPane mainDesktopPane;
     private javax.swing.JMenuBar mainMenu;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem propertiesItem;

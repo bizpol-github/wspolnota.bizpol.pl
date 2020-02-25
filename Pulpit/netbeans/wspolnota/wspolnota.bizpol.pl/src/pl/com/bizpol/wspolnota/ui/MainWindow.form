@@ -238,15 +238,24 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="800" max="32767" attributes="0"/>
+              <Component id="mainDesktopPane" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="552" max="32767" attributes="0"/>
+              <Component id="mainDesktopPane" alignment="0" pref="377" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JDesktopPane" name="mainDesktopPane">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cd" green="22" red="ca" type="rgb"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="footerPanel">
       <Properties>
@@ -268,7 +277,7 @@
                   <Component id="ststusLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="status" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="560" max="32767" attributes="0"/>
+                  <EmptySpace pref="422" max="32767" attributes="0"/>
                   <Component id="author" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
