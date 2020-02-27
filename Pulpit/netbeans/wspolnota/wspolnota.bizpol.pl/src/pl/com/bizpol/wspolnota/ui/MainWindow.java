@@ -7,6 +7,8 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,7 +25,7 @@ public class MainWindow extends javax.swing.JFrame {
     CitiesIFrame citiesIFrame = new CitiesIFrame();
     
     
-    LoginIFrame loginIFrame = new LoginIFrame();
+    LoginIFrame loginIFrame = new LoginIFrame(this);
     
    // LoginIFrame internalPanel = new InternalPanel();
     
@@ -31,6 +33,8 @@ public class MainWindow extends javax.swing.JFrame {
     
     
     InternalPanel internalPanel = new InternalPanel();
+    
+    MsgPanel msgPanel = new MsgPanel();
 
     /**
      * Creates new form MainWindow
@@ -69,7 +73,7 @@ public class MainWindow extends javax.swing.JFrame {
         author = new javax.swing.JLabel();
         mainMenu = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        connectItem = new javax.swing.JMenuItem();
+        loginItem = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         recordsMenu = new javax.swing.JMenu();
         propertiesItem = new javax.swing.JMenuItem();
@@ -110,6 +114,8 @@ public class MainWindow extends javax.swing.JFrame {
             .addComponent(mainDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
         );
 
+        mainDesktopPane.getAccessibleContext().setAccessibleName("");
+
         footerPanel.setBackground(java.awt.SystemColor.controlLtHighlight);
         footerPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -149,16 +155,16 @@ public class MainWindow extends javax.swing.JFrame {
         fileMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/2x2_grid_icon&16.png"))); // NOI18N
         fileMenu.setText("Program");
 
-        connectItem.setFont(connectItem.getFont().deriveFont(connectItem.getFont().getSize()-1f));
-        connectItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/connect_icon&16.png"))); // NOI18N
-        connectItem.setText("Zaloguj się");
-        connectItem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        connectItem.addActionListener(new java.awt.event.ActionListener() {
+        loginItem.setFont(loginItem.getFont().deriveFont(loginItem.getFont().getSize()-1f));
+        loginItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/connect_icon&16.png"))); // NOI18N
+        loginItem.setText("Zaloguj się");
+        loginItem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        loginItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                connectItemActionPerformed(evt);
+                loginItemActionPerformed(evt);
             }
         });
-        fileMenu.add(connectItem);
+        fileMenu.add(loginItem);
 
         jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/on-off_icon&16.png"))); // NOI18N
@@ -252,23 +258,30 @@ public class MainWindow extends javax.swing.JFrame {
         newProperty.setVisible(true);
     }//GEN-LAST:event_propertiesItemActionPerformed
 
-    private void connectItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectItemActionPerformed
+    private void loginItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginItemActionPerformed
         // TODO add your handling code here:
         
-        
-        Rectangle i = mainPanel.getBounds();
-        
-        System.out.println("przycisk connect");
-        internalPanel.setBounds(i);
-        mainPanel.add(internalPanel);
-              
-        internalPanel.setVisible(true);
-        this.validate();
-        this.repaint();
-
-
-//conect.main(['archii','lewiss']);
-    }//GEN-LAST:event_connectItemActionPerformed
+        if (loginIFrame.isVisible()){
+            if (loginIFrame.isIcon()){
+                try {
+                    loginIFrame.setIcon(false);
+                } catch (PropertyVetoException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            System.out.println("visible");
+                
+        } else {
+            Rectangle i = new Rectangle();
+            i = mainDesktopPane.getBounds();
+            
+            mainDesktopPane.add(loginIFrame);
+            loginIFrame.setVisible(true);
+            loginIFrame.setLocation((int)(i.getWidth()-loginIFrame.getWidth())/2, (int)(i.getHeight()-loginIFrame.getHeight())/2);
+        }
+        refresh();
+    }//GEN-LAST:event_loginItemActionPerformed
 
     private void countriesItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countriesItemActionPerformed
         System.out.println("przycisk countries");
@@ -284,16 +297,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void citiesItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_citiesItemActionPerformed
         // TODO add your handling code here:
-        // 
-        //Rectangle i = mainPanel.getBounds();
         
-        System.out.println("przycisk internal");
-        //loginIFrame.setBounds(i);
-        mainDesktopPane.add(loginIFrame);    
-              
-        loginIFrame.setVisible(true);
-        this.validate();
-        this.repaint();
         
     }//GEN-LAST:event_citiesItemActionPerformed
 
@@ -335,13 +339,13 @@ public class MainWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel author;
     private javax.swing.JMenuItem citiesItem;
-    private javax.swing.JMenuItem connectItem;
     private javax.swing.JMenuItem countriesItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JPanel footerPanel;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JMenuItem loginItem;
     private javax.swing.JDesktopPane mainDesktopPane;
     private javax.swing.JMenuBar mainMenu;
     private javax.swing.JPanel mainPanel;
@@ -376,5 +380,45 @@ public class MainWindow extends javax.swing.JFrame {
 //        );
 //        
         
+    }
+    
+    public void setMessage(String title, String msg) {
+        Rectangle b = new Rectangle();
+        b = mainDesktopPane.getBounds();
+        
+        msgPanel.setBounds(b);
+        
+        msgPanel.setTitleMsg(title, msg);
+        
+        System.out.println("test");
+        loginIFrame.setVisible(false);
+        mainDesktopPane.remove(loginIFrame);
+        mainDesktopPane.add(msgPanel);
+        msgPanel.setVisible(true);
+        refresh();
+        
+        
+        Runnable runnable = () -> {
+            try {
+                for (int i = 0; i <= 100; i++) {
+                    Thread.sleep(15);
+                    msgPanel.getProgressBar().setValue(i);
+                }
+
+            } catch (InterruptedException e) {
+                throw new IllegalStateException(e);
+            }
+            msgPanel.setVisible(false);
+            //loginPanel.setVisible(true);
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+
+        
+    }
+    
+    private void refresh(){
+        this.validate();
+        this.repaint();
     }
 }

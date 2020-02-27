@@ -29,15 +29,17 @@ public class MsgPanel extends javax.swing.JPanel {
 
         panel = new javax.swing.JPanel();
         msgPanel = new javax.swing.JPanel();
-        infoLabel = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
         msgSeparator = new javax.swing.JSeparator();
         msgLabel = new javax.swing.JLabel();
         msgProgressBar = new javax.swing.JProgressBar();
 
+        panel.setBackground(new java.awt.Color(217, 151, 85));
+
         msgPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        infoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        infoLabel.setText("Informacja");
+        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLabel.setText("Informacja");
 
         msgLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         msgLabel.setText("Tekst");
@@ -51,7 +53,7 @@ public class MsgPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(msgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(msgSeparator)
-                    .addComponent(infoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(msgLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(msgProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
                 .addContainerGap())
@@ -60,7 +62,7 @@ public class MsgPanel extends javax.swing.JPanel {
             msgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(msgPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(infoLabel)
+                .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(msgSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -101,11 +103,22 @@ public class MsgPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel infoLabel;
     private javax.swing.JLabel msgLabel;
     private javax.swing.JPanel msgPanel;
     private javax.swing.JProgressBar msgProgressBar;
     private javax.swing.JSeparator msgSeparator;
     private javax.swing.JPanel panel;
+    private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
+
+    public javax.swing.JProgressBar getProgressBar(){
+        return msgProgressBar;
+    }
+    
+    public void setTitleMsg(String title, String msg){
+        titleLabel.setText(title);
+        msgLabel.setText(msg);
+        
+    }
+
 }

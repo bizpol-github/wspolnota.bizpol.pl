@@ -5,19 +5,32 @@
  */
 package pl.com.bizpol.wspolnota.ui;
 
+import static java.awt.SystemColor.info;
+import javax.swing.JFrame;
+import pl.com.bizpol.wspolnota.dao.UserDAO;
+import static sun.security.jgss.GSSUtil.login;
+
 /**
  *
  * @author netcom
  */
 public class LoginIFrame extends javax.swing.JInternalFrame {
+    
+    
+    
+    MainWindow mainWindow;
 
     /**
      * Creates new form LoginIFrame
+     * @param parent
      */
-    public LoginIFrame() {
+    public LoginIFrame(JFrame parent) {
+        
+        mainWindow = (MainWindow) parent;
         initComponents();
+        
         //remove_title_bar();
-    }
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,22 +51,22 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
         loginButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(41, 41, 41));
+        setBackground(new java.awt.Color(121, 121, 121));
         setBorder(null);
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
+        setTitle("Logowanie");
         setToolTipText("test");
         setComponentPopupMenu(null);
         setFocusTraversalPolicyProvider(true);
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/padlock_closed_icon&16.png"))); // NOI18N
         setNextFocusableComponent(jPanel1);
         try {
             setSelected(true);
         } catch (java.beans.PropertyVetoException e1) {
             e1.printStackTrace();
         }
-        setVisible(true);
+        setVisible(false);
 
         jPanel1.setBorder(null);
 
@@ -95,7 +108,7 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
                     .addGroup(loginPanelLayout.createSequentialGroup()
                         .addGap(79, 79, 79)
                         .addComponent(loginLabel)
-                        .addGap(0, 88, Short.MAX_VALUE))
+                        .addGap(0, 65, Short.MAX_VALUE))
                     .addGroup(loginPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,30 +149,34 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
-                .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(loginPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(55, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -170,50 +187,37 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_loginFieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-//        String info;
-//        boolean connected = false;
-//        String login = loginField.getText();
-//        try {
-////            connected = userDAO.checkLogin(login);
-////
-////            if(connected) {
-////                info = "Pomyślnie połączono użytkownika - " + login;
-////                System.out.println("Pomyślnie połączono użytkownika - " + login);
-////            } else {
-////                info = "Użytkownik nie istnieje: " + login;
-////                System.out.println("Użytkownik nie istnieje: " + login);
-////            }
-//            //msgLabel.setText(info);
-//            loginPanel.setVisible(false);
-//            //msgPanel.setVisible(true);
-//
-//        } catch (Exception ex) {
-//            //Logger.getLogger(NewConnection.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        Runnable runnable = () -> {
-//            try {
-//                for (int i = 0; i <= 100; i++) {
-//                    Thread.sleep(15);
-//                    msgProgressBar.setValue(i);
-//                }
-//
-//            } catch (InterruptedException e) {
-//                throw new IllegalStateException(e);
-//            }
-//            msgPanel.setVisible(false);
-//            //loginPanel.setVisible(true);
-//        };
-//        Thread thread = new Thread(runnable);
-//        thread.start();
+        String info;
+        boolean connected = false;
+        String login = loginField.getText();
+        
+        try {
+            UserDAO userDAO = new UserDAO();
+            connected = userDAO.checkLogin(login);
 
-        //open msg
-        //msgPanel.setVisible(true);
+            if(connected) {
+                mainWindow.setMessage("Sukces", "Pomyślnie zalogowano");
+                info = "Pomyślnie połączono użytkownika - " + login;
+                System.out.println("Pomyślnie połączono użytkownika - " + login);
+            } else {
+                mainWindow.setMessage("Błąd logowania", "Użytkownik nie istnieje");
+                info = "Użytkownik nie istnieje: " + login;
+                System.out.println("Użytkownik nie istnieje: " + login);
+            }
+            this.setVisible(false);
+            
+            
+
+        } catch (Exception ex) {
+            //Logger.getLogger(NewConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
-        setVisible(false);
+        mainWindow.setMessage("test", "test2");
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     

@@ -6,13 +6,17 @@
 
 package pl.com.bizpol.wspolnota.ui;
 
+import javax.swing.JProgressBar;
+
 /**
  *
  * @author Archii
  */
 public class MsgDialog extends javax.swing.JDialog {
 
-    /** Creates new form MsgDialog */
+    /** Creates new form MsgDialog
+     * @param parent
+     * @param modal */
     public MsgDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
