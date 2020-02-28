@@ -8,21 +8,25 @@ public class User {
 	private String nicename;
 	private String email;
 	private int status;
+        private String display_name;
+        private int parent;
 
 	public User() {
 		
 	}
 	
-	public User(String login, String pass, String nicename, String email, int status) {
+	public User(String login, String pass, String nicename, String email, int status, String display_name, int user_parent) {
 		super();
 		this.login = login;
 		this.pass = pass;
 		this.nicename = nicename;
 		this.email = email;
 		this.status = status;
+                this.display_name = display_name;
+                this.parent = user_parent;
 	}
 	
-	public User(int id, String login, String pass, String nicename, String email, int status) {
+	public User(int id, String login, String pass, String nicename, String email, int status, String display_name, int user_parent) {
 		super();
 		this.id = id;
 		this.login = login;
@@ -30,6 +34,8 @@ public class User {
 		this.nicename = nicename;
 		this.email = email;
 		this.status = status;
+                this.display_name = display_name;
+                this.parent = user_parent;
 	}
 	
 	public int getId() {
@@ -78,6 +84,22 @@ public class User {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+        
+        public String getDisplayName() {
+		return display_name;
+	}
+
+	public void setDisplayName(String display_name) {
+		this.display_name = display_name;
+	}
+        
+        public int getParent() {
+		return parent;
+	}
+
+	public void setParent(int user_parent) {
+		this.parent = user_parent;
 	}
 
 	@Override

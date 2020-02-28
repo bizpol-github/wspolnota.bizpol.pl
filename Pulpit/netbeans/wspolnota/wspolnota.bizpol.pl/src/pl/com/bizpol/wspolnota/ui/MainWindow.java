@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import pl.com.bizpol.wspolnota.core.User;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,18 +24,12 @@ import javax.swing.JInternalFrame;
 public class MainWindow extends javax.swing.JFrame {
 
     CitiesIFrame citiesIFrame = new CitiesIFrame();
-    
-    
     LoginIFrame loginIFrame = new LoginIFrame(this);
-    
-   // LoginIFrame internalPanel = new InternalPanel();
-    
+    // LoginIFrame internalPanel = new InternalPanel();
     PropertyPanel propertyPanel = new PropertyPanel();
-    
-    
     InternalPanel internalPanel = new InternalPanel();
-    
     MsgPanel msgPanel = new MsgPanel();
+    User connectedUser = null;
 
     /**
      * Creates new form MainWindow
@@ -68,7 +63,7 @@ public class MainWindow extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
         mainDesktopPane = new javax.swing.JDesktopPane();
         footerPanel = new javax.swing.JPanel();
-        ststusLabel = new javax.swing.JLabel();
+        statusLabel = new javax.swing.JLabel();
         status = new javax.swing.JLabel();
         author = new javax.swing.JLabel();
         mainMenu = new javax.swing.JMenuBar();
@@ -119,8 +114,8 @@ public class MainWindow extends javax.swing.JFrame {
         footerPanel.setBackground(java.awt.SystemColor.controlLtHighlight);
         footerPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        ststusLabel.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        ststusLabel.setText("STATUS:");
+        statusLabel.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        statusLabel.setText("STATUS:");
 
         status.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         status.setText("nie połączono");
@@ -134,7 +129,7 @@ public class MainWindow extends javax.swing.JFrame {
             footerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(footerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ststusLabel)
+                .addComponent(statusLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(status)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 422, Short.MAX_VALUE)
@@ -145,7 +140,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, footerPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(footerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ststusLabel)
+                    .addComponent(statusLabel)
                     .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(author)))
         );
@@ -261,24 +256,31 @@ public class MainWindow extends javax.swing.JFrame {
     private void loginItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginItemActionPerformed
         // TODO add your handling code here:
         
-        if (loginIFrame.isVisible()){
-            if (loginIFrame.isIcon()){
-                try {
-                    loginIFrame.setIcon(false);
-                } catch (PropertyVetoException ex) {
-                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        if(connectedUser == null) {
+            if (loginIFrame.isVisible()){
+                if (loginIFrame.isIcon()){
+                    try {
+                        loginIFrame.setIcon(false);
+                        loginIFrame.setSelected(true);
+                    } catch (PropertyVetoException ex) {
+                        Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
+
+            } else {
+                Rectangle i = new Rectangle();
+                i = mainDesktopPane.getBounds();
+
+                mainDesktopPane.add(loginIFrame);
+                loginIFrame.setVisible(true);
+                loginIFrame.setLocation((int)(i.getWidth()-loginIFrame.getWidth())/2, (int)(i.getHeight()-loginIFrame.getHeight())/2);
             }
-            
-            System.out.println("visible");
-                
         } else {
-            Rectangle i = new Rectangle();
-            i = mainDesktopPane.getBounds();
-            
-            mainDesktopPane.add(loginIFrame);
-            loginIFrame.setVisible(true);
-            loginIFrame.setLocation((int)(i.getWidth()-loginIFrame.getWidth())/2, (int)(i.getHeight()-loginIFrame.getHeight())/2);
+            connectedUser = null;
+            loginItem.setText("Zaloguj się");
+            mainDesktopPane.removeAll();
+            setMessage("Sukces", "Pomyślnie wylogowano");
+            status.setText("Nie połączono");
         }
         refresh();
     }//GEN-LAST:event_loginItemActionPerformed
@@ -353,7 +355,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu recordsMenu;
     private javax.swing.JMenu settingsMenu;
     private javax.swing.JLabel status;
-    private javax.swing.JLabel ststusLabel;
+    private javax.swing.JLabel statusLabel;
     private javax.swing.JMenuItem zonesItem;
     // End of variables declaration//GEN-END:variables
     
@@ -415,6 +417,28 @@ public class MainWindow extends javax.swing.JFrame {
         thread.start();
 
         
+    }
+    
+    public void setPropertyPanel() {
+        Rectangle b = new Rectangle();
+        b = mainDesktopPane.getBounds();
+        
+        propertyPanel.setBounds(b);
+        
+        System.out.println("Property Panel");
+        //loginIFrame.setVisible(false);
+        //mainDesktopPane.remove(loginIFrame);
+        mainDesktopPane.add(propertyPanel);
+        propertyPanel.setVisible(true);
+        refresh();
+        
+    }
+    
+    public void setConnectedUser(User user){
+        connectedUser = user;
+        status.setText("Połączono - " + user.getDisplayName());
+        loginItem.setText("Wyloguj");
+        System.out.println("użytkownik " + user);
     }
     
     private void refresh(){

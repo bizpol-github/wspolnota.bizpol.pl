@@ -41,11 +41,41 @@ public class UserDAO {
                 String nicename = myRs.getString("user_nicename");
                 String email = myRs.getString("user_email");
                 int status = myRs.getInt("user_status");
+                String display_name = myRs.getString("display_name");
+                int parent = myRs.getInt("user_parent");
                 
-		User tempUser = new User(id, login, pass, nicename, email, status);
+		User tempUser = new User(id, login, pass, nicename, email, status, display_name, parent);
 		
 		return tempUser;
 	}
+        
+        public User getUser(int id) throws Exception {
+		
+		
+		Statement myStmt = null;
+		ResultSet myRs = null;
+		
+		try {
+                        User user = new User();
+			myStmt = myConn.createStatement();
+			
+			String sql = "select * from users where ID=" + id + " limit 1";
+			
+			
+			myRs = myStmt.executeQuery(sql);
+                        
+                        while (myRs.next()) {
+                        
+                            user = convertRowToUser(myRs);
+                        
+                        }
+
+			return user;		
+		}
+		finally {
+			DAOUtils.close(myStmt, myRs);
+		}
+	}	
 	
 	public List<User> getUsers(int status, int id) throws Exception {
 		List<User> list = new ArrayList<>();
@@ -136,8 +166,8 @@ public class UserDAO {
 		}		
 	}
         
-        public boolean checkLogin(String login) throws Exception {
-            boolean loginExists = false;		
+        public int checkLogin(String login) throws Exception {
+            int loginExists = 0;		
             PreparedStatement myStmt = null;
             ResultSet myRs = null;
 
@@ -146,9 +176,11 @@ public class UserDAO {
                     
                     myStmt.setString(1, login);                    
                     myRs = myStmt.executeQuery();
-
-                    loginExists = myRs.next(); // throw new Exception("User id not found: " + login);
-
+                    
+                    while (myRs.next()) {
+                        loginExists = myRs.getInt("ID");
+                    }
+                    
                     return loginExists;		
             }
             finally {

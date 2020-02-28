@@ -188,17 +188,24 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String info;
-        boolean connected = false;
+        int connectedID = 0;
         String login = loginField.getText();
+        System.out.println("Login");
+        
         
         try {
+            
             UserDAO userDAO = new UserDAO();
-            connected = userDAO.checkLogin(login);
+            
+            connectedID = userDAO.checkLogin(login);
+            System.out.println("użytkownik " + connectedID);
 
-            if(connected) {
+            if(connectedID > 0) {
                 mainWindow.setMessage("Sukces", "Pomyślnie zalogowano");
                 info = "Pomyślnie połączono użytkownika - " + login;
                 System.out.println("Pomyślnie połączono użytkownika - " + login);
+                mainWindow.setConnectedUser(userDAO.getUser(connectedID));
+                mainWindow.setPropertyPanel(); //
             } else {
                 mainWindow.setMessage("Błąd logowania", "Użytkownik nie istnieje");
                 info = "Użytkownik nie istnieje: " + login;
