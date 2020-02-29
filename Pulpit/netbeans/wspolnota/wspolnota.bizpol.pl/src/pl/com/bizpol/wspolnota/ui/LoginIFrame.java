@@ -6,6 +6,8 @@
 package pl.com.bizpol.wspolnota.ui;
 
 import static java.awt.SystemColor.info;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import pl.com.bizpol.wspolnota.dao.UserDAO;
 import static sun.security.jgss.GSSUtil.login;
@@ -57,7 +59,6 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Logowanie");
         setToolTipText("test");
-        setComponentPopupMenu(null);
         setFocusTraversalPolicyProvider(true);
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/padlock_closed_icon&16.png"))); // NOI18N
         setNextFocusableComponent(jPanel1);
@@ -68,8 +69,6 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
         }
         setVisible(false);
 
-        jPanel1.setBorder(null);
-
         loginPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         loginLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -77,6 +76,7 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
 
         userLabel.setText("Użytkownik");
 
+        loginField.setText("admin");
         loginField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginFieldActionPerformed(evt);
@@ -187,36 +187,29 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_loginFieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        String info;
+        
         int connectedID = 0;
-        String login = loginField.getText();
-        System.out.println("Login");
+        String login = loginField.getText();        
+        System.out.println("Login");       
         
-        
-        try {
-            
-            UserDAO userDAO = new UserDAO();
-            
+        try {            
+            UserDAO userDAO = new UserDAO();            
             connectedID = userDAO.checkLogin(login);
-            System.out.println("użytkownik " + connectedID);
+            System.out.println("1.Sprawdzam ID " + connectedID + " - " + login);
 
             if(connectedID > 0) {
-                mainWindow.setMessage("Sukces", "Pomyślnie zalogowano");
-                info = "Pomyślnie połączono użytkownika - " + login;
-                System.out.println("Pomyślnie połączono użytkownika - " + login);
+                mainWindow.setMessage("Sukces", "Pomyślnie zalogowano użytkownika - " + login);                
+                System.out.println("2.Pomyślnie połączono użytkownika - " + login);
                 mainWindow.setConnectedUser(userDAO.getUser(connectedID));
                 mainWindow.setPropertyPanel(); //
             } else {
                 mainWindow.setMessage("Błąd logowania", "Użytkownik nie istnieje");
-                info = "Użytkownik nie istnieje: " + login;
                 System.out.println("Użytkownik nie istnieje: " + login);
             }
             this.setVisible(false);
-            
-            
 
         } catch (Exception ex) {
-            //Logger.getLogger(NewConnection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, "Błąd połączenia", ex);
         }
         
 

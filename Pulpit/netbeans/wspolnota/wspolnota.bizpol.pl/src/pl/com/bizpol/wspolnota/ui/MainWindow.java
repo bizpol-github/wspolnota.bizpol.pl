@@ -1,6 +1,7 @@
 package pl.com.bizpol.wspolnota.ui;
 
 
+import java.awt.LayoutManager;
 import java.awt.Rectangle;
 import java.beans.PropertyVetoException;
 import java.net.URL;
@@ -41,12 +42,10 @@ public class MainWindow extends javax.swing.JFrame {
         super.setIconImage(imgicon.getImage());
         
         
+        
         initComponents();
-       
-        //newConnection1.setVisible(false);
         //position oin screen
-//        this.setLocationRelativeTo(null);
-       // this.logged();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -95,20 +94,10 @@ public class MainWindow extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(800, 600));
 
         mainPanel.setBackground(new java.awt.Color(224, 125, 26));
+        mainPanel.setLayout(new java.awt.BorderLayout());
 
         mainDesktopPane.setBackground(new java.awt.Color(202, 34, 205));
-
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainDesktopPane)
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
-        );
-
+        mainPanel.add(mainDesktopPane, java.awt.BorderLayout.CENTER);
         mainDesktopPane.getAccessibleContext().setAccessibleName("");
 
         footerPanel.setBackground(java.awt.SystemColor.controlLtHighlight);
@@ -385,11 +374,9 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     public void setMessage(String title, String msg) {
-        Rectangle b = new Rectangle();
-        b = mainDesktopPane.getBounds();
-        
-        msgPanel.setBounds(b);
-        
+       
+        //LayoutManager b = mainDesktopPane.getLayout();
+      //  msgPanel.setLayout(b);        
         msgPanel.setTitleMsg(title, msg);
         
         System.out.println("test");
@@ -411,7 +398,7 @@ public class MainWindow extends javax.swing.JFrame {
                 throw new IllegalStateException(e);
             }
             msgPanel.setVisible(false);
-            //loginPanel.setVisible(true);
+            mainDesktopPane.remove(msgPanel);
         };
         Thread thread = new Thread(runnable);
         thread.start();
@@ -420,15 +407,21 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     public void setPropertyPanel() {
-        Rectangle b = new Rectangle();
-        b = mainDesktopPane.getBounds();
-        
+        Rectangle b;
+        b = mainDesktopPane.getBounds();        
         propertyPanel.setBounds(b);
         
-        System.out.println("Property Panel");
-        //loginIFrame.setVisible(false);
-        //mainDesktopPane.remove(loginIFrame);
-        mainDesktopPane.add(propertyPanel);
+        mainPanel.remove(mainDesktopPane);
+        
+        mainPanel.add(propertyPanel);
+       
+        
+        System.out.println("Property Panel wystartował");
+       // LayoutManager l = mainDesktopPane.getLayout();
+        
+        //propertyPanel.setLayout(l);
+        
+       // mainDesktopPane.add(propertyPanel);
         propertyPanel.setVisible(true);
         refresh();
         
@@ -438,7 +431,7 @@ public class MainWindow extends javax.swing.JFrame {
         connectedUser = user;
         status.setText("Połączono - " + user.getDisplayName());
         loginItem.setText("Wyloguj");
-        System.out.println("użytkownik " + user);
+        System.out.println("Ustawiam użytkownika " + user);
     }
     
     private void refresh(){

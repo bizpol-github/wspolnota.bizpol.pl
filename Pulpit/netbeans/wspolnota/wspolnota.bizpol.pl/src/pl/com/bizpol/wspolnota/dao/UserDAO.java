@@ -15,7 +15,7 @@ import pl.com.bizpol.wspolnota.util.PasswordUtils;
 
 public class UserDAO {
 
-	private Connection myConn;
+	private final Connection myConn;
 	
 	public UserDAO() throws Exception {
 		
