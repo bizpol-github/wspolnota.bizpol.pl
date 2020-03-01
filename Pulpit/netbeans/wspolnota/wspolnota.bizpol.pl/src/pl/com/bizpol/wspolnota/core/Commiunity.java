@@ -1,5 +1,9 @@
 package pl.com.bizpol.wspolnota.core;
 
+import java.util.ArrayList;
+import java.util.List;
+import pl.com.bizpol.wspolnota.core.CommiunityTenant;
+
 public class Commiunity {
 
 	private int id;
@@ -11,6 +15,7 @@ public class Commiunity {
         private int zone_id;
         private int country_id;
         private int enabled;
+        private List<CommiunityTenant> tenants = new ArrayList<>();
 
 	public Commiunity() {
 		
@@ -112,9 +117,17 @@ public class Commiunity {
 	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
+        
+        public List<CommiunityTenant> getTenants() {
+		return tenants;
+	}
+
+	public void setTenants(List<CommiunityTenant> tenants) {
+		this.tenants = tenants;
+	}
 
 	@Override
 	public String toString() {
-		return name + " -> " + street + " " + street_no;
+		return short_name;
 	}
 }

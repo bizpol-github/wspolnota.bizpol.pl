@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import pl.com.bizpol.wspolnota.core.User;
 
 /*
@@ -40,9 +41,6 @@ public class MainWindow extends javax.swing.JFrame {
         URL url = getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/home_icon&16.png");
         ImageIcon imgicon = new ImageIcon(url);
         super.setIconImage(imgicon.getImage());
-        
-        
-        
         initComponents();
         //position oin screen
         this.setLocationRelativeTo(null);
@@ -57,8 +55,6 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jInternalFrame1 = new javax.swing.JInternalFrame();
-        jSplitPane1 = new javax.swing.JSplitPane();
         mainPanel = new javax.swing.JPanel();
         mainDesktopPane = new javax.swing.JDesktopPane();
         footerPanel = new javax.swing.JPanel();
@@ -75,19 +71,6 @@ public class MainWindow extends javax.swing.JFrame {
         countriesItem = new javax.swing.JMenuItem();
         zonesItem = new javax.swing.JMenuItem();
         citiesItem = new javax.swing.JMenuItem();
-
-        jInternalFrame1.setVisible(true);
-
-        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
-        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
-        jInternalFrame1Layout.setHorizontalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 313, Short.MAX_VALUE)
-        );
-        jInternalFrame1Layout.setVerticalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 57, Short.MAX_VALUE)
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Moja wspólnota");
@@ -121,7 +104,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(statusLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(status)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 422, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 405, Short.MAX_VALUE)
                 .addComponent(author))
         );
         footerPanelLayout.setVerticalGroup(
@@ -225,7 +208,7 @@ public class MainWindow extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(footerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -257,18 +240,30 @@ public class MainWindow extends javax.swing.JFrame {
                 }
 
             } else {
-                Rectangle i = new Rectangle();
-                i = mainDesktopPane.getBounds();
+                int w = mainDesktopPane.getWidth();
+                int h = mainDesktopPane.getHeight();
+                
 
                 mainDesktopPane.add(loginIFrame);
+                System.out.println("else in login");
+                
                 loginIFrame.setVisible(true);
-                loginIFrame.setLocation((int)(i.getWidth()-loginIFrame.getWidth())/2, (int)(i.getHeight()-loginIFrame.getHeight())/2);
+                
+                loginIFrame.setLocation((int)(w-loginIFrame.getWidth())/2, (int)(h-loginIFrame.getHeight())/2);
             }
         } else {
-            connectedUser = null;
+            
+            
+            
             loginItem.setText("Zaloguj się");
-            mainDesktopPane.removeAll();
-            setMessage("Sukces", "Pomyślnie wylogowano");
+            clearMainPanel();            
+            mainPanel.add(mainDesktopPane);
+            setMessage("Sukces", "Pomyślnie wylogowano użytkownika - " + connectedUser.getDisplayName());
+            refresh();
+           
+            connectedUser = null;
+            
+            
             status.setText("Nie połączono");
         }
         refresh();
@@ -333,9 +328,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem countriesItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JPanel footerPanel;
-    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JMenuItem loginItem;
     private javax.swing.JDesktopPane mainDesktopPane;
     private javax.swing.JMenuBar mainMenu;
@@ -374,47 +367,50 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     public void setMessage(String title, String msg) {
-       
-        //LayoutManager b = mainDesktopPane.getLayout();
-      //  msgPanel.setLayout(b);        
-        msgPanel.setTitleMsg(title, msg);
         
-        System.out.println("test");
-        loginIFrame.setVisible(false);
-        mainDesktopPane.remove(loginIFrame);
-        mainDesktopPane.add(msgPanel);
-        msgPanel.setVisible(true);
+        JOptionPane.showMessageDialog(this, msg, title, JOptionPane.INFORMATION_MESSAGE);
+        
+                
+//        loginIFrame.setVisible(false);
+//        mainDesktopPane.remove(loginIFrame);       
+//        Rectangle b = mainDesktopPane.getBounds();
+//        msgPanel.setBounds(b);        
+//        msgPanel.setTitleMsg(title, msg);
+//        mainDesktopPane.add(msgPanel);
+//        System.out.println("test");   
+//        msgPanel.setVisible(true);
+        
+//        Runnable runnable = () -> {
+//            try {
+//                for (int i = 0; i <= 100; i++) {
+//                    Thread.sleep(15);
+//                   // msgPanel.getProgressBar().setValue(i);
+//                }
+//
+//            } catch (InterruptedException e) {
+//                throw new IllegalStateException(e);
+//            }
+//            msgPanel.setVisible(false);
+//            mainDesktopPane.remove(msgPanel);
+//        };
+//        Thread thread = new Thread(runnable);
+//        thread.start();
+
+        
+    }
+    
+    public void clearMainPanel() {
+        mainDesktopPane.removeAll();
+        mainPanel.removeAll();
         refresh();
-        
-        
-        Runnable runnable = () -> {
-            try {
-                for (int i = 0; i <= 100; i++) {
-                    Thread.sleep(15);
-                    msgPanel.getProgressBar().setValue(i);
-                }
-
-            } catch (InterruptedException e) {
-                throw new IllegalStateException(e);
-            }
-            msgPanel.setVisible(false);
-            mainDesktopPane.remove(msgPanel);
-        };
-        Thread thread = new Thread(runnable);
-        thread.start();
-
-        
     }
     
     public void setPropertyPanel() {
         Rectangle b;
         b = mainDesktopPane.getBounds();        
         propertyPanel.setBounds(b);
-        
-        mainPanel.remove(mainDesktopPane);
-        
-        mainPanel.add(propertyPanel);
-       
+        propertyPanel.getTree();
+        mainPanel.add(propertyPanel);       
         
         System.out.println("Property Panel wystartował");
        // LayoutManager l = mainDesktopPane.getLayout();

@@ -5,10 +5,20 @@
  */
 package pl.com.bizpol.wspolnota.ui;
 
-import javax.swing.JFrame;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import pl.com.bizpol.wspolnota.core.Commiunity;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeModel;
-import pl.com.bizpol.wspolnota.util.CommiunityModel;
+import javax.swing.tree.TreePath;
+import pl.com.bizpol.wspolnota.core.CommiunityTenant;
+import pl.com.bizpol.wspolnota.dao.CommiunityTenantDAO;
+import pl.com.bizpol.wspolnota.util.CommiunityTree;
 
 /**
  *
@@ -20,11 +30,22 @@ public class PropertyPanel extends javax.swing.JPanel {
      * Creates new form PropertyPanel
      */
     
-    CommiunityModel commiunityModel = new CommiunityModel();
+    DefaultTreeModel commiunityModel;
     MainWindow mainWindow;
     
     public PropertyPanel() {
+        commiunityModel = new CommiunityTree().getCommiunityModel();
+        
         initComponents();
+        jTree1.setShowsRootHandles(true);
+        // ustawianie icon dla drzewa
+        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) jTree1.getCellRenderer();
+        Icon closedIcon = new ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/home_icon&16.png"));
+        Icon openIcon = new ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/home_icon&16.png"));
+        Icon leafIcon = new ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/home_icon&16.png"));
+        renderer.setClosedIcon(closedIcon);
+        renderer.setOpenIcon(openIcon);
+        renderer.setLeafIcon(leafIcon);
     }
 
     /**
@@ -40,25 +61,52 @@ public class PropertyPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jDesktopPane1 = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
 
         jToolBar1.setRollover(true);
 
+        jSplitPane1.setDividerLocation(200);
+        jSplitPane1.setDividerSize(3);
+        jSplitPane1.setMinimumSize(new java.awt.Dimension(5, 25));
+
+        jLabel1.setBackground(new java.awt.Color(255, 153, 153));
+        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel1.setText("Archii");
+
+        jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(394, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 475, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap(191, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(181, 181, 181))
         );
 
         jSplitPane1.setRightComponent(jDesktopPane1);
 
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(20, 322));
+
         jTree1.setModel(commiunityModel);
+        jTree1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTree1.setShowsRootHandles(true);
+        jTree1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTree1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTree1);
 
         jSplitPane1.setLeftComponent(jScrollPane1);
@@ -67,11 +115,11 @@ public class PropertyPanel extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -90,13 +138,73 @@ public class PropertyPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
+        // TODO add your handling code here:
+        
+        if (!jTree1.isSelectionEmpty()) {            
+            TreePath path = (TreePath) jTree1.getSelectionPath();
+            
+            DefaultMutableTreeNode selected = (DefaultMutableTreeNode) path.getLastPathComponent();
+            
+            if (!selected.isRoot()) {            
+                Commiunity commiunity = (Commiunity) selected.getUserObject();        
+                System.out.println(commiunity.getId() +
+                        ": " +
+                        commiunity.getName() + ", " + commiunity.getStreet() +
+                        " " + commiunity.getStreetNo());
+                
+                //załadowanie lokatorów z bazy danych jako lista w objekcie commiunity
+                
+                if (commiunity.getTenants().isEmpty()) {
+                    try {
+                        // pobieram listę lokatorów
+                        CommiunityTenantDAO ctDAO = new CommiunityTenantDAO();
+                        List<CommiunityTenant> commiunityTenants = ctDAO.getAllCommiunityTenants(commiunity.getId());
+                        commiunity.setTenants(commiunityTenants);
+                        
+                        //TreeModel model = jTree1.getModel();                        
+                        
+                        int i = 0;
+                        
+                        for (CommiunityTenant commT : commiunityTenants) {
+                            System.out.println(commT.toString());
+                            selected.add(new DefaultMutableTreeNode(commT));
+                            i++;
+                        }
+                        jTree1.expandPath(path);
+                        jTree1.setExpandsSelectedPaths(true);
+                        jTree1.setSelectionPath(path);
+                        jTree1.repaint();
+                        
+                        
+                        
+                    } catch (Exception ex) {
+                        Logger.getLogger(PropertyPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                }
+            }
+        }
+            
+       
+        
+        
+        
+        
+    }//GEN-LAST:event_jTree1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables
+    
+    public void getTree () {
+        commiunityModel = new CommiunityTree().getCommiunityModel();
+    }
 }

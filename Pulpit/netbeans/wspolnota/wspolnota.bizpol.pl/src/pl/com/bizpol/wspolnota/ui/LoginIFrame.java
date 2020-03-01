@@ -9,6 +9,7 @@ import static java.awt.SystemColor.info;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import pl.com.bizpol.wspolnota.dao.UserDAO;
 import static sun.security.jgss.GSSUtil.login;
 
@@ -30,10 +31,8 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
         
         mainWindow = (MainWindow) parent;
         initComponents();
-        
         //remove_title_bar();
-    }    
-
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -198,15 +197,17 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
             System.out.println("1.Sprawdzam ID " + connectedID + " - " + login);
 
             if(connectedID > 0) {
+                this.setVisible(false);
+                
                 mainWindow.setMessage("Sukces", "Pomyślnie zalogowano użytkownika - " + login);                
-                System.out.println("2.Pomyślnie połączono użytkownika - " + login);
+                System.out.println("2.Pomyślnie połączono użytkownika - " + login);                
                 mainWindow.setConnectedUser(userDAO.getUser(connectedID));
-                mainWindow.setPropertyPanel(); //
+                mainWindow.clearMainPanel();                
+                mainWindow.setPropertyPanel();
             } else {
-                mainWindow.setMessage("Błąd logowania", "Użytkownik nie istnieje");
+                mainWindow.setMessage("Błąd logowania", "Użytkownik nie istnieje - " + login);
                 System.out.println("Użytkownik nie istnieje: " + login);
             }
-            this.setVisible(false);
 
         } catch (Exception ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, "Błąd połączenia", ex);
