@@ -9,13 +9,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import pl.com.bizpol.wspolnota.core.CommiunityTenant;
+import pl.com.bizpol.wspolnota.core.Community;
 
-public class CommiunityTenantDAO {
+public class CommunityDAO {
 
 	private final Connection myConn;
 	
-	public CommiunityTenantDAO() throws Exception {
+	public CommunityDAO() throws Exception {
 		
 		// get db properties
 		Properties props = new Properties();
@@ -28,54 +28,57 @@ public class CommiunityTenantDAO {
 		// connect to database
 		myConn = DriverManager.getConnection(dburl, user, password);
 		
-		System.out.println("CommiunityTenantDAO - DB connection successful to: " + dburl);
+		System.out.println("CommunityDAO - DB connection successful to: " + dburl);
 	}
 	
-	private CommiunityTenant convertRowToCommiunityTenant(ResultSet myRs) throws SQLException {
+	private Community convertRowToCommunity(ResultSet myRs) throws SQLException {
 		
             
         int id = myRs.getInt("id");
-        int commiunity_id = myRs.getInt("commiunity_id");
 	String name = myRs.getString("name");
-	String last_name = myRs.getString("last_name");
-	String email = myRs.getString("email");
-	String tel = myRs.getString("tel");
+	String short_name = myRs.getString("short_name");
+	String street = myRs.getString("street");
+	String street_no = myRs.getString("street_no");
+	int city_id = myRs.getInt("city_id");
+        int zone_id = myRs.getInt("zone_id");
+        int country_id = myRs.getInt("country_id");
+        int enabled = myRs.getInt("enabled");
                 
-		CommiunityTenant commiunityTenant = new CommiunityTenant(id, commiunity_id, name, last_name, email, tel);
+		Community commiunity = new Community(id, name, short_name, street, street_no, city_id, zone_id, country_id, enabled);
 		
-		return commiunityTenant;
+		return commiunity;
 	}
         
-        public CommiunityTenant getCommiunityTenant(int id) throws Exception {
+        public Community getCommunity(int id) throws Exception {
 		
 		
 		Statement myStmt = null;
 		ResultSet myRs = null;
 		
 		try {
-                        CommiunityTenant commiunityTenant = new CommiunityTenant();
+                        Community community = new Community();
 			myStmt = myConn.createStatement();
 			
-			String sql = "select * from commiunity_tenants"
-                                + " where id=" + id + " limit 1";			
+			String sql = "select * from commiunity where id=" + id + " limit 1";
+			
 			
 			myRs = myStmt.executeQuery(sql);
                         
                         while (myRs.next()) {
                         
-                            commiunityTenant = convertRowToCommiunityTenant(myRs);
+                            community = convertRowToCommunity(myRs);
                         
                         }
 
-			return commiunityTenant;		
+			return community;		
 		}
 		finally {
 			DAOUtils.close(myStmt, myRs);
 		}
 	}	
 	
-	public List<CommiunityTenant> getAllCommiunityTenants(int id) throws Exception {
-		List<CommiunityTenant> list = new ArrayList<>();
+	public List<Community> getAllCommunities() throws Exception {
+		List<Community> list = new ArrayList<>();
 		
 		Statement myStmt = null;
 		ResultSet myRs = null;
@@ -83,13 +86,13 @@ public class CommiunityTenantDAO {
 		try {
 			myStmt = myConn.createStatement();
 			
-			String sql = "select * from commiunity_tenants where commiunity_id=" + id;			
+			String sql = "select * from commiunity";			
 			
 			myRs = myStmt.executeQuery(sql);
 			
 			while (myRs.next()) {
-				CommiunityTenant commiunityTenant = convertRowToCommiunityTenant(myRs);
-				list.add(commiunityTenant);
+				Community community = convertRowToCommunity(myRs);
+				list.add(community);
 			}
 
 			return list;		

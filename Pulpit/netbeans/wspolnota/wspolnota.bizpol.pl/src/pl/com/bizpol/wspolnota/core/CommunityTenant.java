@@ -1,6 +1,6 @@
 package pl.com.bizpol.wspolnota.core;
 
-public class CommiunityTenant {
+public class CommunityTenant {
 
 	private int id;
         private int commiunity_id;
@@ -9,11 +9,11 @@ public class CommiunityTenant {
 	private String email;
 	private String tel;
 
-	public CommiunityTenant() {
+	public CommunityTenant() {
 		
 	}
 	
-	public CommiunityTenant(int commiunity_id, String name, String last_name, String email, String tel) {
+	public CommunityTenant(int commiunity_id, String name, String last_name, String email, String tel) {
 		super();
                 this.commiunity_id = commiunity_id;
 		this.name = name;
@@ -22,7 +22,7 @@ public class CommiunityTenant {
 		this.tel = tel;
 	}
 	
-	public CommiunityTenant(int id, int commiunity_id, String name, String last_name, String email, String tel) {
+	public CommunityTenant(int id, int commiunity_id, String name, String last_name, String email, String tel) {
 		super();
                 this.id = id;
 		this.commiunity_id = commiunity_id;

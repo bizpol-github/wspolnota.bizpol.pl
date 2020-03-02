@@ -5,20 +5,22 @@
  */
 package pl.com.bizpol.wspolnota.ui;
 
+import java.awt.Rectangle;
+import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import pl.com.bizpol.wspolnota.core.Commiunity;
+import pl.com.bizpol.wspolnota.core.Community;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-import pl.com.bizpol.wspolnota.core.CommiunityTenant;
-import pl.com.bizpol.wspolnota.dao.CommiunityTenantDAO;
-import pl.com.bizpol.wspolnota.util.CommiunityTree;
+import pl.com.bizpol.wspolnota.core.CommunityTenant;
+import pl.com.bizpol.wspolnota.dao.CommunityTenantDAO;
+import pl.com.bizpol.wspolnota.util.CommunityTree;
 
 /**
  *
@@ -30,11 +32,13 @@ public class PropertyPanel extends javax.swing.JPanel {
      * Creates new form PropertyPanel
      */
     
-    DefaultTreeModel commiunityModel;
+    DefaultTreeModel communityModel;
     MainWindow mainWindow;
     
+    CommunityIFrame communityIFrame;
+    
     public PropertyPanel() {
-        commiunityModel = new CommiunityTree().getCommiunityModel();
+        communityModel = new CommunityTree().getCommunityModel();
         
         initComponents();
         jTree1.setShowsRootHandles(true);
@@ -61,7 +65,6 @@ public class PropertyPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
 
@@ -71,27 +74,15 @@ public class PropertyPanel extends javax.swing.JPanel {
         jSplitPane1.setDividerSize(3);
         jSplitPane1.setMinimumSize(new java.awt.Dimension(5, 25));
 
-        jLabel1.setBackground(new java.awt.Color(255, 153, 153));
-        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel1.setText("Archii");
-
-        jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(394, Short.MAX_VALUE))
+            .addGap(0, 476, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap(191, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(181, 181, 181))
+            .addGap(0, 475, Short.MAX_VALUE)
         );
 
         jSplitPane1.setRightComponent(jDesktopPane1);
@@ -99,9 +90,8 @@ public class PropertyPanel extends javax.swing.JPanel {
         jScrollPane1.setBorder(null);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(20, 322));
 
-        jTree1.setModel(commiunityModel);
+        jTree1.setModel(communityModel);
         jTree1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTree1.setShowsRootHandles(true);
         jTree1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTree1MouseClicked(evt);
@@ -146,27 +136,55 @@ public class PropertyPanel extends javax.swing.JPanel {
             
             DefaultMutableTreeNode selected = (DefaultMutableTreeNode) path.getLastPathComponent();
             
-            if (!selected.isRoot()) {            
-                Commiunity commiunity = (Commiunity) selected.getUserObject();        
-                System.out.println(commiunity.getId() +
+            
+            if (selected.getLevel() > 1){
+                System.out.println("Selected level " + selected.getLevel());
+            } else if (!selected.isRoot()) {            
+                Community community = (Community) selected.getUserObject();        
+                System.out.println(community.getId() +
                         ": " +
-                        commiunity.getName() + ", " + commiunity.getStreet() +
-                        " " + commiunity.getStreetNo());
+                        community.getName() + ", " + community.getStreet() +
+                        " " + community.getStreetNo());
+                Rectangle b = jDesktopPane1.getBounds();
+                
+                communityIFrame = new CommunityIFrame();
+                jDesktopPane1.add(communityIFrame);
+                communityIFrame.setBounds(b);
+                communityIFrame.setLocation(0, 0);
+                
+                if (communityIFrame.isVisible()){
+                    if(communityIFrame.isIcon()){
+                        try {
+                            communityIFrame.setIcon(false);
+                            communityIFrame.setSelected(true);
+                        } catch (PropertyVetoException ex) {
+                            Logger.getLogger(PropertyPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } else {
+                    communityIFrame.setVisible(true);
+                    communityIFrame.setIFrameTitle(community.getShortName());
+                
+                    communityIFrame.requestFocusInWindow();
+                    communityIFrame.repaint();
+                }
+                
+                
                 
                 //załadowanie lokatorów z bazy danych jako lista w objekcie commiunity
                 
-                if (commiunity.getTenants().isEmpty()) {
+                if (community.getTenants().isEmpty()) {
                     try {
                         // pobieram listę lokatorów
-                        CommiunityTenantDAO ctDAO = new CommiunityTenantDAO();
-                        List<CommiunityTenant> commiunityTenants = ctDAO.getAllCommiunityTenants(commiunity.getId());
-                        commiunity.setTenants(commiunityTenants);
+                        CommunityTenantDAO ctDAO = new CommunityTenantDAO();
+                        List<CommunityTenant> communityTenants = ctDAO.getAllCommunityTenants(community.getId());
+                        community.setTenants(communityTenants);
                         
                         //TreeModel model = jTree1.getModel();                        
                         
                         int i = 0;
                         
-                        for (CommiunityTenant commT : commiunityTenants) {
+                        for (CommunityTenant commT : communityTenants) {
                             System.out.println(commT.toString());
                             selected.add(new DefaultMutableTreeNode(commT));
                             i++;
@@ -183,6 +201,12 @@ public class PropertyPanel extends javax.swing.JPanel {
                     }
                     
                 }
+                
+                
+                
+//                if (path.getPathComponent(WIDTH)){
+//                    
+//                }
             }
         }
             
@@ -196,7 +220,6 @@ public class PropertyPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane1;
@@ -205,6 +228,6 @@ public class PropertyPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     
     public void getTree () {
-        commiunityModel = new CommiunityTree().getCommiunityModel();
+        communityModel = new CommunityTree().getCommunityModel();
     }
 }

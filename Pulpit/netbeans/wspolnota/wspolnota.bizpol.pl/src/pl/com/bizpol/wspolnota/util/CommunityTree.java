@@ -7,20 +7,19 @@ package pl.com.bizpol.wspolnota.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import pl.com.bizpol.wspolnota.core.Commiunity;
-import pl.com.bizpol.wspolnota.dao.CommiunityDAO;
+import pl.com.bizpol.wspolnota.core.Community;
+import pl.com.bizpol.wspolnota.dao.CommunityDAO;
 import pl.com.bizpol.wspolnota.dao.UserDAO;
 
 /**
  *
  * @author Archii
  */
-public final class CommiunityTree {
+public final class CommunityTree {
     
     int level = 0;
     DefaultMutableTreeNode commiunity;
@@ -28,7 +27,7 @@ public final class CommiunityTree {
     DefaultTreeModel innerModel;
     DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Wspólnoty");
     
-    public CommiunityTree(){
+    public CommunityTree(){
         //commiunity = new DefaultMutableTreeNode("Wspólnoty");
         
         innerModel = new DefaultTreeModel(rootNode);
@@ -73,15 +72,15 @@ public final class CommiunityTree {
         System.out.println("Commiunity");       
         
         try {            
-            CommiunityDAO cDAO = new CommiunityDAO();
-            List<Commiunity> cList = new ArrayList<>();
-            cList = cDAO.getAllCommiunities();
+            CommunityDAO cDAO = new CommunityDAO();
+            List<Community> cList = new ArrayList<>();
+            cList = cDAO.getAllCommunities();
             
             System.out.println("1. Tworze drzewo");
             
             int i = 0;
             
-            for (Commiunity comm : cList) {
+            for (Community comm : cList) {
                 
                 System.out.println(comm.getShortName());
                 innerModel.insertNodeInto(new DefaultMutableTreeNode(comm), rootNode, i);
@@ -92,7 +91,7 @@ public final class CommiunityTree {
         }
     }
     
-    public DefaultTreeModel getCommiunityModel() {
+    public DefaultTreeModel getCommunityModel() {
         return innerModel;
     }
 

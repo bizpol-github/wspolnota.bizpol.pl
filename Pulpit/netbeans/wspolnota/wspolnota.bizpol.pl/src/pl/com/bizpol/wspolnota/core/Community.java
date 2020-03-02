@@ -2,9 +2,9 @@ package pl.com.bizpol.wspolnota.core;
 
 import java.util.ArrayList;
 import java.util.List;
-import pl.com.bizpol.wspolnota.core.CommiunityTenant;
+import pl.com.bizpol.wspolnota.core.CommunityTenant;
 
-public class Commiunity {
+public class Community {
 
 	private int id;
 	private String name;
@@ -15,13 +15,13 @@ public class Commiunity {
         private int zone_id;
         private int country_id;
         private int enabled;
-        private List<CommiunityTenant> tenants = new ArrayList<>();
+        private List<CommunityTenant> tenants = new ArrayList<>();
 
-	public Commiunity() {
+	public Community() {
 		
 	}
 	
-	public Commiunity(String name, String short_name, String street, String street_no, int city_id, int zone_id, int country_id, int enabled) {
+	public Community(String name, String short_name, String street, String street_no, int city_id, int zone_id, int country_id, int enabled) {
 		super();
 		this.name = name;
 		this.short_name = short_name;
@@ -33,7 +33,7 @@ public class Commiunity {
                 this.enabled = enabled;
 	}
 	
-	public Commiunity(int id, String name, String short_name, String street, String street_no, int city_id, int zone_id, int country_id, int enabled) {
+	public Community(int id, String name, String short_name, String street, String street_no, int city_id, int zone_id, int country_id, int enabled) {
 		super();
                 this.id = id;
 		this.name = name;
@@ -118,11 +118,11 @@ public class Commiunity {
 		this.enabled = enabled;
 	}
         
-        public List<CommiunityTenant> getTenants() {
+        public List<CommunityTenant> getTenants() {
 		return tenants;
 	}
 
-	public void setTenants(List<CommiunityTenant> tenants) {
+	public void setTenants(List<CommunityTenant> tenants) {
 		this.tenants = tenants;
 	}
 
