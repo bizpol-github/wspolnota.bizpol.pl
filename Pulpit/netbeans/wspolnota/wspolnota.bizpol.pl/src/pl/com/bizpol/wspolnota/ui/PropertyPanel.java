@@ -139,35 +139,27 @@ public class PropertyPanel extends javax.swing.JPanel {
             
             if (selected.getLevel() > 1){
                 System.out.println("Selected level " + selected.getLevel());
-            } else if (!selected.isRoot()) {            
-                Community community = (Community) selected.getUserObject();        
-                System.out.println(community.getId() +
+            } else if (!selected.isRoot()) {
+                Community community = (Community) selected.getUserObject(); 
+                if (!community.getCommunityWindow()){
+                    System.out.println(community.getId() +
                         ": " +
                         community.getName() + ", " + community.getStreet() +
                         " " + community.getStreetNo());
-                Rectangle b = jDesktopPane1.getBounds();
-                
-                communityIFrame = new CommunityIFrame();
-                jDesktopPane1.add(communityIFrame);
-                communityIFrame.setBounds(b);
-                communityIFrame.setLocation(0, 0);
-                
-                if (communityIFrame.isVisible()){
-                    if(communityIFrame.isIcon()){
-                        try {
-                            communityIFrame.setIcon(false);
-                            communityIFrame.setSelected(true);
-                        } catch (PropertyVetoException ex) {
-                            Logger.getLogger(PropertyPanel.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                } else {
+                    Rectangle b = jDesktopPane1.getBounds();
+
+                    communityIFrame = new CommunityIFrame(community);
+                    jDesktopPane1.add(communityIFrame);
+                    communityIFrame.setBounds(b);
+                    communityIFrame.setLocation(0, 0);
                     communityIFrame.setVisible(true);
-                    communityIFrame.setIFrameTitle(community.getShortName());
-                
                     communityIFrame.requestFocusInWindow();
-                    communityIFrame.repaint();
+                    communityIFrame.repaint();                    
                 }
+                
+                
+                
+                
                 
                 
                 
@@ -207,6 +199,15 @@ public class PropertyPanel extends javax.swing.JPanel {
 //                if (path.getPathComponent(WIDTH)){
 //                    
 //                }
+            }
+            
+            if(communityIFrame.isIcon()){
+                try {
+                    communityIFrame.setIcon(false);
+                    communityIFrame.setSelected(true);
+                } catch (PropertyVetoException ex) {
+                    Logger.getLogger(PropertyPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
             

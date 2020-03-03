@@ -16,6 +16,8 @@ public class Community {
         private int country_id;
         private int enabled;
         private List<CommunityTenant> tenants = new ArrayList<>();
+        private boolean community_window = false;
+        private List<ArrayList> data = new ArrayList<>();
 
 	public Community() {
 		
@@ -124,6 +126,22 @@ public class Community {
 
 	public void setTenants(List<CommunityTenant> tenants) {
 		this.tenants = tenants;
+	}
+        
+        public boolean getCommunityWindow() {
+		return community_window;
+	}
+
+	public void setCommunityWindow(boolean community_window) {
+		this.community_window = community_window;
+	}
+        
+        public List<String> getData() {
+		return data;
+	}
+
+	public void setData(List<String> data) {
+		this.data = data;
 	}
 
 	@Override
