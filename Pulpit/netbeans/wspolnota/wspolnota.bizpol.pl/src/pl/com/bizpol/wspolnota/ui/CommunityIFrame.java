@@ -5,6 +5,7 @@
  */
 package pl.com.bizpol.wspolnota.ui;
 
+import javax.swing.table.TableCellRenderer;
 import pl.com.bizpol.wspolnota.core.Community;
 
 /**
@@ -25,6 +26,7 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
         initComponents();
         
         this.setIFrameTitle(this.community.getShortName());
+        populateTable(community);
     }
 
     /**
@@ -42,7 +44,7 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        communityTable = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -90,7 +92,7 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
 
         jPanel4.setBackground(new java.awt.Color(169, 37, 67));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        communityTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -101,7 +103,7 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
                 "Dane", "Wartość", "Akcja"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(communityTable);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -151,13 +153,13 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable communityTable;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
     
     public final void setIFrameTitle(String title){
@@ -168,31 +170,27 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
         this.community = community;
     }
     
-     private void populateTable (String name) {
+     private void populateTable (Community community) {          
+            
+            
+            
         
-        try {            
             
-            List<Countries> countries = null;
+            CommunityTableModel model = new CommunityTableModel(community);
+            communityTable.setModel(model);
             
-            if (name != null && name.trim().length() > 0) {
-                countries = countriesDAO.searchCountries(name);
-            } else {
-                countries = countriesDAO.getAllCountries();
-            }
+//            TableCellRenderer buttonRenderer = new JTableButtonRenderer();
+//        table.getColumn("Button1").setCellRenderer(buttonRenderer);
+//        table.getColumn("Button2").setCellRenderer(buttonRenderer);
             
-            CountriesTableModel model = new CountriesTableModel(countries);
-            searchTable.setModel(model);
-            
-            searchTable.getColumnModel().getColumn(0).setPreferredWidth(20);
-            searchTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-            searchTable.getColumnModel().getColumn(2).setPreferredWidth(30);
+//            communityTable.getColumnModel().getColumn(0).setPreferredWidth(20);
+//            communityTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+//            communityTable.getColumnModel().getColumn(2).setPreferredWidth(30);
             
 //            for (Countries temp : countries) {
 //                System.out.println(temp);
 //            }            
-        } catch(Exception exc) {
-            JOptionPane.showMessageDialog(CountriesJDialog.this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE);
-        }
+
         
     }
 

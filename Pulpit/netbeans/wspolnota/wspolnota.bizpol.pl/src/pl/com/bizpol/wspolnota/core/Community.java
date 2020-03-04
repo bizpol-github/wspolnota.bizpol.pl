@@ -1,12 +1,14 @@
 package pl.com.bizpol.wspolnota.core;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import pl.com.bizpol.wspolnota.core.CommunityTenant;
+import jdk.nashorn.internal.objects.NativeArray;
 
 public class Community {
 
-	private int id;
+	private int id = 0;
 	private String name;
 	private String short_name;
 	private String street;
@@ -17,7 +19,7 @@ public class Community {
         private int enabled;
         private List<CommunityTenant> tenants = new ArrayList<>();
         private boolean community_window = false;
-        private List<ArrayList> data = new ArrayList<>();
+        private String[][] data = new String[9][2];
 
 	public Community() {
 		
@@ -33,6 +35,7 @@ public class Community {
                 this.zone_id = zone_id;
                 this.country_id = country_id;
                 this.enabled = enabled;
+                setTableArray();
 	}
 	
 	public Community(int id, String name, String short_name, String street, String street_no, int city_id, int zone_id, int country_id, int enabled) {
@@ -46,6 +49,7 @@ public class Community {
                 this.zone_id = zone_id;
                 this.country_id = country_id;
                 this.enabled = enabled;
+                setTableArray();
 	}
 	
 	public int getId() {
@@ -136,14 +140,22 @@ public class Community {
 		this.community_window = community_window;
 	}
         
-        public List<String> getData() {
+        public String[][] getTableArray() {
 		return data;
 	}
-
-	public void setData(List<String> data) {
-		this.data = data;
-	}
-
+        
+        public void setTableArray(){
+            this.data[0] = new String[]{"id", String.valueOf(this.id)};
+            this.data[1] = new String[]{"name", this.name};
+            this.data[2] = new String[]{"short_name", this.short_name};
+            this.data[3] = new String[]{"street", this.street};
+            this.data[4] = new String[]{"street_no", this.street_no};
+            this.data[5] = new String[]{"city_id", String.valueOf(this.city_id)};
+            this.data[6] = new String[]{"zone_id", String.valueOf(this.zone_id)};
+            this.data[7] = new String[]{"country_id", String.valueOf(this.country_id)};
+            this.data[8] = new String[]{"enabled", String.valueOf(this.enabled)};
+        }
+        
 	@Override
 	public String toString() {
 		return short_name;

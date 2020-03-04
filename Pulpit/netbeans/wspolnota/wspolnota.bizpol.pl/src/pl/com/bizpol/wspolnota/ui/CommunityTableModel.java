@@ -1,6 +1,12 @@
 package pl.com.bizpol.wspolnota.ui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Array;
+import java.util.HashMap;
 import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import javax.swing.table.AbstractTableModel;
 import pl.com.bizpol.wspolnota.core.Community;
@@ -15,10 +21,12 @@ class CommunityTableModel extends AbstractTableModel {
 
 	private String[] columnNames = { "DANE", "WARTOŚĆ", "AKCJE"};
 	private Community community;
-        private List<String> list;
+        private String[][] data;
 
 	public CommunityTableModel(Community community) {
-		this.community = community;               
+		this.community = community;  
+                data = community.getTableArray();
+                
 	}
 
 	@Override
@@ -28,7 +36,7 @@ class CommunityTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return list.size();
+		return data.length;
 	}
 
 	@Override
@@ -38,18 +46,28 @@ class CommunityTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int row, int col) {
-
-		Countries tempCountries = list.get(row);
+            
+            
 
 		switch (col) {
 		case DATA:
-			return tempCountries.getCountriesId();
+			return data[row][0];
 		case VALUE:
-			return tempCountries.getCountriesName();
+			return data[row][1];
 		case ACTIONS:
-			return tempCountries.getIsoCode2();                
+			final JButton button = new JButton(columnNames[col]);
+                        button.addActionListener(new ActionListener() {
+                             @Override
+                            public void actionPerformed(ActionEvent arg0) {
+                                JOptionPane.showMessageDialog(JOptionPane.getFrameForComponent(button), 
+                                        "Button clicked for row "+row);
+                            }
+
+                    
+                        });
+                        return button;               
 		default:
-			return tempCountries.getCountriesId();
+			return data[row][0];
 		}
 	}
 
