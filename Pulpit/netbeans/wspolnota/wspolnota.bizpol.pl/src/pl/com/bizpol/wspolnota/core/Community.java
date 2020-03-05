@@ -20,6 +20,7 @@ public class Community {
         private List<CommunityTenant> tenants = new ArrayList<>();
         private boolean community_window = false;
         private String[][] data = new String[9][2];
+        private boolean changed = false;
 
 	public Community() {
 		
@@ -156,8 +157,20 @@ public class Community {
             this.data[8] = new String[]{"enabled", String.valueOf(this.enabled)};
         }
         
+        public boolean isChanged(){
+            return changed;
+        }
+        
+        public void setChanged(boolean changed){
+            this.changed = changed;
+        }
+        
 	@Override
 	public String toString() {
 		return short_name;
+	}
+        
+        public String toString2() {
+		return "ID:" + id + ", " + name + ", " + short_name + ", " + street + ", " + street_no + ", " + city_id + ", " + zone_id + ", " + country_id + ", " + enabled;
 	}
 }

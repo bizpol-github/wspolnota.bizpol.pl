@@ -1,25 +1,16 @@
 package pl.com.bizpol.wspolnota.ui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Array;
-import java.util.HashMap;
-import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
 
 import javax.swing.table.AbstractTableModel;
 import pl.com.bizpol.wspolnota.core.Community;
 
-import pl.com.bizpol.wspolnota.core.Countries;
 
 class CommunityTableModel extends AbstractTableModel {
 
 	private static final int DATA = 0;
 	private static final int VALUE = 1;
-	private static final int ACTIONS = 2;
 
-	private String[] columnNames = { "DANE", "WARTOŚĆ", "AKCJE"};
+	private String[] columnNames = { "DANE", "WARTOŚĆ"};
 	private Community community;
         private String[][] data;
 
@@ -47,32 +38,39 @@ class CommunityTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
             
-            
-
-		switch (col) {
-		case DATA:
-			return data[row][0];
-		case VALUE:
-			return data[row][1];
-		case ACTIONS:
-			final JButton button = new JButton(columnNames[col]);
-                        button.addActionListener(new ActionListener() {
-                             @Override
-                            public void actionPerformed(ActionEvent arg0) {
-                                JOptionPane.showMessageDialog(JOptionPane.getFrameForComponent(button), 
-                                        "Button clicked for row "+row);
-                            }
-
-                    
-                        });
-                        return button;               
-		default:
-			return data[row][0];
-		}
+            switch (col) {
+            case DATA:
+                    return data[row][0];
+            case VALUE:
+                    return data[row][1];
+            default:
+                    return data[row][0];
+            }
 	}
 
 	@Override
 	public Class getColumnClass(int c) {
 		return getValueAt(0, c).getClass();
 	}
+        
+        @Override
+        public void setValueAt(Object aValue, int row, int col)
+        {
+            if(1 == col) {
+                data[row][col] =  (String) aValue;
+                System.out.println("Zmieniono dane w kolumnie " + col + ", wiersz " + row);
+                
+                //Informacja do obiektu o zmianie
+                if (!community.isChanged()){
+                    community.setChanged(false);
+                    System.out.println(community.toString2());
+                }
+            }
+        }
+        
+        @Override
+        public boolean isCellEditable(int row, int col)
+        {
+            return true;
+        }
 }
