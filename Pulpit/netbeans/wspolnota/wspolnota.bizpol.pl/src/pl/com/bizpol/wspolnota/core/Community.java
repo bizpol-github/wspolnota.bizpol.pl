@@ -65,7 +65,7 @@ public class Community {
 		return name;
 	}
         
-        public void setname(String name) {
+        public void setName(String name) {
 		this.name = name;
 	}
 	public String getShortName() {
@@ -146,15 +146,15 @@ public class Community {
 	}
         
         public void setTableArray(){
-            this.data[0] = new String[]{"id", String.valueOf(this.id)};
-            this.data[1] = new String[]{"name", this.name};
-            this.data[2] = new String[]{"short_name", this.short_name};
-            this.data[3] = new String[]{"street", this.street};
-            this.data[4] = new String[]{"street_no", this.street_no};
-            this.data[5] = new String[]{"city_id", String.valueOf(this.city_id)};
-            this.data[6] = new String[]{"zone_id", String.valueOf(this.zone_id)};
-            this.data[7] = new String[]{"country_id", String.valueOf(this.country_id)};
-            this.data[8] = new String[]{"enabled", String.valueOf(this.enabled)};
+            this.data[0] = new String[]{"id", String.valueOf(this.id), "int"};
+            this.data[1] = new String[]{"name", this.name, "String"};
+            this.data[2] = new String[]{"short_name", this.short_name, "String"};
+            this.data[3] = new String[]{"street", this.street, "String"};
+            this.data[4] = new String[]{"street_no", this.street_no, "String"};
+            this.data[5] = new String[]{"city_id", String.valueOf(this.city_id), "int"};
+            this.data[6] = new String[]{"zone_id", String.valueOf(this.zone_id), "int"};
+            this.data[7] = new String[]{"country_id", String.valueOf(this.country_id), "int"};
+            this.data[8] = new String[]{"enabled", String.valueOf(this.enabled), "boolean"};
         }
         
         public boolean isChanged(){
@@ -170,7 +170,7 @@ public class Community {
 		return short_name;
 	}
         
-        public String toString2() {
+        public String toStringAll() {
 		return "ID:" + id + ", " + name + ", " + short_name + ", " + street + ", " + street_no + ", " + city_id + ", " + zone_id + ", " + country_id + ", " + enabled;
 	}
 }

@@ -187,13 +187,13 @@ public class LoginIFrame extends javax.swing.JInternalFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         
-        int connectedID = 0;
+        int connectedID = 1;
         String login = loginField.getText();        
         System.out.println("Login");       
         
         try {            
             UserDAO userDAO = new UserDAO();            
-            connectedID = userDAO.checkLogin(login);
+            //connectedID = userDAO.checkLogin(login);
             System.out.println("1.Sprawdzam ID " + connectedID + " - " + login);
 
             if(connectedID > 0) {

@@ -5,7 +5,10 @@
  */
 package pl.com.bizpol.wspolnota.ui;
 
+import java.awt.Color;
+import javax.swing.RowFilter;
 import pl.com.bizpol.wspolnota.core.Community;
+import pl.com.bizpol.wspolnota.util.SearchTableSorter;
 
 /**
  *
@@ -14,6 +17,8 @@ import pl.com.bizpol.wspolnota.core.Community;
 public class CommunityIFrame extends javax.swing.JInternalFrame {
     
     public Community community;
+    public SearchTableSorter sorter;
+    public boolean dynamicSearch = true;
 
     /**
      * Creates new form CopmmunityIFrame
@@ -27,10 +32,14 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
         this.setIFrameTitle(this.community.getShortName());
         
         CommunityTableModel model = new CommunityTableModel(community);
-        communityTable.setModel(model);
-            
+        communityTable.setModel(model);            
         communityTable.getColumnModel().getColumn(0).setPreferredWidth(200);
         communityTable.getColumnModel().getColumn(1).setPreferredWidth(300);
+        
+        sorter = new SearchTableSorter(communityTable, model);
+        sorter.sort("");
+        
+        dynamicChBox.setSelected(dynamicSearch);
         
        // populateTable(community);
     }
@@ -52,8 +61,9 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        searchField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        dynamicChBox = new javax.swing.JCheckBox();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         communityTable = new javax.swing.JTable();
@@ -96,12 +106,40 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/delete_icon&16.png"))); // NOI18N
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/zoom_icon&16.png"))); // NOI18N
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
 
-        jTextField1.setForeground(new java.awt.Color(189, 189, 189));
-        jTextField1.setText("Szukaj ...");
+        searchField.setForeground(new java.awt.Color(189, 189, 189));
+        searchField.setText("Szukaj ...");
+        searchField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchFieldFocusLost(evt);
+            }
+        });
+        searchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchFieldKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchFieldKeyReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jLabel2.setText("jLabel2");
+
+        dynamicChBox.setText("Wyszukiwanie dynamiczne");
+        dynamicChBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dynamicChBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -115,13 +153,16 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 481, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton2))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(dynamicChBox)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -131,12 +172,15 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(dynamicChBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3)
+                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -165,7 +209,7 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
         );
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);
@@ -203,9 +247,70 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
         System.out.println(community.getCommunityWindow());
     }//GEN-LAST:event_formInternalFrameClosing
 
+    private void searchFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyPressed
+        // TODO add your handling code here:
+        String text = searchField.getText();
+        System.out.println(text);
+        if (text.equals("Szukaj ...")){
+            searchField.setText("");
+            searchField.setForeground(Color.black);
+        }
+        
+    }//GEN-LAST:event_searchFieldKeyPressed
+
+    private void searchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyReleased
+        // TODO add your handling code here:
+        if (dynamicSearch){
+            String text = searchField.getText();
+            sorter.sort(text);
+        }
+    }//GEN-LAST:event_searchFieldKeyReleased
+
+    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
+        // TODO add your handling code here:
+        String text = searchField.getText();
+        System.out.println(text);
+        if (text.equals("Szukaj ...")){
+            searchField.setText("");
+            searchField.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_searchFieldFocusGained
+
+    private void searchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusLost
+        // TODO add your handling code here:
+        String text = searchField.getText();
+        if (text.isEmpty()){
+            searchField.setText("Szukaj ...");
+            searchField.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_searchFieldFocusLost
+
+    private void dynamicChBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dynamicChBoxActionPerformed
+        // TODO add your handling code here:
+        dynamicSearch = dynamicChBox.isSelected();
+        
+        if(!dynamicSearch){
+            sorter.sort("");
+            searchField.setText("Szukaj ...");
+            searchField.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_dynamicChBoxActionPerformed
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        if (!dynamicSearch){
+            String text = searchField.getText();
+            if (text.equals("Szukaj ...")){
+                text = "";
+            }
+            sorter.sort(text);
+        }
+    }//GEN-LAST:event_jButton3MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable communityTable;
+    private javax.swing.JCheckBox dynamicChBox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -217,7 +322,7 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
     
     public final void setIFrameTitle(String title){
