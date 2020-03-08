@@ -15,10 +15,10 @@ public class CommunityTableModel extends AbstractTableModel {
 	private static final int DATA = 0;
 	private static final int VALUE = 1;
 
-	private String[] columnNames = { "DANE", "WARTOŚĆ"};
-	private Community community;
-        private Community changedCommunity = new Community();
-        private String[][] data;
+	private final String[] columnNames = { "DANE", "WARTOŚĆ"};
+	private final Community community;
+        private final Community changedCommunity = new Community();
+        private final String[][] data;
 
 	public CommunityTableModel(Community community) {
 		this.community = community;  
@@ -92,10 +92,7 @@ public class CommunityTableModel extends AbstractTableModel {
         }
         
         public Community getChangedCommunity() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException{
-            
-            
-            
-            
+                    
             for (String[] string : data) {
                 
                 String id = string[0];
@@ -106,33 +103,38 @@ public class CommunityTableModel extends AbstractTableModel {
                 Class[] classType = new Class[1];
                 
                 //System.out.println("ID: " + id + " " + value);
-                switch (type) {
-                    case "int":
-                        System.out.println("Numer " + id + " " + value);
-                        classType[0] = int.class;
-                        break;
-                    case "String":
-                        System.out.println("Tekst " + id + " " + value);
-                        classType[0] = String.class;
-                        break;
-                    case "boolean":
-                        System.out.println("Logiczne " + id + " " + value);
-                        classType[0] = boolean.class;
-                        break;
-                    default:
-                        break;
-                }
-                
-                
                 try {
-                    Class c = changedCommunity.getClass();
-                    Method method = changedCommunity.getClass().getMethod(id, classType[0]);
-                    method.invoke(c, value);
-                } catch (IllegalAccessException ex) {
-                    Logger.getLogger(CommunityTableModel.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IllegalArgumentException ex) {
-                    Logger.getLogger(CommunityTableModel.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InvocationTargetException ex) {
+                    Method method;
+                    switch (type) {
+                        case "int":
+                            System.out.println("Numer " + id + " " + value);
+                            method = changedCommunity.getClass().getMethod(id, int.class);
+                            method.invoke(changedCommunity, Integer.parseInt(value));
+                            break;
+                        case "String":
+                            System.out.println("Tekst " + id + " " + value);
+                            method = changedCommunity.getClass().getMethod(id, String.class);
+                            method.invoke(changedCommunity, value);
+                            break;
+                        case "boolean":
+                            System.out.println("Logiczne " + id + " " + value);
+                            method = changedCommunity.getClass().getMethod(id, boolean.class);
+                            if ("0".equals(value)){
+                                 method.invoke(changedCommunity, false);
+                            } else {
+                                method.invoke(changedCommunity, true);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                
+                
+               
+                    
+                    
+                    
+                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                     Logger.getLogger(CommunityTableModel.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
@@ -142,7 +144,7 @@ public class CommunityTableModel extends AbstractTableModel {
             
             System.out.println("---------------------------------------");
             
-            System.out.println(changedCommunity);
+            System.out.println(changedCommunity.toStringAll());
             
              
             

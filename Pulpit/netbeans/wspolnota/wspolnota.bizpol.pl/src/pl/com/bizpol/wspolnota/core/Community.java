@@ -154,7 +154,7 @@ public class Community {
             this.data[5] = new String[]{"city_id", String.valueOf(this.city_id), "int"};
             this.data[6] = new String[]{"zone_id", String.valueOf(this.zone_id), "int"};
             this.data[7] = new String[]{"country_id", String.valueOf(this.country_id), "int"};
-            this.data[8] = new String[]{"enabled", String.valueOf(this.enabled), "boolean"};
+            this.data[8] = new String[]{"enabled", String.valueOf(this.enabled), "int"};
         }
         
         public boolean isChanged(){

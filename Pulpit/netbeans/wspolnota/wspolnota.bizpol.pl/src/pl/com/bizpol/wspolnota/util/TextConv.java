@@ -12,23 +12,25 @@ package pl.com.bizpol.wspolnota.util;
 public class TextConv {
     
     public static String colNameToMethod(String setget, String name) {
-        String method = setget;
-        name = name.substring(0, 1).toUpperCase() + name.substring(1);
+        String method = "";        
         int idx = name.indexOf("_");
-        
-        if (idx > 0) {
+        name = name.substring(0, 1).toUpperCase() + name.substring(1);
+                
+        if (idx > 0) {            
             String firstPart = name.substring(0, idx);
-            String nextPart = name.substring(idx);            
-            String up = nextPart.substring(0,1).toUpperCase() + nextPart.substring(1);            
+            String restPart = name.substring(idx+1);
+            String up = restPart.substring(0,1).toUpperCase() + restPart.substring(1);
             
             method = firstPart + up;
             
-        } else {
+            colNameToMethod(setget, method);
             
-            method += name;
+        } else {            
+            
+            method = name;
         }
         
-        return method;
+        return setget+method;
     }
     
 }
