@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 import pl.com.bizpol.wspolnota.core.Community;
+import static pl.com.bizpol.wspolnota.util.TextConv.colNameToMethod;
 
 
 public class CommunityTableModel extends AbstractTableModel {
@@ -98,30 +99,34 @@ public class CommunityTableModel extends AbstractTableModel {
             for (String[] string : data) {
                 
                 String id = string[0];
+                id = colNameToMethod("set", id);
                 String value = string[1];
                 String type = string[2];
                 
                 Class[] classType = new Class[1];
                 
                 //System.out.println("ID: " + id + " " + value);
-                
-                
-                if(type.equals("int")) {
-                    System.out.println("Numer " + id + " " + value);
-                    classType[0] = int.class; 
-                } else if (type.equals("String")) {
-                    System.out.println("Tekst " + id + " " + value);
-                    classType[0] = String.class;
-                    
-                } else if (type.equals("boolean")) {
-                    System.out.println("Logiczne " + id + " " + value);
-                    classType[0] = boolean.class;
+                switch (type) {
+                    case "int":
+                        System.out.println("Numer " + id + " " + value);
+                        classType[0] = int.class;
+                        break;
+                    case "String":
+                        System.out.println("Tekst " + id + " " + value);
+                        classType[0] = String.class;
+                        break;
+                    case "boolean":
+                        System.out.println("Logiczne " + id + " " + value);
+                        classType[0] = boolean.class;
+                        break;
+                    default:
+                        break;
                 }
                 
                 
                 try {
                     Class c = changedCommunity.getClass();
-                    Method method = changedCommunity.getClass().getMethod("set" + id.substring(0, 1).toUpperCase() + id.substring(1), classType[0]);
+                    Method method = changedCommunity.getClass().getMethod(id, classType[0]);
                     method.invoke(c, value);
                 } catch (IllegalAccessException ex) {
                     Logger.getLogger(CommunityTableModel.class.getName()).log(Level.SEVERE, null, ex);
