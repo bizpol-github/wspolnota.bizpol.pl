@@ -3,10 +3,15 @@ package pl.com.bizpol.wspolnota.ui;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 import pl.com.bizpol.wspolnota.core.Community;
+import pl.com.bizpol.wspolnota.dao.CommunityDAO;
+import pl.com.bizpol.wspolnota.dao.DAOUtils;
 import static pl.com.bizpol.wspolnota.util.TextConv.colNameToMethod;
 
 
@@ -23,7 +28,6 @@ public class CommunityTableModel extends AbstractTableModel {
 	public CommunityTableModel(Community community) {
 		this.community = community;  
                 data = community.getTableArray();
-                
 	}
 
 	@Override
@@ -78,6 +82,8 @@ public class CommunityTableModel extends AbstractTableModel {
                     Logger.getLogger(CommunityTableModel.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (NoSuchMethodException ex) {
                     Logger.getLogger(CommunityTableModel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(CommunityTableModel.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
                 
@@ -91,7 +97,7 @@ public class CommunityTableModel extends AbstractTableModel {
             }
         }
         
-        public Community getChangedCommunity() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException{
+        public Community getChangedCommunity() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, Exception{
                     
             for (String[] string : data) {
                 
@@ -99,8 +105,6 @@ public class CommunityTableModel extends AbstractTableModel {
                 id = colNameToMethod("set", id);
                 String value = string[1];
                 String type = string[2];
-                
-                Class[] classType = new Class[1];
                 
                 //System.out.println("ID: " + id + " " + value);
                 try {
@@ -141,6 +145,13 @@ public class CommunityTableModel extends AbstractTableModel {
                 
                 
             }
+            
+            //Uzyskanie dostępu do bazy danych i zapisanie zmian
+            
+            CommunityDAO cDAO = new CommunityDAO();
+            cDAO.updateCommunity(changedCommunity);
+            
+            
             
             System.out.println("---------------------------------------");
             

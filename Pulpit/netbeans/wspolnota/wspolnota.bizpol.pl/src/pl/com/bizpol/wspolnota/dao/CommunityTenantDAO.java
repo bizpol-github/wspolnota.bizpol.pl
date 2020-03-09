@@ -35,13 +35,13 @@ public class CommunityTenantDAO {
 		
             
         int id = myRs.getInt("id");
-        int commiunity_id = myRs.getInt("commiunity_id");
+        int community_id = myRs.getInt("community_id");
 	String name = myRs.getString("name");
 	String last_name = myRs.getString("last_name");
 	String email = myRs.getString("email");
 	String tel = myRs.getString("tel");
                 
-		CommunityTenant communityTenant = new CommunityTenant(id, commiunity_id, name, last_name, email, tel);
+		CommunityTenant communityTenant = new CommunityTenant(id, community_id, name, last_name, email, tel);
 		
 		return communityTenant;
 	}
@@ -56,7 +56,7 @@ public class CommunityTenantDAO {
                         CommunityTenant communityTenant = new CommunityTenant();
 			myStmt = myConn.createStatement();
 			
-			String sql = "select * from commiunity_tenants"
+			String sql = "select * from community_tenants"
                                 + " where id=" + id + " limit 1";			
 			
 			myRs = myStmt.executeQuery(sql);
@@ -83,13 +83,13 @@ public class CommunityTenantDAO {
 		try {
 			myStmt = myConn.createStatement();
 			
-			String sql = "select * from commiunity_tenants where commiunity_id=" + id;			
+			String sql = "select * from community_tenants where community_id=" + id;			
 			
 			myRs = myStmt.executeQuery(sql);
 			
 			while (myRs.next()) {
-				CommunityTenant commiunityTenant = convertRowToCommunityTenant(myRs);
-				list.add(commiunityTenant);
+				CommunityTenant communityTenant = convertRowToCommunityTenant(myRs);
+				list.add(communityTenant);
 			}
 
 			return list;		

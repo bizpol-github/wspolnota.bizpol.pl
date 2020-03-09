@@ -3,6 +3,7 @@ package pl.com.bizpol.wspolnota.dao;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -44,9 +45,9 @@ public class CommunityDAO {
         int country_id = myRs.getInt("country_id");
         int enabled = myRs.getInt("enabled");
                 
-		Community commiunity = new Community(id, name, short_name, street, street_no, city_id, zone_id, country_id, enabled);
+		Community community = new Community(id, name, short_name, street, street_no, city_id, zone_id, country_id, enabled);
 		
-		return commiunity;
+		return community;
 	}
         
         public Community getCommunity(int id) throws Exception {
@@ -59,7 +60,7 @@ public class CommunityDAO {
                         Community community = new Community();
 			myStmt = myConn.createStatement();
 			
-			String sql = "select * from commiunity where id=" + id + " limit 1";
+			String sql = "select * from community where id=" + id + " limit 1";
 			
 			
 			myRs = myStmt.executeQuery(sql);
@@ -86,7 +87,7 @@ public class CommunityDAO {
 		try {
 			myStmt = myConn.createStatement();
 			
-			String sql = "select * from commiunity";			
+			String sql = "select * from community";			
 			
 			myRs = myStmt.executeQuery(sql);
 			
@@ -132,28 +133,32 @@ public class CommunityDAO {
 //	}
 //		
 //	
-//	public void updateUser(User theUser) throws Exception {
-//		PreparedStatement myStmt = null;
-//
-//		try {
-//			// prepare statement
-//			myStmt = myConn.prepareStatement("update users"
-//					+ " set user_login=?, user_nicename=?, user_email=?, user_status=?"
-//					+ " where ID=?");
-//			
-//			// set params
-//			myStmt.setString(1, theUser.getLogin());
-//                        myStmt.setString(2, theUser.getNicename());                        
-//			myStmt.setString(3, theUser.getEmail());
-//			myStmt.setInt(4, theUser.getStatus());
-//			myStmt.setInt(5, theUser.getId());
-//			
-//			// execute SQL
-//			myStmt.executeUpdate();
-//
-//		}
-//		finally {
-//			DAOUtils.close(myStmt);
-//		}		
-//	}
+	public void updateCommunity(Community community) throws Exception {
+		PreparedStatement myStmt = null;
+
+		try {
+			// prepare statement
+			myStmt = myConn.prepareStatement("update community"
+					+ " set name=?, short_name=?, street=?, street_no=?, city_id=?, zone_id=?, country_id=?, enabled=?"
+					+ " where id=?");
+			
+			// set params
+			myStmt.setString(1, community.getName());
+                        myStmt.setString(2, community.getShortName());                        
+			myStmt.setString(3, community.getStreet());
+			myStmt.setString(4, community.getStreetNo());
+			myStmt.setInt(5, community.getCityId());
+                        myStmt.setInt(6, community.getCountryId());
+                        myStmt.setInt(7, community.getZoneId());
+                        myStmt.setInt(8, community.getEnabled());
+                        myStmt.setInt(9, community.getId());
+			
+			// execute SQL
+			myStmt.executeUpdate();
+
+		}
+		finally {
+			DAOUtils.close(myStmt);
+		}		
+	}
 }
