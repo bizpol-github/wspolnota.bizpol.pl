@@ -1,12 +1,10 @@
 package pl.com.bizpol.wspolnota.core;
 
-import java.sql.Array;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import jdk.nashorn.internal.objects.NativeArray;
 
-public class Community {
+public final class Community implements Serializable{
 
 	private int id = 0;
 	private String name;
@@ -50,7 +48,7 @@ public class Community {
                 this.zone_id = zone_id;
                 this.country_id = country_id;
                 this.enabled = enabled;
-                setTableArray();
+                this.setTableArray();
 	}
 	
 	public int getId() {

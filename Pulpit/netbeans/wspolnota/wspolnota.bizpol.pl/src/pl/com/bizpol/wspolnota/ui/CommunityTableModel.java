@@ -12,6 +12,7 @@ import javax.swing.table.AbstractTableModel;
 import pl.com.bizpol.wspolnota.core.Community;
 import pl.com.bizpol.wspolnota.dao.CommunityDAO;
 import pl.com.bizpol.wspolnota.dao.DAOUtils;
+import pl.com.bizpol.wspolnota.dao.LogDAO;
 import static pl.com.bizpol.wspolnota.util.TextConv.colNameToMethod;
 
 
@@ -151,6 +152,8 @@ public class CommunityTableModel extends AbstractTableModel {
             CommunityDAO cDAO = new CommunityDAO();
             cDAO.updateCommunity(changedCommunity);
             
+            LogDAO logDAO = new LogDAO();
+            logDAO.EnterLog(1, "community", community, changedCommunity);
             
             
             System.out.println("---------------------------------------");

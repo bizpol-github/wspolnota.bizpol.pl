@@ -1,6 +1,8 @@
 package pl.com.bizpol.wspolnota.core;
 
-public class CommunityTenant {
+import java.io.Serializable;
+
+public class CommunityTenant implements Serializable{
 
 	private int id;
         private int commiunity_id;

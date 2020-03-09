@@ -124,8 +124,8 @@ public class UserDAO {
 			myStmt.setString(1, theUser.getLogin());
 			myStmt.setString(2, theUser.getPass());
                         myStmt.setString(3, theUser.getNicename());                        
-			myStmt.setString(3, theUser.getEmail());
-			myStmt.setInt(4, theUser.getStatus());
+			myStmt.setString(4, theUser.getEmail());
+			myStmt.setInt(5, theUser.getStatus());
 			
 			// encrypt password
 			String encryptedPassword = PasswordUtils.encryptPassword(theUser.getPass());
