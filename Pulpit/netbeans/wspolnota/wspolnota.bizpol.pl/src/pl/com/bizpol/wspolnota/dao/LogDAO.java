@@ -5,14 +5,23 @@
  */
 package pl.com.bizpol.wspolnota.dao;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+import pl.com.bizpol.wspolnota.core.Countries;
+import static pl.com.bizpol.wspolnota.dao.DAOUtils.close;
 
 /**
  *
@@ -40,7 +49,7 @@ public class LogDAO {
         
     }
     
-    public void EnterLog(int user_id, String table_name, Object old_value, Object new_value) throws Exception{
+    public void EnterLog(int user_id, String table_name, int data_id, Object old_value, Object new_value) throws Exception{
         
         PreparedStatement myStmt = null;
         
@@ -64,14 +73,15 @@ public class LogDAO {
 		try {
 			// prepare statement
 			myStmt = myConn.prepareStatement("insert into log"
-					+ " (user_id, table_name, old_values, new_values)"
-					+ " values (?, ?, ?, ?)");
+					+ " (user_id, table_name, data_id, old_values, new_values)"
+					+ " values (?, ?, ?, ?, ?)");
 			
 			// set params
 			myStmt.setInt(1, user_id);
 			myStmt.setString(2, table_name);
-                        myStmt.setObject(3, byteOld);                        
-			myStmt.setObject(4, byteNew);
+                        myStmt.setInt(3, data_id);
+                        myStmt.setObject(4, byteOld);                        
+			myStmt.setObject(5, byteNew);
 			
 			// execute SQL
 			myStmt.executeUpdate();				
@@ -80,6 +90,36 @@ public class LogDAO {
 			DAOUtils.close(myStmt);
 		}
         
+    }
+    
+    public List<Object> getAllLogsById(String table_name, int content_id) throws Exception {
+        List<Object> list = new ArrayList<>();
+        
+        Statement myStmt = null;
+        ResultSet myRs = null; 
+        
+//        ByteArrayInputStream baisOld, baisNew;
+//        ObjectInputStream inOld, inNew;
+        
+        try {
+            myStmt = myConn.createStatement();
+            myRs = myStmt.executeQuery("select * from log where table_name=" + table_name + " and content_id=" + content_id);
+            
+            while (myRs.next()) {
+//                baisOld = new ByteArrayInputStream((byte[]) myRs.getObject("old_values"));
+//                baisNew = new ByteArrayInputStream((byte[]) myRs.getObject("new_values"));
+//                
+//                inOld = new ObjectInputStream(baisOld);
+//                inNew = new ObjectInputStream(baisNew);
+                
+                  list.add(myRs);                
+            }
+            
+            return list;
+            
+        } finally {
+            close(myStmt, myRs);            
+        }    
     }
     
     public void logInsert(){

@@ -153,7 +153,7 @@ public class CommunityTableModel extends AbstractTableModel {
             cDAO.updateCommunity(changedCommunity);
             
             LogDAO logDAO = new LogDAO();
-            logDAO.EnterLog(1, "community", community, changedCommunity);
+            logDAO.EnterLog(1, "community", community.getId(), community, changedCommunity);
             
             
             System.out.println("---------------------------------------");
