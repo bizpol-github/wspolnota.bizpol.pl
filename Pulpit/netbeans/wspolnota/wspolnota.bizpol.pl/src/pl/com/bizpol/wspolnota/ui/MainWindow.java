@@ -71,6 +71,7 @@ public class MainWindow extends javax.swing.JFrame {
         countriesItem = new javax.swing.JMenuItem();
         zonesItem = new javax.swing.JMenuItem();
         citiesItem = new javax.swing.JMenuItem();
+        logItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Moja wspólnota");
@@ -104,7 +105,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(statusLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(status)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 405, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 560, Short.MAX_VALUE)
                 .addComponent(author))
         );
         footerPanelLayout.setVerticalGroup(
@@ -194,6 +195,17 @@ public class MainWindow extends javax.swing.JFrame {
         });
         settingsMenu.add(citiesItem);
 
+        logItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/notepad_icon&16.png"))); // NOI18N
+        logItem.setText("Dziennik");
+        logItem.setToolTipText("");
+        logItem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        logItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logItemActionPerformed(evt);
+            }
+        });
+        settingsMenu.add(logItem);
+
         mainMenu.add(settingsMenu);
 
         setJMenuBar(mainMenu);
@@ -208,7 +220,7 @@ public class MainWindow extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(footerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -287,6 +299,10 @@ public class MainWindow extends javax.swing.JFrame {
         
     }//GEN-LAST:event_citiesItemActionPerformed
 
+    private void logItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_logItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -329,6 +345,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JPanel footerPanel;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem logItem;
     private javax.swing.JMenuItem loginItem;
     private javax.swing.JDesktopPane mainDesktopPane;
     private javax.swing.JMenuBar mainMenu;

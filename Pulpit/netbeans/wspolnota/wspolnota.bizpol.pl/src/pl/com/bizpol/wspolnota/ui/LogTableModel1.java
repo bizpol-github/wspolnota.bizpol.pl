@@ -4,22 +4,22 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import pl.com.bizpol.wspolnota.core.Countries;
+import pl.com.bizpol.wspolnota.core.Log;
 
 class LogTableModel1 extends AbstractTableModel {
 
-	private static final int COUNTRIES_ID = 0;
-	private static final int COUNTRIES_NAME = 1;
-	private static final int COUNTRIES_ISO_CODE_2 = 2;
-	private static final int COUNTRIES_ISO_CODE_3 = 3;
-        private static final int ADDRESS_FORMAT = 4;
+	private static final int ID = 0;
+	private static final int USER_ID = 1;
+	private static final int TABLE_NAME = 2;
+        private static final int DATA_ID = 3;
+	private static final int OLD_VALUE = 4;
+        private static final int NEW_VALUE = 5;
 
-	private String[] columnNames = { "ID", "NAZWA", "ISO-2",
-			"ISO-3", "FORMAT" };
-	private List<Countries> countries;
+	private String[] columnNames = { "ID", "USER_NAME", "TABLE_NAME", "OLD_VALUE", "NEW_VALUE" };
+	private List<Log> log;
 
-	public LogTableModel1(List<Countries> theCountries) {
-		countries = theCountries;               
+	public LogTableModel1(List<Log> theLog) {
+		log = theLog;               
 	}
 
 	@Override
@@ -29,7 +29,7 @@ class LogTableModel1 extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return countries.size();
+		return log.size();
 	}
 
 	@Override
@@ -40,21 +40,23 @@ class LogTableModel1 extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 
-		Countries tempCountries = countries.get(row);
+		Log tempCountries = log.get(row);
 
 		switch (col) {
-		case COUNTRIES_ID:
-			return tempCountries.getCountriesId();
-		case COUNTRIES_NAME:
-			return tempCountries.getCountriesName();
-		case COUNTRIES_ISO_CODE_2:
-			return tempCountries.getIsoCode2();
-                case COUNTRIES_ISO_CODE_3:
-			return tempCountries.getIsoCode3();
-		case ADDRESS_FORMAT:
-			return tempCountries.getAddressFormat();
+		case ID:
+			return tempCountries.getId();
+		case USER_ID:
+			return tempCountries.getUserId();
+		case TABLE_NAME:
+			return tempCountries.getTableName();
+                case DATA_ID:
+			return tempCountries.getDataId();
+		case OLD_VALUE:
+			return tempCountries.getOldValues();
+                case NEW_VALUE:
+			return tempCountries.getNewValues();        
 		default:
-			return tempCountries.getCountriesId();
+			return tempCountries.getId();
 		}
 	}
 

@@ -122,6 +122,10 @@ public class LogDAO {
         }    
     }
     
+    public void logSearch(){
+        
+    }
+    
     public void logInsert(){
         
     }

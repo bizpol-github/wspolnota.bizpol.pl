@@ -9,8 +9,8 @@ import java.net.URL;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import pl.com.bizpol.wspolnota.core.Countries;
 import pl.com.bizpol.wspolnota.dao.LogDAO;
+import pl.com.bizpol.wspolnota.util.SearchTableSorter;
 
 /**
  *
@@ -19,14 +19,20 @@ import pl.com.bizpol.wspolnota.dao.LogDAO;
 public class LogJDialog extends javax.swing.JDialog {
     
     private LogDAO logDAO;
+    public SearchTableSorter sorter;
+    public static int id;
+    public static String table_name;
 
     /**
      * Creates new form CountriesJDialog
      * @param parent
      * @param modal
      */
-    public LogJDialog(java.awt.Frame parent, boolean modal) {
+    public LogJDialog(java.awt.Frame parent, boolean modal, int id, String table_name) {
         super(parent, modal);
+        
+        this.id = id;
+        this.table_name = table_name;
         
         try {
             logDAO = new LogDAO();            
@@ -43,7 +49,10 @@ public class LogJDialog extends javax.swing.JDialog {
         
         populateTable(null);
         
-        this.setLocationRelativeTo(parent);        
+        this.setLocationRelativeTo(parent);
+
+//        sorter = new SearchTableSorter(communityTable, model);
+//        sorter.sort("");
         
     }
 
@@ -179,7 +188,7 @@ public class LogJDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                LogJDialog dialog = new LogJDialog(new javax.swing.JFrame(), true);
+                LogJDialog dialog = new LogJDialog(new javax.swing.JFrame(), true, id, table_name);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -198,12 +207,12 @@ public class LogJDialog extends javax.swing.JDialog {
             List<Object> obj = null;
             
             if (name != null && name.trim().length() > 0) {
-                obj = logDAO.searchCountries(name);
+                obj = logDAO.getAllLogsById("community", id);
             } else {
-                obj = logDAO.getAllCountries();
+                 obj = logDAO.getAllLogsById("community", id);
             }
             
-            CountriesTableModel model = new CountriesTableModel(obj);
+            LogTableModel1 model = new LogTableModel1(obj);
             searchTable.setModel(model);
             
             searchTable.getColumnModel().getColumn(0).setPreferredWidth(20);
