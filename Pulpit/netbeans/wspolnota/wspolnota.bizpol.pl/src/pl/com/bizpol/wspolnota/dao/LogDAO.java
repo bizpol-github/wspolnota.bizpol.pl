@@ -20,7 +20,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import pl.com.bizpol.wspolnota.core.Countries;
+import pl.com.bizpol.wspolnota.core.Log;
 import static pl.com.bizpol.wspolnota.dao.DAOUtils.close;
 
 /**
@@ -122,8 +122,40 @@ public class LogDAO {
         }    
     }
     
-    public void logSearch(){
-        
+//    public List<Object> searchCountries(String countriesName) throws Exception {
+//        List<Object> list = new ArrayList<>();
+//        
+//        PreparedStatement myStmt = null;
+//        ResultSet myRs = null;        
+//        
+//        try {
+//            countriesName += "%";
+//            myStmt = myConn.prepareStatement("select * from log where countries_name like ?");
+//            myStmt.setString(1, countriesName);            
+//            myRs = myStmt.executeQuery();
+//            
+//            while (myRs.next()) {
+//                Log tempLog = convertRowToLogs(myRs);
+//                list.add(tempLog);                
+//            }
+//            
+//            return list;
+//            
+//        } finally {
+//            close(myStmt, myRs);            
+//        }    
+//    }
+    
+    private Log convertRowToLogs(ResultSet myRs) throws SQLException{
+        int id = myRs.getInt("id");
+        int userId = myRs.getInt("userId");
+        String tableName = myRs.getString("tableName");
+        int dataId = myRs.getInt("dataId");
+        String oldValues = myRs.getString("oldValues");
+        String newValues = myRs.getString("newValues");
+    	Log tempLog = new Log(id, userId, tableName, dataId, oldValues, newValues);
+		
+        return tempLog;
     }
     
     public void logInsert(){

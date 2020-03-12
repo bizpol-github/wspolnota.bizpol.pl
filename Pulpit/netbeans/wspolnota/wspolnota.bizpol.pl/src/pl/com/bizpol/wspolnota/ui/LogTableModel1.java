@@ -15,8 +15,8 @@ class LogTableModel1 extends AbstractTableModel {
 	private static final int OLD_VALUE = 4;
         private static final int NEW_VALUE = 5;
 
-	private String[] columnNames = { "ID", "USER_NAME", "TABLE_NAME", "OLD_VALUE", "NEW_VALUE" };
-	private List<Log> log;
+	private final String[] columnNames = { "ID", "USER_NAME", "TABLE_NAME", "OLD_VALUE", "NEW_VALUE" };
+	private final List<Log> log;
 
 	public LogTableModel1(List<Log> theLog) {
 		log = theLog;               
@@ -40,23 +40,23 @@ class LogTableModel1 extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 
-		Log tempCountries = log.get(row);
+		Log tempLog = log.get(row);
 
 		switch (col) {
 		case ID:
-			return tempCountries.getId();
+			return tempLog.getId();
 		case USER_ID:
-			return tempCountries.getUserId();
+			return tempLog.getUserId();
 		case TABLE_NAME:
-			return tempCountries.getTableName();
+			return tempLog.getTableName();
                 case DATA_ID:
-			return tempCountries.getDataId();
+			return tempLog.getDataId();
 		case OLD_VALUE:
-			return tempCountries.getOldValues();
+			return tempLog.getOldValues();
                 case NEW_VALUE:
-			return tempCountries.getNewValues();        
+			return tempLog.getNewValues();        
 		default:
-			return tempCountries.getId();
+			return tempLog.getId();
 		}
 	}
 

@@ -212,7 +212,10 @@ public class LogJDialog extends javax.swing.JDialog {
                  obj = logDAO.getAllLogsById("community", id);
             }
             
-            LogTableModel1 model = new LogTableModel1(obj);
+            //LogTableModel1 model = new LogTableModel1();
+            
+            logDAO.convertRowToLogs();
+            
             searchTable.setModel(model);
             
             searchTable.getColumnModel().getColumn(0).setPreferredWidth(20);
