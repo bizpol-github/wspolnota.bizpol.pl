@@ -6,9 +6,12 @@
 package pl.com.bizpol.wspolnota.ui;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import pl.com.bizpol.wspolnota.core.Log;
 import pl.com.bizpol.wspolnota.dao.LogDAO;
 import pl.com.bizpol.wspolnota.util.SearchTableSorter;
 
@@ -202,20 +205,18 @@ public class LogJDialog extends javax.swing.JDialog {
     
     private void populateTable (String name) {
         
-        try {            
+        try {   
             
-            List<Object> obj = null;
+            Class obj = Class.forName("Community");
             
-            if (name != null && name.trim().length() > 0) {
-                obj = logDAO.getAllLogsById("community", id);
-            } else {
-                 obj = logDAO.getAllLogsById("community", id);
-            }
             
-            //LogTableModel1 model = new LogTableModel1();
+            List<Log> logs = logDAO.getAllLogsById("community", id);
             
-            logDAO.convertRowToLogs();
             
+          
+//        String name = table_name.substring(0, 1).toUpperCase() + table_name.substring(1);
+            LogTableModel model = new LogTableModel(logs);
+            //ResultSetMetaData columnNames = myRs.getMetaData();
             searchTable.setModel(model);
             
             searchTable.getColumnModel().getColumn(0).setPreferredWidth(20);

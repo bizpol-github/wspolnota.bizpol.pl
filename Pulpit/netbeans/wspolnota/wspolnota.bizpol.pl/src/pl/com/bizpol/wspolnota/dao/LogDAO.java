@@ -17,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -92,11 +93,14 @@ public class LogDAO {
         
     }
     
-    public List<Object> getAllLogsById(String table_name, int content_id) throws Exception {
-        List<Object> list = new ArrayList<>();
+    public List<Log> getAllLogsById(String table_name, int content_id) throws Exception {
+        
         
         Statement myStmt = null;
-        ResultSet myRs = null; 
+        ResultSet myRs = null;
+        List<Log> list = new ArrayList<>();
+        
+        
         
 //        ByteArrayInputStream baisOld, baisNew;
 //        ObjectInputStream inOld, inNew;
@@ -106,23 +110,20 @@ public class LogDAO {
             myRs = myStmt.executeQuery("select * from log where table_name=" + table_name + " and content_id=" + content_id);
             
             while (myRs.next()) {
-//                baisOld = new ByteArrayInputStream((byte[]) myRs.getObject("old_values"));
-//                baisNew = new ByteArrayInputStream((byte[]) myRs.getObject("new_values"));
-//                
-//                inOld = new ObjectInputStream(baisOld);
-//                inNew = new ObjectInputStream(baisNew);
-                
-                  list.add(myRs);                
+              
+                Log tempLog = convertRowToLogs(myRs);
+                list.add(tempLog);                  
             }
             
             return list;
             
         } finally {
             close(myStmt, myRs);            
-        }    
+        }
+        
     }
     
-//    public List<Object> searchCountries(String countriesName) throws Exception {
+//    public List<Object> searchLogs(String countriesName) throws Exception {
 //        List<Object> list = new ArrayList<>();
 //        
 //        PreparedStatement myStmt = null;
@@ -146,14 +147,15 @@ public class LogDAO {
 //        }    
 //    }
     
-    private Log convertRowToLogs(ResultSet myRs) throws SQLException{
+    public Log convertRowToLogs(ResultSet myRs) throws SQLException{
         int id = myRs.getInt("id");
         int userId = myRs.getInt("userId");
         String tableName = myRs.getString("tableName");
         int dataId = myRs.getInt("dataId");
         String oldValues = myRs.getString("oldValues");
         String newValues = myRs.getString("newValues");
-    	Log tempLog = new Log(id, userId, tableName, dataId, oldValues, newValues);
+        Timestamp date = myRs.getTimestamp("date");
+    	Log tempLog = new Log(id, userId, tableName, dataId, oldValues, newValues, date);
 		
         return tempLog;
     }

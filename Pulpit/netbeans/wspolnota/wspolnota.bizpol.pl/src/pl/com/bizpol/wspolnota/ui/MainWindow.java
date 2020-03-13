@@ -28,7 +28,7 @@ public class MainWindow extends javax.swing.JFrame {
     CitiesIFrame citiesIFrame = new CitiesIFrame();
     LoginIFrame loginIFrame = new LoginIFrame(this);
     // LoginIFrame internalPanel = new InternalPanel();
-    PropertyPanel propertyPanel = new PropertyPanel();
+    PropertyPanel propertyPanel = new PropertyPanel(this);
     InternalPanel internalPanel = new InternalPanel();
     MsgPanel msgPanel = new MsgPanel();
     User connectedUser = null;

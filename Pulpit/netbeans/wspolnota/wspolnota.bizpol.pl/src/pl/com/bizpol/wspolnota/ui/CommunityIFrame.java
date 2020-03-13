@@ -19,12 +19,15 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
     public Community community;
     public SearchTableSorter sorter;
     public boolean dynamicSearch = true;
+    public MainWindow mainWindow;
 
     /**
      * Creates new form CopmmunityIFrame
      * @param community
+     * @param parent
      */
-    public CommunityIFrame(Community community) {
+    public CommunityIFrame(Community community, MainWindow parent) {
+        this.mainWindow =  parent;
         this.community = community;
         this.community.setCommunityWindow(true);
         initComponents();
@@ -64,7 +67,7 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
         searchField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         dynamicChBox = new javax.swing.JCheckBox();
-        jButton4 = new javax.swing.JButton();
+        logButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         communityTable = new javax.swing.JTable();
@@ -142,10 +145,10 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/doc_lines_icon&16.png"))); // NOI18N
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        logButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/doc_lines_icon&16.png"))); // NOI18N
+        logButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                logButtonActionPerformed(evt);
             }
         });
 
@@ -165,7 +168,7 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 437, Short.MAX_VALUE)
-                        .addComponent(jButton4)
+                        .addComponent(logButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -193,7 +196,7 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jButton3)
                                 .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(logButton, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
@@ -320,10 +323,14 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton3MouseClicked
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void logButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logButtonActionPerformed
         // TODO add your handling code here:
+        System.out.println("przycisk log");
         
-    }//GEN-LAST:event_jButton4ActionPerformed
+        LogJDialog logDialog = new LogJDialog(mainWindow, true, community.getId(), "community");
+        logDialog.setVisible(true);
+        
+    }//GEN-LAST:event_logButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -332,7 +339,6 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -341,6 +347,7 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton logButton;
     private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
     

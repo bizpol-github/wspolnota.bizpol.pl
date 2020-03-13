@@ -16,7 +16,6 @@ import pl.com.bizpol.wspolnota.core.Community;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import pl.com.bizpol.wspolnota.core.CommunityTenant;
 import pl.com.bizpol.wspolnota.dao.CommunityTenantDAO;
@@ -37,8 +36,9 @@ public class PropertyPanel extends javax.swing.JPanel {
     
     CommunityIFrame communityIFrame;
     
-    public PropertyPanel() {
+    public PropertyPanel(java.awt.Frame parent) {
         communityModel = new CommunityTree().getCommunityModel();
+        mainWindow = (MainWindow) parent;
         
         initComponents();
         jTree1.setShowsRootHandles(true);
@@ -148,7 +148,7 @@ public class PropertyPanel extends javax.swing.JPanel {
                         " " + community.getStreetNo());
                     Rectangle b = jDesktopPane1.getBounds();
 
-                    communityIFrame = new CommunityIFrame(community);
+                    communityIFrame = new CommunityIFrame(community, mainWindow);
                     jDesktopPane1.add(communityIFrame);
                     communityIFrame.setBounds(b);
                     communityIFrame.setLocation(0, 0);

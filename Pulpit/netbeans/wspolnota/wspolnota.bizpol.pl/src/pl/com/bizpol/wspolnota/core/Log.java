@@ -5,6 +5,8 @@
  */
 package pl.com.bizpol.wspolnota.core;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author Archii
@@ -16,8 +18,9 @@ public class Log {
     private int dataId;
     private String oldValues;
     private String newValues;
+    private Timestamp date;
     
-    public Log(int id, int userId, String tableName, int dataId, String oldValues, String newValues){
+    public Log(int id, int userId, String tableName, int dataId, String oldValues, String newValues , Timestamp date){
         super();
          this.id = id;
          this.userId = userId;
@@ -25,6 +28,7 @@ public class Log {
          this.dataId = dataId;
          this.oldValues = oldValues;
          this.newValues = newValues;
+         this.date = date;
     }
     
     public int getId(){
@@ -75,10 +79,18 @@ public class Log {
         return this.newValues;
     }
     
+    public Timestamp getDate(){
+        return date;
+    }
+    
+    public Timestamp setDate(){
+        return this.date;
+    }
+    
     @Override
     public String toString() {
         return String
-                .format("Log [id=%s, userId=%s, tableName=%s, dataId=%s, oldValues=%s, newValues=%s]", id, userId, tableName, dataId, oldValues, newValues);
+                .format("Log [id=%s, userId=%s, tableName=%s, dataId=%s, oldValues=%s, newValues=%s, date=%s]", id, userId, tableName, dataId, oldValues, newValues, date);
     }
     
 }

@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 import pl.com.bizpol.wspolnota.core.Log;
 
-class LogTableModel1 extends AbstractTableModel {
+class LogTableModel extends AbstractTableModel {
 
 	private static final int ID = 0;
 	private static final int USER_ID = 1;
@@ -14,11 +14,13 @@ class LogTableModel1 extends AbstractTableModel {
         private static final int DATA_ID = 3;
 	private static final int OLD_VALUE = 4;
         private static final int NEW_VALUE = 5;
+        private static final int DATE = 6;
+        
 
-	private final String[] columnNames = { "ID", "USER_NAME", "TABLE_NAME", "OLD_VALUE", "NEW_VALUE" };
+	private final String[] columnNames = { "ID", "USER_NAME", "TABLE_NAME", "OLD_VALUE", "NEW_VALUE", "DATE" };
 	private final List<Log> log;
 
-	public LogTableModel1(List<Log> theLog) {
+	public LogTableModel(List<Log> theLog) {
 		log = theLog;               
 	}
 
@@ -55,6 +57,8 @@ class LogTableModel1 extends AbstractTableModel {
 			return tempLog.getOldValues();
                 case NEW_VALUE:
 			return tempLog.getNewValues();        
+                case DATE:
+			return tempLog.getDate();        
 		default:
 			return tempLog.getId();
 		}
