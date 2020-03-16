@@ -17,7 +17,7 @@ class LogTableModel extends AbstractTableModel {
         private static final int DATE = 6;
         
 
-	private final String[] columnNames = { "ID", "USER_NAME", "TABLE_NAME", "OLD_VALUE", "NEW_VALUE", "DATE" };
+	private final String[] columnNames = { "ID", "USER_NAME", "DATA_ID", "TABLE_NAME", "OLD_VALUE", "NEW_VALUE", "DATE" };
 	private final List<Log> log;
 
 	public LogTableModel(List<Log> theLog) {
@@ -58,7 +58,7 @@ class LogTableModel extends AbstractTableModel {
                 case NEW_VALUE:
 			return tempLog.getNewValues();        
                 case DATE:
-			return tempLog.getDate();        
+			return tempLog.getDate().toString();        
 		default:
 			return tempLog.getId();
 		}

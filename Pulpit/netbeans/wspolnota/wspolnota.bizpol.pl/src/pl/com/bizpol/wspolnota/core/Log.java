@@ -16,11 +16,11 @@ public class Log {
     private int userId;
     private String tableName;
     private int dataId;
-    private String oldValues;
-    private String newValues;
+    private Object oldValues;
+    private Object newValues;
     private Timestamp date;
     
-    public Log(int id, int userId, String tableName, int dataId, String oldValues, String newValues , Timestamp date){
+    public Log(int id, int userId, String tableName, int dataId, Object oldValues, Object newValues , Timestamp date){
         super();
          this.id = id;
          this.userId = userId;
@@ -63,19 +63,19 @@ public class Log {
         return this.dataId;
     }
     
-    public String getOldValues(){
+    public Object getOldValues(){
         return oldValues;
     }
     
-    public String setOldValues(){
+    public Object setOldValues(){
         return this.oldValues;
     }
     
-    public String getNewValues(){
+    public Object getNewValues(){
         return newValues;
     }
     
-    public String setNewValues(){
+    public Object setNewValues(){
         return this.newValues;
     }
     

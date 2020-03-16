@@ -11,7 +11,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Method;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 import pl.com.bizpol.wspolnota.core.Log;
@@ -102,12 +105,12 @@ public class LogDAO {
         
         
         
-//        ByteArrayInputStream baisOld, baisNew;
-//        ObjectInputStream inOld, inNew;
+
         
         try {
             myStmt = myConn.createStatement();
-            myRs = myStmt.executeQuery("select * from log where table_name=" + table_name + " and content_id=" + content_id);
+            //myRs = myStmt.executeQuery("select * from log where `table_name`=" + table_name + " and `content_id`=" + content_id);
+            myRs = myStmt.executeQuery("select * from log");
             
             while (myRs.next()) {
               
@@ -147,15 +150,41 @@ public class LogDAO {
 //        }    
 //    }
     
-    public Log convertRowToLogs(ResultSet myRs) throws SQLException{
+    public Log convertRowToLogs(ResultSet myRs) throws SQLException, ClassNotFoundException, IOException{
+        
+        ByteArrayInputStream baisOld, baisNew;
+        ObjectInputStream inOld, inNew;
+        
+        
+        
         int id = myRs.getInt("id");
-        int userId = myRs.getInt("userId");
-        String tableName = myRs.getString("tableName");
-        int dataId = myRs.getInt("dataId");
-        String oldValues = myRs.getString("oldValues");
-        String newValues = myRs.getString("newValues");
+        int userId = myRs.getInt("user_id");
+        String tableName = myRs.getString("table_name");
+        String name = tableName.substring(0, 1).toUpperCase() + tableName.substring(1);
+        Object obj = Class.forName("pl.com.bizpol.wspolnota.core." + name);
+        
+        
+        int dataId = myRs.getInt("data_id");
+        Object oldValues = myRs.getObject("old_values");
+        baisOld = new ByteArrayInputStream((byte[]) oldValues);
+        inOld = new ObjectInputStream(baisOld);
+        obj = inOld.readObject();
+        
+        Method[] method = inOld.getClass().getMethods();
+        
+        //for(int i = 0; i<method.length; i++){
+            System.out.println(obj.toString());
+        //}
+        
+        
+        
+        
+        
+        Object newValues = myRs.getObject("new_values");
         Timestamp date = myRs.getTimestamp("date");
-    	Log tempLog = new Log(id, userId, tableName, dataId, oldValues, newValues, date);
+        
+        System.out.println("data: " + date);
+    	Log tempLog = new Log(id, userId, tableName, dataId, obj.toString(), newValues, date);
 		
         return tempLog;
     }

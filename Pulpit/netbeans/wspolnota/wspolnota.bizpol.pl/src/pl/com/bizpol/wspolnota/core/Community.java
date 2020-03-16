@@ -165,7 +165,15 @@ public final class Community implements Serializable{
         
 	@Override
 	public String toString() {
-		return short_name;
+		return "id:" + id + ", "
+                        + "name: " + name + ", "
+                        + "short_name: " + short_name + ", "
+                        + "street: " + street + ", "
+                        + "street_no: " + street_no + ", "
+                        + "city_id: " + city_id + ", "
+                        + "zone_id: " + zone_id + ", "
+                        + "country_id: " + country_id + ", "
+                        + "enabled: " + enabled;
 	}
         
         public String toStringAll() {

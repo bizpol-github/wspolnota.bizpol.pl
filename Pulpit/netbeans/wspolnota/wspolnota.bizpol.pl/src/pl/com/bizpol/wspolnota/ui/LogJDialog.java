@@ -11,7 +11,7 @@ import java.sql.ResultSetMetaData;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import pl.com.bizpol.wspolnota.core.Log;
+import pl.com.bizpol.wspolnota.core.*;
 import pl.com.bizpol.wspolnota.dao.LogDAO;
 import pl.com.bizpol.wspolnota.util.SearchTableSorter;
 
@@ -205,10 +205,7 @@ public class LogJDialog extends javax.swing.JDialog {
     
     private void populateTable (String name) {
         
-        try {   
-            
-            Class obj = Class.forName("Community");
-            
+        try { 
             
             List<Log> logs = logDAO.getAllLogsById("community", id);
             
