@@ -9,7 +9,7 @@ import pl.com.bizpol.wspolnota.core.Log;
 class LogTableModel extends AbstractTableModel {
 
 	private static final int ID = 0;
-	private static final int USER_ID = 1;
+	private static final int USER_NAME = 1;
 	private static final int TABLE_NAME = 2;
         private static final int DATA_ID = 3;
 	private static final int OLD_VALUE = 4;
@@ -17,7 +17,7 @@ class LogTableModel extends AbstractTableModel {
         private static final int DATE = 6;
         
 
-	private final String[] columnNames = { "ID", "USER_NAME", "DATA_ID", "TABLE_NAME", "OLD_VALUE", "NEW_VALUE", "DATE" };
+	private final String[] columnNames = { "ID", "USER_NAME", "TABLE_NAME", "DATA_ID", "OLD_VALUE", "NEW_VALUE", "DATE" };
 	private final List<Log> log;
 
 	public LogTableModel(List<Log> theLog) {
@@ -47,13 +47,13 @@ class LogTableModel extends AbstractTableModel {
 		switch (col) {
 		case ID:
 			return tempLog.getId();
-		case USER_ID:
-			return tempLog.getUserId();
+		case USER_NAME:
+			return tempLog.getUserName() + "(ID:" + tempLog.getUserId() + ")";
 		case TABLE_NAME:
 			return tempLog.getTableName();
                 case DATA_ID:
 			return tempLog.getDataId();
-		case OLD_VALUE:
+		case OLD_VALUE:                    
 			return tempLog.getOldValues();
                 case NEW_VALUE:
 			return tempLog.getNewValues();        

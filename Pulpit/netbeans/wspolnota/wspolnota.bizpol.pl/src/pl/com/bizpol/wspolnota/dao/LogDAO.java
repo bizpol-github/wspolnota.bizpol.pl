@@ -12,16 +12,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 import pl.com.bizpol.wspolnota.core.Log;
@@ -33,7 +25,7 @@ import static pl.com.bizpol.wspolnota.dao.DAOUtils.close;
  */
 public class LogDAO {
     
-    private Connection myConn;
+    private final Connection myConn;
     
     public LogDAO() throws Exception{
         
@@ -99,18 +91,16 @@ public class LogDAO {
     public List<Log> getAllLogsById(String table_name, int content_id) throws Exception {
         
         
-        Statement myStmt = null;
+        PreparedStatement myStmt = null;
         ResultSet myRs = null;
         List<Log> list = new ArrayList<>();
         
-        
-        
-
-        
         try {
-            myStmt = myConn.createStatement();
-            //myRs = myStmt.executeQuery("select * from log where `table_name`=" + table_name + " and `content_id`=" + content_id);
-            myRs = myStmt.executeQuery("select * from log");
+            myStmt = myConn.prepareStatement("select l.*, u.display_name as user_name from log l, users u "
+                    + "where l.table_name=? and l.data_id=? and l.user_id=u.ID");            
+            myStmt.setString(1, table_name);
+            myStmt.setInt(2, content_id);
+            myRs = myStmt.executeQuery();
             
             while (myRs.next()) {
               
@@ -153,38 +143,33 @@ public class LogDAO {
     public Log convertRowToLogs(ResultSet myRs) throws SQLException, ClassNotFoundException, IOException{
         
         ByteArrayInputStream baisOld, baisNew;
-        ObjectInputStream inOld, inNew;
-        
-        
+        ObjectInputStream inOld, inNew;     
         
         int id = myRs.getInt("id");
         int userId = myRs.getInt("user_id");
-        String tableName = myRs.getString("table_name");
-        String name = tableName.substring(0, 1).toUpperCase() + tableName.substring(1);
-        Object obj = Class.forName("pl.com.bizpol.wspolnota.core." + name);
-        
-        
         int dataId = myRs.getInt("data_id");
+        String userName = myRs.getString("user_name");
+        String tableName = myRs.getString("table_name");
+        
+        String name = tableName.substring(0, 1).toUpperCase() + tableName.substring(1);
+        Object objOld = Class.forName("pl.com.bizpol.wspolnota.core." + name);
+        Object objNew = Class.forName("pl.com.bizpol.wspolnota.core." + name);        
+        
         Object oldValues = myRs.getObject("old_values");
         baisOld = new ByteArrayInputStream((byte[]) oldValues);
         inOld = new ObjectInputStream(baisOld);
-        obj = inOld.readObject();
+        objOld = inOld.readObject();
         
-        Method[] method = inOld.getClass().getMethods();
+        Object newValues = myRs.getObject("old_values");
+        baisNew = new ByteArrayInputStream((byte[]) newValues);
+        inNew = new ObjectInputStream(baisNew);
+        objNew = inNew.readObject();
         
-        //for(int i = 0; i<method.length; i++){
-            System.out.println(obj.toString());
-        //}
-        
-        
-        
-        
-        
-        Object newValues = myRs.getObject("new_values");
         Timestamp date = myRs.getTimestamp("date");
         
         System.out.println("data: " + date);
-    	Log tempLog = new Log(id, userId, tableName, dataId, obj.toString(), newValues, date);
+    	Log tempLog = new Log(id, userId, tableName, dataId, objOld.toString(), objNew.toString(), date);
+        tempLog.setUserName(userName);
 		
         return tempLog;
     }

@@ -6,8 +6,6 @@
 package pl.com.bizpol.wspolnota.ui;
 
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -30,6 +28,8 @@ public class LogJDialog extends javax.swing.JDialog {
      * Creates new form CountriesJDialog
      * @param parent
      * @param modal
+     * @param id
+     * @param table_name
      */
     public LogJDialog(java.awt.Frame parent, boolean modal, int id, String table_name) {
         super(parent, modal);
@@ -208,19 +208,17 @@ public class LogJDialog extends javax.swing.JDialog {
         try { 
             
             List<Log> logs = logDAO.getAllLogsById("community", id);
-            
-            
           
 //        String name = table_name.substring(0, 1).toUpperCase() + table_name.substring(1);
             LogTableModel model = new LogTableModel(logs);
             //ResultSetMetaData columnNames = myRs.getMetaData();
-            searchTable.setModel(model);
-            
+            searchTable.setModel(model);            
             searchTable.getColumnModel().getColumn(0).setPreferredWidth(20);
             searchTable.getColumnModel().getColumn(1).setPreferredWidth(100);
             searchTable.getColumnModel().getColumn(2).setPreferredWidth(30);
             searchTable.getColumnModel().getColumn(3).setPreferredWidth(30);
             searchTable.getColumnModel().getColumn(4).setPreferredWidth(200);
+            searchTable.setRowHeight(50);
             
 //            for (Countries temp : countries) {
 //                System.out.println(temp);

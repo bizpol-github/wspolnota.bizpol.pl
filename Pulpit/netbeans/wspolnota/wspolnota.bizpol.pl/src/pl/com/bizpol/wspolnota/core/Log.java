@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 public class Log {
     private int id;
     private int userId;
+    private String userName = "";
     private String tableName;
     private int dataId;
     private Object oldValues;
@@ -35,62 +36,70 @@ public class Log {
         return id;
     }
     
-    public int setId(){
-        return this.id;
+    public void setId(int id){
+        this.id=id;
     }
     
     public int getUserId(){
         return userId;
     }
     
-    public int setUserId(){
-        return this.userId;
+    public void setUserId(int userId){
+        this.userId=userId;
+    }
+    
+    public String getUserName(){
+        return userName;
+    }
+    
+    public void setUserName(String userName){
+        this.userName = userName;
     }
     
     public String getTableName(){
         return tableName;
     }
     
-    public String setTableName(){
-        return this.tableName;
+    public void setTableName(String tableName){
+        this.tableName=tableName;
     }
     
     public int getDataId(){
         return dataId;
     }
     
-    public int setDataId(){
-        return this.dataId;
+    public void setDataId(int dataId){
+        this.dataId = dataId;
     }
     
     public Object getOldValues(){
         return oldValues;
     }
     
-    public Object setOldValues(){
-        return this.oldValues;
+    public void setOldValues(Object oldValues){
+        this.oldValues = oldValues;
     }
     
     public Object getNewValues(){
         return newValues;
     }
     
-    public Object setNewValues(){
-        return this.newValues;
+    public void setNewValues(Object newValues){
+        this.newValues = newValues;
     }
     
     public Timestamp getDate(){
         return date;
     }
     
-    public Timestamp setDate(){
-        return this.date;
+    public void setDate(Timestamp date){
+        this.date = date;
     }
     
     @Override
     public String toString() {
         return String
-                .format("Log [id=%s, userId=%s, tableName=%s, dataId=%s, oldValues=%s, newValues=%s, date=%s]", id, userId, tableName, dataId, oldValues, newValues, date);
+                .format("Log [id=%s, userId=%s, userName=%s, tableName=%s, dataId=%s, oldValues=%s, newValues=%s, date=%s]", id, userId, userName, tableName, dataId, oldValues, newValues, date);
     }
     
 }
