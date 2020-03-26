@@ -3,15 +3,11 @@ package pl.com.bizpol.wspolnota.ui;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 import pl.com.bizpol.wspolnota.core.Community;
 import pl.com.bizpol.wspolnota.dao.CommunityDAO;
-import pl.com.bizpol.wspolnota.dao.DAOUtils;
 import pl.com.bizpol.wspolnota.dao.LogDAO;
 import static pl.com.bizpol.wspolnota.util.TextConv.colNameToMethod;
 
@@ -22,7 +18,7 @@ public class CommunityTableModel extends AbstractTableModel {
 	private static final int VALUE = 1;
 
 	private final String[] columnNames = { "DANE", "WARTOŚĆ"};
-	private final Community community;
+	private Community community;
         private final Community changedCommunity = new Community();
         private final String[][] data;
 
@@ -79,9 +75,7 @@ public class CommunityTableModel extends AbstractTableModel {
                     //changedCommunity = 
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(CommunityTableModel.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InvocationTargetException ex) {
-                    Logger.getLogger(CommunityTableModel.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NoSuchMethodException ex) {
+                } catch (InvocationTargetException | NoSuchMethodException ex) {
                     Logger.getLogger(CommunityTableModel.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
                     Logger.getLogger(CommunityTableModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,17 +127,10 @@ public class CommunityTableModel extends AbstractTableModel {
                         default:
                             break;
                     }
-                
-                
-               
-                    
-                    
                     
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                     Logger.getLogger(CommunityTableModel.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                
                 
             }
             
@@ -159,6 +146,8 @@ public class CommunityTableModel extends AbstractTableModel {
             System.out.println("---------------------------------------");
             
             System.out.println(changedCommunity.toStringAll());
+            
+            community = changedCommunity;
             
              
             

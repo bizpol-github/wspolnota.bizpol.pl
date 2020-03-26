@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import pl.com.bizpol.wspolnota.core.*;
 import pl.com.bizpol.wspolnota.dao.LogDAO;
 import pl.com.bizpol.wspolnota.util.SearchTableSorter;
+import pl.com.bizpol.wspolnota.util.LogTableRenderer;
+
 
 /**
  *
@@ -50,7 +52,9 @@ public class LogJDialog extends javax.swing.JDialog {
         
         initComponents();
         
+        
         populateTable(null);
+        this.setSize(parent.getSize());
         
         this.setLocationRelativeTo(parent);
 
@@ -83,6 +87,7 @@ public class LogJDialog extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Event Log");
 
+        searchTable.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         searchTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -213,12 +218,18 @@ public class LogJDialog extends javax.swing.JDialog {
             LogTableModel model = new LogTableModel(logs);
             //ResultSetMetaData columnNames = myRs.getMetaData();
             searchTable.setModel(model);            
-            searchTable.getColumnModel().getColumn(0).setPreferredWidth(20);
+            searchTable.getColumnModel().getColumn(0).setPreferredWidth(40);
             searchTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-            searchTable.getColumnModel().getColumn(2).setPreferredWidth(30);
-            searchTable.getColumnModel().getColumn(3).setPreferredWidth(30);
-            searchTable.getColumnModel().getColumn(4).setPreferredWidth(200);
-            searchTable.setRowHeight(50);
+            searchTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+            searchTable.getColumnModel().getColumn(3).setPreferredWidth(40);
+            searchTable.getColumnModel().getColumn(4).setPreferredWidth(300);
+            searchTable.getColumnModel().getColumn(5).setPreferredWidth(300);
+            searchTable.getColumnModel().getColumn(6).setPreferredWidth(100);
+           
+            searchTable.setDefaultRenderer(Object.class, new LogTableRenderer());
+            //searchTable.repaint();
+            
+            
             
 //            for (Countries temp : countries) {
 //                System.out.println(temp);

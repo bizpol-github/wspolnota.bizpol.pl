@@ -7,49 +7,53 @@ package pl.com.bizpol.wspolnota.ui;
 
 import java.awt.Rectangle;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import pl.com.bizpol.wspolnota.core.Community;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import pl.com.bizpol.wspolnota.core.CommunityTenant;
+import pl.com.bizpol.wspolnota.dao.CommunityDAO;
 import pl.com.bizpol.wspolnota.dao.CommunityTenantDAO;
-import pl.com.bizpol.wspolnota.util.CommunityTree;
+import pl.com.bizpol.wspolnota.dao.UserDAO;
+import pl.com.bizpol.wspolnota.util.CommunityTreeModel;
+import pl.com.bizpol.wspolnota.util.ComunityTreeRenderer;
 
 /**
  *
  * @author Archii
  */
-public class PropertyPanel extends javax.swing.JPanel {
+public final class PropertyPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form PropertyPanel
      */
-    
+    List<Community> cList = new ArrayList<>();    
     DefaultTreeModel communityModel;
-    MainWindow mainWindow;
-    
+    MainWindow mainWindow;    
     CommunityIFrame communityIFrame;
     
-    public PropertyPanel(java.awt.Frame parent) {
-        communityModel = new CommunityTree().getCommunityModel();
+    public PropertyPanel(java.awt.Frame parent) {     
+        
         mainWindow = (MainWindow) parent;
         
         initComponents();
+        
+        //pobieram dane mysql do zmiennej cList
+        getTreeMysqlData();
+        
+        communityModel = new CommunityTreeModel(cList);
+        
+        jTree1.setModel(communityModel);
+                
         jTree1.setShowsRootHandles(true);
-        // ustawianie icon dla drzewa
-        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) jTree1.getCellRenderer();
-        Icon closedIcon = new ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/home_icon&16.png"));
-        Icon openIcon = new ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/home_icon&16.png"));
-        Icon leafIcon = new ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/home_icon&16.png"));
-        renderer.setClosedIcon(closedIcon);
-        renderer.setOpenIcon(openIcon);
-        renderer.setLeafIcon(leafIcon);
+        // ustawianie icon tekstu dla drzewa        
+        jTree1.setCellRenderer(new ComunityTreeRenderer());
+        
     }
 
     /**
@@ -134,20 +138,21 @@ public class PropertyPanel extends javax.swing.JPanel {
         if (!jTree1.isSelectionEmpty()) {            
             TreePath path = (TreePath) jTree1.getSelectionPath();
             
-            DefaultMutableTreeNode selected = (DefaultMutableTreeNode) path.getLastPathComponent();
-            
+            DefaultMutableTreeNode selected = (DefaultMutableTreeNode) path.getLastPathComponent();            
             
             if (selected.getLevel() > 1){
                 System.out.println("Selected level " + selected.getLevel());
             } else if (!selected.isRoot()) {
-                Community community = (Community) selected.getUserObject(); 
+                Community community = (Community) selected.getUserObject();
+                
+                community.setName("aaaaaaaaa");
                 if (!community.getCommunityWindow()){
                     System.out.println(community.getId() +
                         ": " +
                         community.getName() + ", " + community.getStreet() +
                         " " + community.getStreetNo());
+                    
                     Rectangle b = jDesktopPane1.getBounds();
-
                     communityIFrame = new CommunityIFrame(community, mainWindow);
                     jDesktopPane1.add(communityIFrame);
                     communityIFrame.setBounds(b);
@@ -156,12 +161,6 @@ public class PropertyPanel extends javax.swing.JPanel {
                     communityIFrame.requestFocusInWindow();
                     communityIFrame.repaint();                    
                 }
-                
-                
-                
-                
-                
-                
                 
                 //załadowanie lokatorów z bazy danych jako lista w objekcie commiunity
                 
@@ -228,7 +227,15 @@ public class PropertyPanel extends javax.swing.JPanel {
     private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables
     
-    public void getTree () {
-        communityModel = new CommunityTree().getCommunityModel();
+     public void getTreeMysqlData() {
+        
+        try {            
+            CommunityDAO cDAO = new CommunityDAO();            
+            cList = cDAO.getAllCommunities();  
+            
+        } catch (Exception ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, "Błąd połączenia", ex);
+        }
+        
     }
 }

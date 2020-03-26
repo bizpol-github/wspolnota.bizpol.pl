@@ -159,6 +159,12 @@ public final class Community implements Serializable{
             return changed;
         }
         
+        public boolean hasTenants(){
+            return tenants.size() > 1;
+        }
+        
+        
+        
         public void setChanged(boolean changed){
             this.changed = changed;
         }

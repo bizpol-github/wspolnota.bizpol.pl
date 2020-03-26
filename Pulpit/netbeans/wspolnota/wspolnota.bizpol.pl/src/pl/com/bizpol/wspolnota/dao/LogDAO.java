@@ -160,7 +160,7 @@ public class LogDAO {
         inOld = new ObjectInputStream(baisOld);
         objOld = inOld.readObject();
         
-        Object newValues = myRs.getObject("old_values");
+        Object newValues = myRs.getObject("new_values");
         baisNew = new ByteArrayInputStream((byte[]) newValues);
         inNew = new ObjectInputStream(baisNew);
         objNew = inNew.readObject();

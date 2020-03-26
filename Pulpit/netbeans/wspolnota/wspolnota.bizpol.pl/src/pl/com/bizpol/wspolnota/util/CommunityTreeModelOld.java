@@ -9,8 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
 import pl.com.bizpol.wspolnota.core.Community;
 import pl.com.bizpol.wspolnota.dao.CommunityDAO;
 import pl.com.bizpol.wspolnota.dao.UserDAO;
@@ -19,7 +22,7 @@ import pl.com.bizpol.wspolnota.dao.UserDAO;
  *
  * @author Archii
  */
-public final class CommunityTree {
+public final class CommunityTreeModelOld implements TreeModel{
     
     int level = 0;
     DefaultMutableTreeNode commiunity;
@@ -27,11 +30,11 @@ public final class CommunityTree {
     DefaultTreeModel innerModel;
     DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Wspólnoty");
     
-    public CommunityTree(){
+    public CommunityTreeModelOld(){
         //commiunity = new DefaultMutableTreeNode("Wspólnoty");
         
         innerModel = new DefaultTreeModel(rootNode);
-        getCommiunites();
+        setCommiunites();
 //    innerModel.insertNodeInto(colorNode, rootNode, 0);
 //    innerModel.insertNodeInto(borderNode, rootNode, 1);
 //    innerModel.insertNodeInto(fontNode, rootNode, 2);
@@ -68,7 +71,7 @@ public final class CommunityTree {
 //    }
     }
     
-    public void getCommiunites(){      
+    public void setCommiunites(){      
         System.out.println("Commiunity");       
         
         try {            
@@ -94,6 +97,48 @@ public final class CommunityTree {
     public DefaultTreeModel getCommunityModel() {
         return innerModel;
     }
+
+    @Override
+    public Object getRoot() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object getChild(Object parent, int index) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getChildCount(Object parent) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean isLeaf(Object node) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void valueForPathChanged(TreePath path, Object newValue) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getIndexOfChild(Object parent, Object child) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addTreeModelListener(TreeModelListener l) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void removeTreeModelListener(TreeModelListener l) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
 
 }
