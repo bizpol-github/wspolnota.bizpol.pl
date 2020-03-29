@@ -1,15 +1,12 @@
 package pl.com.bizpol.wspolnota.ui;
 
 
-import java.awt.LayoutManager;
 import java.awt.Rectangle;
 import java.beans.PropertyVetoException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import pl.com.bizpol.wspolnota.core.User;
 
@@ -426,7 +423,7 @@ public class MainWindow extends javax.swing.JFrame {
         Rectangle b;
         b = mainDesktopPane.getBounds();        
         propertyPanel.setBounds(b);
-        propertyPanel.getTree();
+       // propertyPanel.getTree();
         mainPanel.add(propertyPanel);       
         
         System.out.println("Property Panel wystartował");

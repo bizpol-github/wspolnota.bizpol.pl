@@ -6,55 +6,72 @@
 package pl.com.bizpol.wspolnota.util;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.event.TreeModelListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import pl.com.bizpol.wspolnota.core.Community;
 import pl.com.bizpol.wspolnota.core.CommunityTenant;
+import pl.com.bizpol.wspolnota.dao.CommunityTenantDAO;
 
 /**
  *
  * @author Archii
  */
-public final class CommunityTreeModel extends DefaultTreeModel implements TreeModel{
+public final class CommunityTreeModel implements TreeModel{
     
    
-    List<Community> community;
+    List<Community> communityList;    
+    DefaultTreeModel innerModel;    
+    DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Wspólnoty");
     
-    public CommunityTreeModel (){
-        
+
+    public CommunityTreeModel(List<Community> list) {
+        this.communityList = list;
     }
-    
-    public CommunityTreeModel(List<Community> community){
-        
-        this.community = community;        
-
-    }  
-
+ 
     @Override
     public Object getRoot() {
-        return community;
+        return rootNode;
     }
 
     @Override
-    public Object getChild(Object parent, int index) {
-        
-        List<CommunityTenant> children = ((Community)parent).getTenants();
-        if ((children == null) || (index >= children.size())) return null;
-        return children.get(index); 
+    public Object getChild(Object parent, int index) { 
+
+        return communityList.get(index);
     }
 
     @Override
     public int getChildCount(Object parent) {
-        List<CommunityTenant> children = ((Community)parent).getTenants();
-        if (children == null) return 0;
-        return children.size();
+        int size = 0;
+        
+        if (parent.equals(rootNode)) {
+            size = communityList.size();
+        } else {
+            System.out.println(parent.getClass());
+        }
+        
+//            List<CommunityTenant> children = ((Community)parent).getTenants();
+//            
+//            //jezeli nie ma sprawdz w bazie czy są lokatorzy
+//            if (children.equals(parent)) {
+//                System.out.println("Parent = " + parent + " " + "childs = " + children.size());
+//            }
+//            
+//            System.out.println("Children = " + parent + " " + "childs = " + children.size());
+//            
+//            if (children == null) return 0;
+//            //return children.size();
+            
+          return size;
     }
 
     @Override
     public boolean isLeaf(Object node) {
-        return true;
+        return false;
     }
 
     @Override
@@ -64,13 +81,14 @@ public final class CommunityTreeModel extends DefaultTreeModel implements TreeMo
 
     @Override
     public int getIndexOfChild(Object parent, Object child) {
-        List<CommunityTenant> children = ((Community)parent).getTenants();
-        if (children.size() < 1) return -1;
-        String childname = ((CommunityTenant)child).toString();
-        for(int i = 0; i < children.size(); i++) {
-            if (childname.equals(children.get(i).toString())) return i;
-        } 
-        return -1;
+//        List<CommunityTenant> children = ((Community)parent).getTenants();
+//        if (children.size() < 1) return -1;
+//        String childname = ((CommunityTenant)child).toString();
+//        for(int i = 0; i < children.size(); i++) {
+//            if (childname.equals(children.get(i).toString())) return i;
+//        }
+        System.out.println("Index of child:" + parent);
+        return 0;
     }
 
     @Override

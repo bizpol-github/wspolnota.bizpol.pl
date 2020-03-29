@@ -15,10 +15,12 @@ public final class Community implements Serializable{
         private int zone_id;
         private int country_id;
         private int enabled;
-        private List<CommunityTenant> tenants = new ArrayList<>();
-        private boolean community_window = false;
-        private String[][] data = new String[9][2];
+        
+        private boolean community_window = false;        
+        private boolean tenants = false;
         private boolean changed = false;
+        
+        private String[][] data = new String[9][2];
 
 	public Community() {
 		
@@ -123,11 +125,11 @@ public final class Community implements Serializable{
 		this.enabled = enabled;
 	}
         
-        public List<CommunityTenant> getTenants() {
+        public boolean hasTenants() {
 		return tenants;
 	}
 
-	public void setTenants(List<CommunityTenant> tenants) {
+	public void setTenants(boolean tenants) {
 		this.tenants = tenants;
 	}
         
@@ -157,13 +159,7 @@ public final class Community implements Serializable{
         
         public boolean isChanged(){
             return changed;
-        }
-        
-        public boolean hasTenants(){
-            return tenants.size() > 1;
-        }
-        
-        
+        }        
         
         public void setChanged(boolean changed){
             this.changed = changed;
@@ -171,15 +167,7 @@ public final class Community implements Serializable{
         
 	@Override
 	public String toString() {
-		return "id:" + id + ", "
-                        + "name: " + name + ", "
-                        + "short_name: " + short_name + ", "
-                        + "street: " + street + ", "
-                        + "street_no: " + street_no + ", "
-                        + "city_id: " + city_id + ", "
-                        + "zone_id: " + zone_id + ", "
-                        + "country_id: " + country_id + ", "
-                        + "enabled: " + enabled;
+		return short_name;
 	}
         
         public String toStringAll() {
