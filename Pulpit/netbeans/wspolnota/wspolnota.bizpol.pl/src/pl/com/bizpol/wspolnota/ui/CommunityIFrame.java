@@ -6,7 +6,6 @@
 package pl.com.bizpol.wspolnota.ui;
 
 import java.awt.Color;
-import javax.swing.RowFilter;
 import pl.com.bizpol.wspolnota.core.Community;
 import pl.com.bizpol.wspolnota.util.SearchTableSorter;
 
@@ -20,6 +19,7 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
     public SearchTableSorter sorter;
     public boolean dynamicSearch = true;
     public MainWindow mainWindow;
+    public boolean isOpened = false;
 
     /**
      * Creates new form CopmmunityIFrame
@@ -29,7 +29,7 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
     public CommunityIFrame(Community community, MainWindow parent) {
         this.mainWindow =  parent;
         this.community = community;
-        this.community.setCommunityWindow(true);
+        this.community.setIsOpened(true);
         initComponents();
         
         this.setIFrameTitle(this.community.getShortName());
@@ -259,8 +259,8 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
         // TODO add your handling code here:
-        this.community.setCommunityWindow(false);
-        System.out.println(community.getCommunityWindow());
+        this.community.setIsOpened(false);
+        System.out.println(community.getIsOpened());
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void searchFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyPressed
@@ -355,22 +355,20 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
        this.setTitle(title);
     }
     
+    public Community getCommunity(){
+        return this.community;
+    }
+    
     public void setCommunity(Community community){
         this.community = community;
     }
     
+    public boolean getIsOpened () {
+        return this.isOpened;
+    }
     
-    
-     private void populateTable (Community community) {          
-            
-            
-        
-            
-//            for (Countries temp : countries) {
-//                System.out.println(temp);
-//            }            
-
-        
+    public void setIsOpened (boolean state) {
+        this.isOpened = state;
     }
 
 }

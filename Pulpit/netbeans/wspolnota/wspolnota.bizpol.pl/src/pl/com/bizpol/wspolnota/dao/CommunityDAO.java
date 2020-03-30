@@ -32,7 +32,7 @@ public class CommunityDAO {
         System.out.println("CommunityDAO - DB connection successful to: " + dburl);
     }
 
-    private Community convertRowToCommunity(ResultSet myRs) throws SQLException {
+    private Community convertRowToCommunity(ResultSet myRs) throws SQLException, Exception {
 
         int id = myRs.getInt("id");
         String name = myRs.getString("name");
@@ -43,8 +43,9 @@ public class CommunityDAO {
         int zone_id = myRs.getInt("zone_id");
         int country_id = myRs.getInt("country_id");
         int enabled = myRs.getInt("enabled");
-
-        Community community = new Community(id, name, short_name, street, street_no, city_id, zone_id, country_id, enabled);
+        List<Integer> tenants = getCommunitiyTenantsId(id);
+        
+        Community community = new Community(id, name, short_name, street, street_no, city_id, zone_id, country_id, enabled, tenants);
 
         return community;
     }
@@ -89,6 +90,30 @@ public class CommunityDAO {
                     while (myRs.next()) {
                             Community community = convertRowToCommunity(myRs);
                             list.add(community);
+                    }
+
+                    return list;		
+            }
+            finally {
+                    DAOUtils.close(myStmt, myRs);
+            }
+    }
+    
+    public List<Integer> getCommunitiyTenantsId(int id) throws Exception {
+            List<Integer> list = new ArrayList<>();
+
+            Statement myStmt = null;
+            ResultSet myRs = null;
+
+            try {
+                    myStmt = myConn.createStatement();
+
+                    String sql = "select id from community_tenants where community_id=" + id;			
+
+                    myRs = myStmt.executeQuery(sql);
+
+                    while (myRs.next()) {                            
+                            list.add(myRs.getInt("id"));
                     }
 
                     return list;		

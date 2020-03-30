@@ -158,7 +158,7 @@ public class CommunityTableModel extends AbstractTableModel {
         @Override
         public boolean isCellEditable(int row, int col)
         {
-            return true;
+            return !(col==0 || row==0 || row==9);
         }
         
         

@@ -11,12 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JInternalFrame;
 import pl.com.bizpol.wspolnota.core.Community;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
-import pl.com.bizpol.wspolnota.core.CommunityTenant;
 import pl.com.bizpol.wspolnota.dao.CommunityDAO;
-import pl.com.bizpol.wspolnota.dao.CommunityTenantDAO;
 import pl.com.bizpol.wspolnota.dao.UserDAO;
 import pl.com.bizpol.wspolnota.util.CommunityTreeModel;
 
@@ -31,8 +29,7 @@ public final class PropertyPanel extends javax.swing.JPanel {
      */
     List<Community> communityList = new ArrayList<>();    
     CommunityTreeModel communityModel;
-    MainWindow mainWindow;    
-    CommunityIFrame communityIFrame;
+    MainWindow mainWindow;
     
     public PropertyPanel(java.awt.Frame parent) {     
         
@@ -131,85 +128,41 @@ public final class PropertyPanel extends javax.swing.JPanel {
     private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
         // TODO add your handling code here:
         
-//        if (!jTree1.isSelectionEmpty()) {            
-//            TreePath path = (TreePath) jTree1.getSelectionPath();
-//            
-//            DefaultMutableTreeNode selected = (DefaultMutableTreeNode) path.getLastPathComponent();            
-//            
-//            if (selected.getLevel() > 1){
-//                System.out.println("Selected level " + selected.getLevel());
-//            } else if (!selected.isRoot()) {
-//                Community community = (Community) selected.getUserObject();
-//                
-//                community.setName("aaaaaaaaa");
-//                if (!community.getCommunityWindow()){
-//                    System.out.println(community.getId() +
-//                        ": " +
-//                        community.getName() + ", " + community.getStreet() +
-//                        " " + community.getStreetNo());
-//                    
-//                    Rectangle b = jDesktopPane1.getBounds();
-//                    communityIFrame = new CommunityIFrame(community, mainWindow);
-//                    jDesktopPane1.add(communityIFrame);
-//                    communityIFrame.setBounds(b);
-//                    communityIFrame.setLocation(0, 0);
-//                    communityIFrame.setVisible(true);
-//                    communityIFrame.requestFocusInWindow();
-//                    communityIFrame.repaint();                    
-//                }
-//                
-//                //załadowanie lokatorów z bazy danych jako lista w objekcie commiunity
-//                
-//                if (community.getTenants().isEmpty()) {
-//                    try {
-//                        // pobieram listę lokatorów
-//                        CommunityTenantDAO ctDAO = new CommunityTenantDAO();
-//                        List<CommunityTenant> communityTenants = ctDAO.getAllCommunityTenants(community.getId());
-//                        community.setTenants(communityTenants);
-//                        
-//                        //TreeModel model = jTree1.getModel();                        
-//                        
-//                        int i = 0;
-//                        
-//                        for (CommunityTenant commT : communityTenants) {
-//                            System.out.println(commT.toString());
-//                            selected.add(new DefaultMutableTreeNode(commT));
-//                            i++;
-//                        }
-//                        jTree1.expandPath(path);
-//                        jTree1.setExpandsSelectedPaths(true);
-//                        jTree1.setSelectionPath(path);
-//                        jTree1.repaint();
-//                        
-//                        
-//                        
-//                    } catch (Exception ex) {
-//                        Logger.getLogger(PropertyPanel.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                    
-//                }
-//                
-//                
-//                
-////                if (path.getPathComponent(WIDTH)){
-////                    
-////                }
-//            }
-//            
-//            if(communityIFrame.isIcon()){
-//                try {
-//                    communityIFrame.setIcon(false);
-//                    communityIFrame.setSelected(true);
-//                } catch (PropertyVetoException ex) {
-//                    Logger.getLogger(PropertyPanel.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        }
+        if (!jTree1.isSelectionEmpty()) {          
+            TreePath path = (TreePath) jTree1.getSelectionPath();
             
-       
-        
-        
-        
+            Object obj = path.getLastPathComponent();
+            
+            if (obj instanceof Community) {
+                Community comm = (Community) obj;
+                
+                if (!comm.getIsOpened()) {                
+                Rectangle b = jDesktopPane1.getBounds();
+                CommunityIFrame communityIFrame = new CommunityIFrame((Community) obj, mainWindow);                
+                jDesktopPane1.add(communityIFrame);
+                communityIFrame.setBounds(b);
+                communityIFrame.setLocation(0, 0);
+                communityIFrame.setVisible(true);
+                communityIFrame.setIsOpened(true);
+                communityIFrame.requestFocusInWindow();
+                communityIFrame.repaint();    
+                } else {
+                    CommunityIFrame frame = getCommunityIFrame(comm);
+                    if(frame.isIcon()){
+                        try {
+                            frame.setIcon(false);
+                            frame.setSelected(true);
+                        } catch (PropertyVetoException ex) {
+                            Logger.getLogger(PropertyPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }
+            
+            System.out.println("path: " + path + " obj: " + obj);
+            
+
+        }
         
     }//GEN-LAST:event_jTree1MouseClicked
 
@@ -233,5 +186,19 @@ public final class PropertyPanel extends javax.swing.JPanel {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, "Błąd połączenia", ex);
         }
 
+    }
+     
+    public CommunityIFrame getCommunityIFrame(Community comm){
+        JInternalFrame[] frames = jDesktopPane1.getAllFrames();
+        CommunityIFrame frame = null;         
+         
+        for (JInternalFrame fr : frames) {
+            CommunityIFrame f = (CommunityIFrame)fr;
+            if (f.getCommunity().equals(comm)) {                
+                frame = (CommunityIFrame) fr;
+                break;                
+            }             
+        }         
+        return frame;
     }
 }

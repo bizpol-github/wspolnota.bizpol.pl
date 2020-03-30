@@ -1,7 +1,6 @@
 package pl.com.bizpol.wspolnota.core;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Community implements Serializable{
@@ -16,11 +15,11 @@ public final class Community implements Serializable{
         private int country_id;
         private int enabled;
         
-        private boolean community_window = false;        
-        private boolean tenants = false;
+        private boolean isOpened = false;        
+        private List<Integer> tenants = null;
         private boolean changed = false;
         
-        private String[][] data = new String[9][2];
+        private final String[][] data = new String[10][3];
 
 	public Community() {
 		
@@ -39,7 +38,7 @@ public final class Community implements Serializable{
                 setTableArray();
 	}
 	
-	public Community(int id, String name, String short_name, String street, String street_no, int city_id, int zone_id, int country_id, int enabled) {
+	public Community(int id, String name, String short_name, String street, String street_no, int city_id, int zone_id, int country_id, int enabled, List tenants) {
 		super();
                 this.id = id;
 		this.name = name;
@@ -50,6 +49,7 @@ public final class Community implements Serializable{
                 this.zone_id = zone_id;
                 this.country_id = country_id;
                 this.enabled = enabled;
+                this.tenants = tenants;
                 this.setTableArray();
 	}
 	
@@ -125,36 +125,44 @@ public final class Community implements Serializable{
 		this.enabled = enabled;
 	}
         
-        public boolean hasTenants() {
+        public List getTenants() {
 		return tenants;
 	}
 
-	public void setTenants(boolean tenants) {
+	public void setTenants(List tenants) {
 		this.tenants = tenants;
 	}
         
-        public boolean getCommunityWindow() {
-		return community_window;
+        public boolean hasTenants() {
+		return this.tenants.size() > 0;
+	}
+        
+        public boolean getIsOpened() {
+		return isOpened;
 	}
 
-	public void setCommunityWindow(boolean community_window) {
-		this.community_window = community_window;
+	public void setIsOpened(boolean opened) {
+		this.isOpened = opened;
 	}
         
         public String[][] getTableArray() {
 		return data;
 	}
-        
+        //ustawiam tanle array
+        //name, value, type, editable
         public void setTableArray(){
-            this.data[0] = new String[]{"id", String.valueOf(this.id), "int"};
-            this.data[1] = new String[]{"name", this.name, "String"};
-            this.data[2] = new String[]{"short_name", this.short_name, "String"};
-            this.data[3] = new String[]{"street", this.street, "String"};
-            this.data[4] = new String[]{"street_no", this.street_no, "String"};
-            this.data[5] = new String[]{"city_id", String.valueOf(this.city_id), "int"};
-            this.data[6] = new String[]{"zone_id", String.valueOf(this.zone_id), "int"};
-            this.data[7] = new String[]{"country_id", String.valueOf(this.country_id), "int"};
-            this.data[8] = new String[]{"enabled", String.valueOf(this.enabled), "int"};
+            this.data[0] = new String[]{"id", String.valueOf(this.id), "int", "0"};
+            this.data[1] = new String[]{"name", this.name, "String", "1"};
+            this.data[2] = new String[]{"short_name", this.short_name, "String", "1"};
+            this.data[3] = new String[]{"street", this.street, "String", "1"};
+            this.data[4] = new String[]{"street_no", this.street_no, "String", "1"};
+            this.data[5] = new String[]{"city_id", String.valueOf(this.city_id), "int", "1"};
+            this.data[6] = new String[]{"zone_id", String.valueOf(this.zone_id), "int", "1"};
+            this.data[7] = new String[]{"country_id", String.valueOf(this.country_id), "int", "1"};
+            this.data[8] = new String[]{"enabled", String.valueOf(this.enabled), "int", "1"};
+            
+            String hasTenants = (this.tenants.size() > 0) ? "tak" : "nie";
+            this.data[9] = new String[]{"tenants", hasTenants + "(" + tenants.size() + ")", "int", "0"};
         }
         
         public boolean isChanged(){

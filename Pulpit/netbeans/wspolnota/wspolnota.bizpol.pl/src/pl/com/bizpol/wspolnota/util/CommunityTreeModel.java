@@ -39,7 +39,11 @@ public final class CommunityTreeModel implements TreeModel{
     }
 
     @Override
-    public Object getChild(Object parent, int index) { 
+    public Object getChild(Object parent, int index) {
+        
+        if (parent instanceof Community) {
+            return ((Community) parent).getTenants().get(index);
+        }
 
         return communityList.get(index);
     }
@@ -50,27 +54,20 @@ public final class CommunityTreeModel implements TreeModel{
         
         if (parent.equals(rootNode)) {
             size = communityList.size();
-        } else {
-            System.out.println(parent.getClass());
+        } else if (parent instanceof Community) {
+            size = ((Community) parent).getTenants().size();
         }
         
-//            List<CommunityTenant> children = ((Community)parent).getTenants();
-//            
-//            //jezeli nie ma sprawdz w bazie czy są lokatorzy
-//            if (children.equals(parent)) {
-//                System.out.println("Parent = " + parent + " " + "childs = " + children.size());
-//            }
-//            
-//            System.out.println("Children = " + parent + " " + "childs = " + children.size());
-//            
-//            if (children == null) return 0;
-//            //return children.size();
-            
-          return size;
+        return size;
     }
 
     @Override
     public boolean isLeaf(Object node) {
+        if (node instanceof Community) {
+            return false;
+        } else if (node instanceof CommunityTenant) {
+            return true;
+        }
         return false;
     }
 
@@ -93,6 +90,7 @@ public final class CommunityTreeModel implements TreeModel{
 
     @Override
     public void addTreeModelListener(TreeModelListener l) {
+        System.out.println("listener");
     }
 
     @Override

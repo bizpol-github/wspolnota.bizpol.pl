@@ -25,7 +25,7 @@ public class MainWindow extends javax.swing.JFrame {
     CitiesIFrame citiesIFrame = new CitiesIFrame();
     LoginIFrame loginIFrame = new LoginIFrame(this);
     // LoginIFrame internalPanel = new InternalPanel();
-    PropertyPanel propertyPanel = new PropertyPanel(this);
+    PropertyPanel propertyPanel;
     InternalPanel internalPanel = new InternalPanel();
     MsgPanel msgPanel = new MsgPanel();
     User connectedUser = null;
@@ -420,6 +420,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     public void setPropertyPanel() {
+        propertyPanel = new PropertyPanel(this);
         Rectangle b;
         b = mainDesktopPane.getBounds();        
         propertyPanel.setBounds(b);
