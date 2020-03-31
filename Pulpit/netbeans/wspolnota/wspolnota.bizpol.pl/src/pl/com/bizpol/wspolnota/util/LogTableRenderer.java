@@ -22,6 +22,9 @@ public class LogTableRenderer extends JTextArea implements TableCellRenderer {
 //    DateFormat formatter;
     int rowHeight = 0;
     
+    /**
+     *
+     */
     public LogTableRenderer() {
         super();
         
@@ -35,6 +38,16 @@ public class LogTableRenderer extends JTextArea implements TableCellRenderer {
 //        setText((value == null) ? "" : formatter.format(value));
 //    }
 
+    /**
+     *
+     * @param table
+     * @param value
+     * @param isSelected
+     * @param hasFocus
+     * @param row
+     * @param column
+     * @return
+     */
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         

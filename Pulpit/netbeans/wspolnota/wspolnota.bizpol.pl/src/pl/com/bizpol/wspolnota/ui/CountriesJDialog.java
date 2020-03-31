@@ -22,6 +22,8 @@ public class CountriesJDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form CountriesJDialog
+     * @param parent
+     * @param modal
      */
     public CountriesJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

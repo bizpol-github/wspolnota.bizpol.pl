@@ -111,10 +111,19 @@ public class MsgPanel extends javax.swing.JPanel {
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     *
+     * @return
+     */
     public javax.swing.JProgressBar getProgressBar(){
         return msgProgressBar;
     }
     
+    /**
+     *
+     * @param title
+     * @param msg
+     */
     public void setTitleMsg(String title, String msg){
         titleLabel.setText(title);
         msgLabel.setText(msg);

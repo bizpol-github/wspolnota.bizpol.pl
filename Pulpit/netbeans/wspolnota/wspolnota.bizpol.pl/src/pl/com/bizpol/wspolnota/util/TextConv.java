@@ -11,6 +11,12 @@ package pl.com.bizpol.wspolnota.util;
  */
 public class TextConv {
     
+    /**
+     *
+     * @param setget
+     * @param name
+     * @return
+     */
     public static String colNameToMethod(String setget, String name) {
         String method = "";        
         int idx = name.indexOf("_");

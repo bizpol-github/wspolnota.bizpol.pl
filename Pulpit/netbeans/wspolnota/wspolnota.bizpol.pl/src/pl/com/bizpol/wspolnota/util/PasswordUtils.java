@@ -2,6 +2,10 @@ package pl.com.bizpol.wspolnota.util;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
+/**
+ *
+ * @author netcom
+ */
 public class PasswordUtils {
 
 	private static StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();

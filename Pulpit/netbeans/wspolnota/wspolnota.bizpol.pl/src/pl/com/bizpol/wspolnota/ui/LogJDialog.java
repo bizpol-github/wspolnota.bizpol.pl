@@ -22,8 +22,20 @@ import pl.com.bizpol.wspolnota.util.LogTableRenderer;
 public class LogJDialog extends javax.swing.JDialog {
     
     private LogDAO logDAO;
+
+    /**
+     *
+     */
     public SearchTableSorter sorter;
+
+    /**
+     *
+     */
     public static int id;
+
+    /**
+     *
+     */
     public static String table_name;
 
     /**

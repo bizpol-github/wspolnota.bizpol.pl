@@ -355,6 +355,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem zonesItem;
     // End of variables declaration//GEN-END:variables
     
+    /**
+     *
+     */
     public void logged() {
         //setup new window with tree and database content
 //        PropertyPanel propPanel = new PropertyPanel();
@@ -380,6 +383,11 @@ public class MainWindow extends javax.swing.JFrame {
         
     }
     
+    /**
+     *
+     * @param title
+     * @param msg
+     */
     public void setMessage(String title, String msg) {
         
         JOptionPane.showMessageDialog(this, msg, title, JOptionPane.INFORMATION_MESSAGE);
@@ -413,12 +421,18 @@ public class MainWindow extends javax.swing.JFrame {
         
     }
     
+    /**
+     *
+     */
     public void clearMainPanel() {
         mainDesktopPane.removeAll();
         mainPanel.removeAll();
         refresh();
     }
     
+    /**
+     *
+     */
     public void setPropertyPanel() {
         propertyPanel = new PropertyPanel(this);
         Rectangle b;
@@ -438,6 +452,10 @@ public class MainWindow extends javax.swing.JFrame {
         
     }
     
+    /**
+     *
+     * @param user
+     */
     public void setConnectedUser(User user){
         connectedUser = user;
         status.setText("Połączono - " + user.getDisplayName());

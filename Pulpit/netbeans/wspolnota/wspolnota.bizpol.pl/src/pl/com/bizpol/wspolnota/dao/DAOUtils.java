@@ -5,8 +5,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ *
+ * @author netcom
+ */
 public class DAOUtils {
 
+    /**
+     *
+     * @param myConn
+     * @param myStmt
+     * @param myRs
+     * @throws SQLException
+     */
     public static void close(Connection myConn, Statement myStmt, ResultSet myRs)
                     throws SQLException {
 
@@ -23,10 +34,21 @@ public class DAOUtils {
             }
     }
 
+    /**
+     *
+     * @param myStmt
+     * @param myRs
+     * @throws SQLException
+     */
     public static void close(Statement myStmt, ResultSet myRs) throws SQLException {
             close(null, myStmt, myRs);		
     }
 
+    /**
+     *
+     * @param myStmt
+     * @throws SQLException
+     */
     public static void close(Statement myStmt) throws SQLException {
             close(null, myStmt, null);		
     }

@@ -13,6 +13,10 @@ package pl.com.bizpol.wspolnota.dao;
  */
 import java.sql.*;
 
+/**
+ *
+ * @author netcom
+ */
 public class MysqlCon {
     
     // JDBC driver name and database URL
@@ -23,6 +27,11 @@ public class MysqlCon {
     static final String USER = "netbeans";
     static final String PASS = "netbeans";   
    
+    /**
+     *
+     * @param args
+     * @return
+     */
     public ResultSet connect(String[] args) {
         
         Connection conn = null;
@@ -83,6 +92,10 @@ public class MysqlCon {
         return rs;
     }//end connect
     
+    /**
+     *
+     * @param args
+     */
     public void result(String[] args) {
     }
    

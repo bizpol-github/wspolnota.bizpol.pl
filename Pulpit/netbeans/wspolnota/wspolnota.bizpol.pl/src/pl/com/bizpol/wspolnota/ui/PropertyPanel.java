@@ -17,6 +17,7 @@ import javax.swing.tree.TreePath;
 import pl.com.bizpol.wspolnota.dao.CommunityDAO;
 import pl.com.bizpol.wspolnota.dao.UserDAO;
 import pl.com.bizpol.wspolnota.util.CommunityTreeModel;
+import pl.com.bizpol.wspolnota.util.ComunityTreeRenderer;
 
 /**
  *
@@ -31,6 +32,10 @@ public final class PropertyPanel extends javax.swing.JPanel {
     CommunityTreeModel communityModel;
     MainWindow mainWindow;
     
+    /**
+     *
+     * @param parent
+     */
     public PropertyPanel(java.awt.Frame parent) {     
         
         mainWindow = (MainWindow) parent;
@@ -44,7 +49,7 @@ public final class PropertyPanel extends javax.swing.JPanel {
                 
        // jTree1.setShowsRootHandles(true);
         // ustawianie icon tekstu dla drzewa        
-      //  jTree1.setCellRenderer(new ComunityTreeRenderer());
+        jTree1.setCellRenderer(new ComunityTreeRenderer());
         
     }
 
@@ -176,7 +181,10 @@ public final class PropertyPanel extends javax.swing.JPanel {
     private javax.swing.JTree jTree1;
     // End of variables declaration//GEN-END:variables
     
-     public void getTreeMysqlData() {
+    /**
+     *
+     */
+    public void getTreeMysqlData() {
 
         try {            
             CommunityDAO cDAO = new CommunityDAO();            
@@ -188,6 +196,11 @@ public final class PropertyPanel extends javax.swing.JPanel {
 
     }
      
+    /**
+     *
+     * @param comm
+     * @return
+     */
     public CommunityIFrame getCommunityIFrame(Community comm){
         JInternalFrame[] frames = jDesktopPane1.getAllFrames();
         CommunityIFrame frame = null;         

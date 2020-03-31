@@ -27,6 +27,10 @@ public class LogDAO {
     
     private final Connection myConn;
     
+    /**
+     *
+     * @throws Exception
+     */
     public LogDAO() throws Exception{
         
         // get db properties
@@ -45,6 +49,15 @@ public class LogDAO {
         
     }
     
+    /**
+     *
+     * @param user_id
+     * @param table_name
+     * @param data_id
+     * @param old_value
+     * @param new_value
+     * @throws Exception
+     */
     public void EnterLog(int user_id, String table_name, int data_id, Object old_value, Object new_value) throws Exception{
         
         PreparedStatement myStmt = null;
@@ -88,6 +101,13 @@ public class LogDAO {
         
     }
     
+    /**
+     *
+     * @param table_name
+     * @param content_id
+     * @return
+     * @throws Exception
+     */
     public List<Log> getAllLogsById(String table_name, int content_id) throws Exception {
         
         
@@ -139,6 +159,15 @@ public class LogDAO {
 //            close(myStmt, myRs);            
 //        }    
 //    }
+
+    /**
+     *
+     * @param myRs
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     
     public Log convertRowToLogs(ResultSet myRs) throws SQLException, ClassNotFoundException, IOException{
         
@@ -174,14 +203,23 @@ public class LogDAO {
         return tempLog;
     }
     
+    /**
+     *
+     */
     public void logInsert(){
         
     }
     
+    /**
+     *
+     */
     public void logUpdate(){
         
     }
     
+    /**
+     *
+     */
     public void logDelete(){
         
     }

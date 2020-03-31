@@ -19,6 +19,10 @@ import pl.com.bizpol.wspolnota.core.Countries;
 public class CountriesDAO {
     private Connection myConn;
     
+    /**
+     *
+     * @throws Exception
+     */
     public CountriesDAO() throws Exception {
         
         //get db propereties
@@ -37,6 +41,11 @@ public class CountriesDAO {
         
     }
     
+    /**
+     *
+     * @param theCountry
+     * @throws SQLException
+     */
     public void addCountry(Countries theCountry) throws SQLException {
         
         PreparedStatement myStmt = null;
@@ -55,6 +64,11 @@ public class CountriesDAO {
         
     }
     
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
     public List<Countries> getAllCountries() throws Exception {
         List<Countries> list = new ArrayList<>();
         
@@ -77,7 +91,13 @@ public class CountriesDAO {
         }    
     }
     
-        public List<Countries> searchCountries(String countriesName) throws Exception {
+    /**
+     *
+     * @param countriesName
+     * @return
+     * @throws Exception
+     */
+    public List<Countries> searchCountries(String countriesName) throws Exception {
         List<Countries> list = new ArrayList<>();
         
         PreparedStatement myStmt = null;
@@ -135,6 +155,11 @@ public class CountriesDAO {
 		close(null, myStmt, null);		
 	}
     
+    /**
+     *
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
 		
         CountriesDAO dao = new CountriesDAO();

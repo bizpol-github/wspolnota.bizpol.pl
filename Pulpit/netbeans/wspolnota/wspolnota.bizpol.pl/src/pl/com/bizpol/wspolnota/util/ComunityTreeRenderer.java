@@ -22,6 +22,9 @@ public class ComunityTreeRenderer extends DefaultTreeCellRenderer {
     
     Icon commLeafIcon, commOpenIcon, commCloseIcon, icon, tenantLeafIcon;
 
+    /**
+     *
+     */
     public ComunityTreeRenderer() {
         commCloseIcon = new ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/white/png/home_icon&16.png"));
         commOpenIcon = new ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/home_icon&16.png"));
@@ -33,6 +36,17 @@ public class ComunityTreeRenderer extends DefaultTreeCellRenderer {
         
     }
 
+    /**
+     *
+     * @param tree
+     * @param value
+     * @param sel
+     * @param expanded
+     * @param leaf
+     * @param row
+     * @param hasFocus
+     * @return
+     */
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
 
@@ -41,16 +55,16 @@ public class ComunityTreeRenderer extends DefaultTreeCellRenderer {
         setOpenIcon(commOpenIcon);
         setClosedIcon(commCloseIcon);
         setLeafIcon(commLeafIcon);
-        DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;            
+        //DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;            
 
-        if(node.getUserObject() instanceof Community){
-            Community nodeInfo = (Community) (node.getUserObject());
+        if(value instanceof Community){
+            Community nodeInfo = (Community) (value);
             String text = nodeInfo.getShortName(); 
             setText(text);
             setOpenIcon(commOpenIcon);
             setToolTipText("This book is in the Tutorial series.");
 
-        } else if (node.getUserObject() instanceof CommunityTenant) {
+        } else if (value instanceof CommunityTenant) {
             setIcon(tenantLeafIcon);
             setClosedIcon(commCloseIcon);
 

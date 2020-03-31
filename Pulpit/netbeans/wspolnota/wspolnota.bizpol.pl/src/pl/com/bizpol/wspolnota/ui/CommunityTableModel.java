@@ -11,7 +11,10 @@ import pl.com.bizpol.wspolnota.dao.CommunityDAO;
 import pl.com.bizpol.wspolnota.dao.LogDAO;
 import static pl.com.bizpol.wspolnota.util.TextConv.colNameToMethod;
 
-
+/**
+ *
+ * @author netcom
+ */
 public class CommunityTableModel extends AbstractTableModel {
 
 	private static final int DATA = 0;
@@ -22,27 +25,50 @@ public class CommunityTableModel extends AbstractTableModel {
         private final Community changedCommunity = new Community();
         private final String[][] data;
 
-	public CommunityTableModel(Community community) {
+    /**
+     *
+     * @param community
+     */
+    public CommunityTableModel(Community community) {
 		this.community = community;  
                 data = community.getTableArray();
 	}
 
-	@Override
+    /**
+     *
+     * @return
+     */
+    @Override
 	public int getColumnCount() {
 		return columnNames.length;
 	}
 
-	@Override
+    /**
+     *
+     * @return
+     */
+    @Override
 	public int getRowCount() {
 		return data.length;
 	}
 
-	@Override
+    /**
+     *
+     * @param col
+     * @return
+     */
+    @Override
 	public String getColumnName(int col) {
 		return columnNames[col];
 	}
 
-	@Override
+    /**
+     *
+     * @param row
+     * @param col
+     * @return
+     */
+    @Override
 	public Object getValueAt(int row, int col) {
             
             switch (col) {
@@ -55,12 +81,23 @@ public class CommunityTableModel extends AbstractTableModel {
             }
 	}
 
-	@Override
+    /**
+     *
+     * @param c
+     * @return
+     */
+    @Override
 	public Class getColumnClass(int c) {
 		return getValueAt(0, c).getClass();
 	}
         
-        @Override
+    /**
+     *
+     * @param aValue
+     * @param row
+     * @param col
+     */
+    @Override
         public void setValueAt(Object aValue, int row, int col)
         {
             if(1 == col) {
@@ -92,7 +129,15 @@ public class CommunityTableModel extends AbstractTableModel {
             }
         }
         
-        public Community getChangedCommunity() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, Exception{
+    /**
+     *
+     * @return
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws NoSuchMethodException
+     * @throws Exception
+     */
+    public Community getChangedCommunity() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, Exception{
                     
             for (String[] string : data) {
                 
@@ -155,7 +200,13 @@ public class CommunityTableModel extends AbstractTableModel {
             return changedCommunity;
         }
         
-        @Override
+    /**
+     *
+     * @param row
+     * @param col
+     * @return
+     */
+    @Override
         public boolean isCellEditable(int row, int col)
         {
             return !(col==0 || row==0 || row==9);

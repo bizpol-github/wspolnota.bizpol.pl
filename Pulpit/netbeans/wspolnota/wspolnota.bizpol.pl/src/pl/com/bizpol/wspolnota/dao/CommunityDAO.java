@@ -12,10 +12,18 @@ import java.util.List;
 import java.util.Properties;
 import pl.com.bizpol.wspolnota.core.Community;
 
+/**
+ *
+ * @author netcom
+ */
 public class CommunityDAO {
 
     private final Connection myConn;
 
+    /**
+     *
+     * @throws Exception
+     */
     public CommunityDAO() throws Exception {
 
         // get db properties
@@ -50,6 +58,12 @@ public class CommunityDAO {
         return community;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     public Community getCommunity(int id) throws Exception {
 
         Statement myStmt = null;
@@ -74,6 +88,11 @@ public class CommunityDAO {
         }
     }	
 
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
     public List<Community> getAllCommunities() throws Exception {
             List<Community> list = new ArrayList<>();
 
@@ -99,6 +118,12 @@ public class CommunityDAO {
             }
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     public List<Integer> getCommunitiyTenantsId(int id) throws Exception {
             List<Integer> list = new ArrayList<>();
 
@@ -153,6 +178,12 @@ public class CommunityDAO {
 //	}
 //		
 //	
+
+    /**
+     *
+     * @param community
+     * @throws Exception
+     */
     public void updateCommunity(Community community) throws Exception {
             PreparedStatement myStmt = null;
 

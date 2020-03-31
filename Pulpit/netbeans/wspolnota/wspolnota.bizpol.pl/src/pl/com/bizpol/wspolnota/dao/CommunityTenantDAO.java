@@ -11,11 +11,19 @@ import java.util.List;
 import java.util.Properties;
 import pl.com.bizpol.wspolnota.core.CommunityTenant;
 
+/**
+ *
+ * @author netcom
+ */
 public class CommunityTenantDAO {
 
 	private final Connection myConn;
 	
-	public CommunityTenantDAO() throws Exception {
+    /**
+     *
+     * @throws Exception
+     */
+    public CommunityTenantDAO() throws Exception {
 		
 		// get db properties
 		Properties props = new Properties();
@@ -46,7 +54,13 @@ public class CommunityTenantDAO {
 		return communityTenant;
 	}
         
-        public CommunityTenant getCommunityTenant(int id) throws Exception {
+    /**
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public CommunityTenant getCommunityTenant(int id) throws Exception {
 		
 		
 		Statement myStmt = null;
@@ -74,7 +88,13 @@ public class CommunityTenantDAO {
 		}
 	}	
 	
-	public List<CommunityTenant> getAllCommunityTenants(int id) throws Exception {
+    /**
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public List<CommunityTenant> getAllCommunityTenants(int id) throws Exception {
 		List<CommunityTenant> list = new ArrayList<>();
 		
 		Statement myStmt = null;

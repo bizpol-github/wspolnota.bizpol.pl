@@ -30,6 +30,9 @@ public final class CommunityTreeModelOld implements TreeModel{
     DefaultTreeModel innerModel;
     DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Wspólnoty");
     
+    /**
+     *
+     */
     public CommunityTreeModelOld(){
         //commiunity = new DefaultMutableTreeNode("Wspólnoty");
         
@@ -71,6 +74,9 @@ public final class CommunityTreeModelOld implements TreeModel{
 //    }
     }
     
+    /**
+     *
+     */
     public void setCommiunites(){      
         System.out.println("Commiunity");       
         
@@ -94,45 +100,88 @@ public final class CommunityTreeModelOld implements TreeModel{
         }
     }
     
+    /**
+     *
+     * @return
+     */
     public DefaultTreeModel getCommunityModel() {
         return innerModel;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Object getRoot() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param parent
+     * @param index
+     * @return
+     */
     @Override
     public Object getChild(Object parent, int index) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param parent
+     * @return
+     */
     @Override
     public int getChildCount(Object parent) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param node
+     * @return
+     */
     @Override
     public boolean isLeaf(Object node) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param path
+     * @param newValue
+     */
     @Override
     public void valueForPathChanged(TreePath path, Object newValue) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param parent
+     * @param child
+     * @return
+     */
     @Override
     public int getIndexOfChild(Object parent, Object child) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param l
+     */
     @Override
     public void addTreeModelListener(TreeModelListener l) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param l
+     */
     @Override
     public void removeTreeModelListener(TreeModelListener l) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

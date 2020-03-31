@@ -16,6 +16,14 @@ public class Countries {
     private String isoCode3;
     private String addressFormat;
     
+    /**
+     *
+     * @param id
+     * @param countriesName
+     * @param isoCode2
+     * @param isoCode3
+     * @param addressFormat
+     */
     public Countries(int id, String countriesName, String isoCode2, String isoCode3, String addressFormat){
         super();
          this.id = id;
@@ -25,46 +33,90 @@ public class Countries {
          this.addressFormat = addressFormat;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getCountriesId(){
         return id;
     }
     
+    /**
+     *
+     * @return
+     */
     public int setCountriesId(){
         return this.id;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getCountriesName(){
         return countriesName;
     }
     
+    /**
+     *
+     * @return
+     */
     public String setCountriesName(){
         return this.countriesName;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getIsoCode2(){
         return isoCode2;
     }
     
+    /**
+     *
+     * @return
+     */
     public String setIsoCode2(){
         return this.isoCode2;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getIsoCode3(){
         return isoCode3;
     }
     
+    /**
+     *
+     * @return
+     */
     public String setIsoCode3(){
         return this.isoCode3;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getAddressFormat(){
         return addressFormat;
     }
     
+    /**
+     *
+     * @return
+     */
     public String setAddressFormat(){
         return this.addressFormat;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return String

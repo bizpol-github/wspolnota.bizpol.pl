@@ -13,11 +13,19 @@ import java.util.Properties;
 import pl.com.bizpol.wspolnota.core.User;
 import pl.com.bizpol.wspolnota.util.PasswordUtils;
 
+/**
+ *
+ * @author netcom
+ */
 public class UserDAO {
 
 	private final Connection myConn;
 	
-	public UserDAO() throws Exception {
+    /**
+     *
+     * @throws Exception
+     */
+    public UserDAO() throws Exception {
 		
 		// get db properties
 		Properties props = new Properties();
@@ -49,7 +57,13 @@ public class UserDAO {
 		return tempUser;
 	}
         
-        public User getUser(int id) throws Exception {
+    /**
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public User getUser(int id) throws Exception {
 		
 		
 		Statement myStmt = null;
@@ -77,7 +91,14 @@ public class UserDAO {
 		}
 	}	
 	
-	public List<User> getUsers(int status, int id) throws Exception {
+    /**
+     *
+     * @param status
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public List<User> getUsers(int status, int id) throws Exception {
 		List<User> list = new ArrayList<>();
 		
 		Statement myStmt = null;
@@ -111,7 +132,12 @@ public class UserDAO {
 		}
 	}	
 	
-	public void addUser(User theUser) throws Exception {
+    /**
+     *
+     * @param theUser
+     * @throws Exception
+     */
+    public void addUser(User theUser) throws Exception {
 		PreparedStatement myStmt = null;
 
 		try {
@@ -140,8 +166,12 @@ public class UserDAO {
 		
 	}
 		
-	
-	public void updateUser(User theUser) throws Exception {
+    /**
+     *
+     * @param theUser
+     * @throws Exception
+     */
+    public void updateUser(User theUser) throws Exception {
 		PreparedStatement myStmt = null;
 
 		try {
@@ -166,7 +196,13 @@ public class UserDAO {
 		}		
 	}
         
-        public int checkLogin(String login) throws Exception {
+    /**
+     *
+     * @param login
+     * @return
+     * @throws Exception
+     */
+    public int checkLogin(String login) throws Exception {
             int loginExists = 0;		
             PreparedStatement myStmt = null;
             ResultSet myRs = null;
@@ -233,7 +269,12 @@ public class UserDAO {
 		}		
 	}
 
-	public void changePassword(User user) throws Exception {
+    /**
+     *
+     * @param user
+     * @throws Exception
+     */
+    public void changePassword(User user) throws Exception {
 
 		// get plain text password
 		String plainTextPassword = user.getPass();

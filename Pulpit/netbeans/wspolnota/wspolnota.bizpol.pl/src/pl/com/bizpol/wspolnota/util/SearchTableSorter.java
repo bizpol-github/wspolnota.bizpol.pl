@@ -19,15 +19,28 @@ public class SearchTableSorter extends TableRowSorter{
     
     final TableRowSorter<TableModel> sorter;
     
+    /**
+     *
+     * @param table
+     * @param model
+     */
     public SearchTableSorter(JTable table, CommunityTableModel model){
         this.sorter = new TableRowSorter<TableModel>(model);
         table.setRowSorter(this.sorter);
     }
     
+    /**
+     *
+     * @return
+     */
     public TableRowSorter getSorter(){
         return this.sorter;
     }
     
+    /**
+     *
+     * @param search
+     */
     public void sort(String search){
         
         if (search.length() == 0) {

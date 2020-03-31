@@ -21,7 +21,16 @@ public class JTableButtonRenderer implements TableCellRenderer {
     
     URL url;
     
-    
+    /**
+     *
+     * @param table
+     * @param value
+     * @param isSelected
+     * @param hasFocus
+     * @param row
+     * @param column
+     * @return
+     */
     @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         
         JButton button = (JButton)value;
@@ -33,6 +42,10 @@ public class JTableButtonRenderer implements TableCellRenderer {
         return button;  
     }
     
+    /**
+     *
+     * @param url
+     */
     public void setImageToButton(URL url){
         this.url = url;
         

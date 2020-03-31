@@ -2,6 +2,10 @@ package pl.com.bizpol.wspolnota.core;
 
 import java.io.Serializable;
 
+/**
+ *
+ * @author netcom
+ */
 public class CommunityTenant implements Serializable{
 
 	private int id;
@@ -11,11 +15,22 @@ public class CommunityTenant implements Serializable{
 	private String email;
 	private String tel;
 
-	public CommunityTenant() {
+    /**
+     *
+     */
+    public CommunityTenant() {
 		
 	}
 	
-	public CommunityTenant(int commiunity_id, String name, String last_name, String email, String tel) {
+    /**
+     *
+     * @param commiunity_id
+     * @param name
+     * @param last_name
+     * @param email
+     * @param tel
+     */
+    public CommunityTenant(int commiunity_id, String name, String last_name, String email, String tel) {
 		super();
                 this.commiunity_id = commiunity_id;
 		this.name = name;
@@ -24,7 +39,16 @@ public class CommunityTenant implements Serializable{
 		this.tel = tel;
 	}
 	
-	public CommunityTenant(int id, int commiunity_id, String name, String last_name, String email, String tel) {
+    /**
+     *
+     * @param id
+     * @param commiunity_id
+     * @param name
+     * @param last_name
+     * @param email
+     * @param tel
+     */
+    public CommunityTenant(int id, int commiunity_id, String name, String last_name, String email, String tel) {
 		super();
                 this.id = id;
 		this.commiunity_id = commiunity_id;
@@ -34,54 +58,107 @@ public class CommunityTenant implements Serializable{
 		this.tel = tel;
 	}
 	
-	public int getId() {
+    /**
+     *
+     * @return
+     */
+    public int getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+    /**
+     *
+     * @param id
+     */
+    public void setId(int id) {
 		this.id = id;
 	}
         
-        public int getCommiunityId() {
+    /**
+     *
+     * @return
+     */
+    public int getCommiunityId() {
 		return commiunity_id;
 	}
 	
-	public void setCommiunityId(int id) {
+    /**
+     *
+     * @param id
+     */
+    public void setCommiunityId(int id) {
 		this.commiunity_id = id;
 	}
 	
-	public String getName() {
+    /**
+     *
+     * @return
+     */
+    public String getName() {
 		return name;
 	}
         
-        public void setname(String name) {
+    /**
+     *
+     * @param name
+     */
+    public void setname(String name) {
 		this.name = name;
 	}
-	public String getLastName() {
+
+    /**
+     *
+     * @return
+     */
+    public String getLastName() {
 		return last_name;
 	}
 	
-	public void setLastName(String last_name) {
+    /**
+     *
+     * @param last_name
+     */
+    public void setLastName(String last_name) {
 		this.last_name = last_name;
 	}
         
-        public String getEmail() {
+    /**
+     *
+     * @return
+     */
+    public String getEmail() {
 		return email;
 	}
 	
-	public void setEmail(String street) {
+    /**
+     *
+     * @param street
+     */
+    public void setEmail(String street) {
 		this.email = street;
 	}
 	
-	public String getTel() {
+    /**
+     *
+     * @return
+     */
+    public String getTel() {
 		return tel;
 	}
 	
-	public void setTel(String street_no) {
+    /**
+     *
+     * @param street_no
+     */
+    public void setTel(String street_no) {
 		this.tel = street_no;
 	}
 
-	@Override
+    /**
+     *
+     * @return
+     */
+    @Override
 	public String toString() {
 		return name + " " + last_name;
 	}

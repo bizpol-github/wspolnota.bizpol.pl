@@ -15,10 +15,29 @@ import pl.com.bizpol.wspolnota.util.SearchTableSorter;
  */
 public class CommunityIFrame extends javax.swing.JInternalFrame {
     
+    /**
+     *
+     */
     public Community community;
+
+    /**
+     *
+     */
     public SearchTableSorter sorter;
+
+    /**
+     *
+     */
     public boolean dynamicSearch = true;
+
+    /**
+     *
+     */
     public MainWindow mainWindow;
+
+    /**
+     *
+     */
     public boolean isOpened = false;
 
     /**
@@ -351,22 +370,42 @@ public class CommunityIFrame extends javax.swing.JInternalFrame {
     private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
     
+    /**
+     *
+     * @param title
+     */
     public final void setIFrameTitle(String title){
        this.setTitle(title);
     }
     
+    /**
+     *
+     * @return
+     */
     public Community getCommunity(){
         return this.community;
     }
     
+    /**
+     *
+     * @param community
+     */
     public void setCommunity(Community community){
         this.community = community;
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean getIsOpened () {
         return this.isOpened;
     }
     
+    /**
+     *
+     * @param state
+     */
     public void setIsOpened (boolean state) {
         this.isOpened = state;
     }
