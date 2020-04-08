@@ -16,14 +16,14 @@ public final class Community implements Serializable{
 	private String street_no;
 	private int city_id;
         private int zone_id;
-        private int country_id;
-        private int enabled;
+        private Country country;
+        private boolean enabled;
         
         private boolean isOpened = false;        
         private List<Integer> tenants = null;
         private boolean changed = false;
         
-        private final String[][] data = new String[10][3];
+        private final Object[][] data = new Object[10][3];
 
     /**
      *
@@ -40,10 +40,10 @@ public final class Community implements Serializable{
      * @param street_no
      * @param city_id
      * @param zone_id
-     * @param country_id
+     * @param country
      * @param enabled
      */
-    public Community(String name, String short_name, String street, String street_no, int city_id, int zone_id, int country_id, int enabled) {
+    public Community(String name, String short_name, String street, String street_no, int city_id, int zone_id, Country country, boolean enabled) {
 		super();
 		this.name = name;
 		this.short_name = short_name;
@@ -51,7 +51,7 @@ public final class Community implements Serializable{
 		this.street_no = street_no;
 		this.city_id = city_id;
                 this.zone_id = zone_id;
-                this.country_id = country_id;
+                this.country = country;
                 this.enabled = enabled;
                 setTableArray();
 	}
@@ -65,11 +65,11 @@ public final class Community implements Serializable{
      * @param street_no
      * @param city_id
      * @param zone_id
-     * @param country_id
+     * @param country
      * @param enabled
      * @param tenants
      */
-    public Community(int id, String name, String short_name, String street, String street_no, int city_id, int zone_id, int country_id, int enabled, List tenants) {
+    public Community(int id, String name, String short_name, String street, String street_no, int city_id, int zone_id, Country country, boolean enabled, List tenants) {
 		super();
                 this.id = id;
 		this.name = name;
@@ -78,7 +78,7 @@ public final class Community implements Serializable{
 		this.street_no = street_no;
 		this.city_id = city_id;
                 this.zone_id = zone_id;
-                this.country_id = country_id;
+                this.country = country;
                 this.enabled = enabled;
                 this.tenants = tenants;
                 this.setTableArray();
@@ -200,23 +200,23 @@ public final class Community implements Serializable{
      *
      * @return
      */
-    public int getCountryId() {
-		return country_id;
+    public Country getCountry() {
+		return country;
 	}
 
     /**
      *
-     * @param country_id
+     * @param country
      */
-    public void setCountryId(int country_id) {
-		this.country_id = country_id;
+    public void setCountry(Country country) {
+		this.country = country;
 	}
         
     /**
      *
      * @return
      */
-    public int getEnabled() {
+    public boolean getEnabled() {
 		return enabled;
 	}
 
@@ -224,7 +224,7 @@ public final class Community implements Serializable{
      *
      * @param enabled
      */
-    public void setEnabled(int enabled) {
+    public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
         
@@ -272,7 +272,7 @@ public final class Community implements Serializable{
      *
      * @return
      */
-    public String[][] getTableArray() {
+    public Object[][] getTableArray() {
 		return data;
 	}
         //ustawiam tanle array
@@ -282,15 +282,15 @@ public final class Community implements Serializable{
      *
      */
         public void setTableArray(){
-            this.data[0] = new String[]{"id", String.valueOf(this.id), "int", "0"};
-            this.data[1] = new String[]{"name", this.name, "String", "1"};
-            this.data[2] = new String[]{"short_name", this.short_name, "String", "1"};
-            this.data[3] = new String[]{"street", this.street, "String", "1"};
-            this.data[4] = new String[]{"street_no", this.street_no, "String", "1"};
-            this.data[5] = new String[]{"city_id", String.valueOf(this.city_id), "int", "1"};
-            this.data[6] = new String[]{"zone_id", String.valueOf(this.zone_id), "int", "1"};
-            this.data[7] = new String[]{"country_id", String.valueOf(this.country_id), "int", "1"};
-            this.data[8] = new String[]{"enabled", String.valueOf(this.enabled), "int", "1"};
+            this.data[0] = new Object[]{"id", this.id, "int", "0"};
+            this.data[1] = new Object[]{"name", this.name, "String", "1"};
+            this.data[2] = new Object[]{"short_name", this.short_name, "String", "1"};
+            this.data[3] = new Object[]{"street", this.street, "String", "1"};
+            this.data[4] = new Object[]{"street_no", this.street_no, "String", "1"};
+            this.data[5] = new Object[]{"city_id", this.city_id, "int", "1"};
+            this.data[6] = new Object[]{"zone_id", this.zone_id, "int", "1"};
+            this.data[7] = new Object[]{"country", this.country, "Country", "1"};
+            this.data[8] = new Object[]{"enabled", this.enabled, "boolean", "1"};
             
             String hasTenants = (this.tenants.size() > 0) ? "tak" : "nie";
             this.data[9] = new String[]{"tenants", hasTenants + "(" + tenants.size() + ")", "List", "0"};
@@ -326,6 +326,6 @@ public final class Community implements Serializable{
      * @return
      */
     public String toStringAll() {
-		return "ID:" + id + ", " + name + ", " + short_name + ", " + street + ", " + street_no + ", " + city_id + ", " + zone_id + ", " + country_id + ", " + enabled;
+		return "ID:" + id + ", " + name + ", " + short_name + ", " + street + ", " + street_no + ", " + city_id + ", " + zone_id + ", " + country + ", " + enabled;
 	}
 }

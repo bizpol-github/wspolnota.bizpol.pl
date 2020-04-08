@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import pl.com.bizpol.wspolnota.core.Countries;
 import pl.com.bizpol.wspolnota.core.User;
 
 /*
@@ -29,14 +30,20 @@ public class MainWindow extends javax.swing.JFrame {
     InternalPanel internalPanel = new InternalPanel();
     MsgPanel msgPanel = new MsgPanel();
     User connectedUser = null;
+    Countries countries = null;
+     
 
     /**
      * Creates new form MainWindow
+     * @throws java.lang.Exception
      */
-    public MainWindow() {
+    public MainWindow() throws Exception {
         //icon to project
         URL url = getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/home_icon&16.png");
         ImageIcon imgicon = new ImageIcon(url);
+        //add countries to panel
+        countries = new Countries();
+        
         super.setIconImage(imgicon.getImage());
         initComponents();
         //position oin screen
@@ -181,6 +188,7 @@ public class MainWindow extends javax.swing.JFrame {
         zonesItem.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         settingsMenu.add(zonesItem);
 
+        citiesItem.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         citiesItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/info_icon&16.png"))); // NOI18N
         citiesItem.setText("Miasta");
         citiesItem.setToolTipText("");
@@ -192,6 +200,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         settingsMenu.add(citiesItem);
 
+        logItem.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         logItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pl/com/bizpol/wspolnota/icons/cc/black/png/notepad_icon&16.png"))); // NOI18N
         logItem.setText("Dziennik");
         logItem.setToolTipText("");
@@ -328,9 +337,11 @@ public class MainWindow extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
                 new MainWindow().setVisible(true);
+            } catch (Exception ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -432,8 +443,10 @@ public class MainWindow extends javax.swing.JFrame {
     
     /**
      *
+     * @throws java.lang.Exception
      */
-    public void setPropertyPanel() {
+    public void setPropertyPanel() throws Exception {
+       
         propertyPanel = new PropertyPanel(this);
         Rectangle b;
         b = mainDesktopPane.getBounds();        
@@ -461,6 +474,14 @@ public class MainWindow extends javax.swing.JFrame {
         status.setText("Połączono - " + user.getDisplayName());
         loginItem.setText("Wyloguj");
         System.out.println("Ustawiam użytkownika " + user);
+    }
+    
+     /**
+     *
+     * @return 
+     */
+    public Countries getCountries(){
+        return countries;
     }
     
     private void refresh(){

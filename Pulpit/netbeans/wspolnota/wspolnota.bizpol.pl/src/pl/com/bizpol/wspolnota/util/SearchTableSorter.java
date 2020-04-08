@@ -25,7 +25,7 @@ public class SearchTableSorter extends TableRowSorter{
      * @param model
      */
     public SearchTableSorter(JTable table, CommunityTableModel model){
-        this.sorter = new TableRowSorter<TableModel>(model);
+        this.sorter = new TableRowSorter<>(model);
         table.setRowSorter(this.sorter);
     }
     

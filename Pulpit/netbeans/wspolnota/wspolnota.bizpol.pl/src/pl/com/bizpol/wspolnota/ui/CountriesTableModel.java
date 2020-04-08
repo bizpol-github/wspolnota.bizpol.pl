@@ -1,24 +1,31 @@
 package pl.com.bizpol.wspolnota.ui;
 
+import java.awt.Image;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 import javax.swing.table.AbstractTableModel;
 
-import pl.com.bizpol.wspolnota.core.Countries;
+import pl.com.bizpol.wspolnota.core.Country;
 
 class CountriesTableModel extends AbstractTableModel {
 
 	private static final int COUNTRIES_ID = 0;
-	private static final int COUNTRIES_NAME = 1;
-	private static final int COUNTRIES_ISO_CODE_2 = 2;
-	private static final int COUNTRIES_ISO_CODE_3 = 3;
-        private static final int ADDRESS_FORMAT = 4;
+        private static final int COUNTRIES_ICON = 1;
+	private static final int COUNTRIES_NAME = 2;
+	private static final int COUNTRIES_ISO_CODE_2 = 3;
+	private static final int COUNTRIES_ISO_CODE_3 = 4;
+        private static final int ADDRESS_FORMAT = 5;
 
-	private String[] columnNames = { "ID", "NAZWA", "ISO-2",
+	private String[] columnNames = { "ID", "IKONA", "NAZWA", "ISO-2",
 			"ISO-3", "FORMAT" };
-	private List<Countries> countries;
+	private List<Country> countries;
 
-	public CountriesTableModel(List<Countries> theCountries) {
+	public CountriesTableModel(List<Country> theCountries) {
 		countries = theCountries;               
 	}
 
@@ -40,11 +47,24 @@ class CountriesTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 
-		Countries tempCountries = countries.get(row);
-
+		Country tempCountries = countries.get(row);
+                ImageIcon icon,newIcon;
+                Image img;
+                
+                
 		switch (col) {
 		case COUNTRIES_ID:
 			return tempCountries.getCountriesId();
+                case COUNTRIES_ICON:                   
+                {
+                    try {
+                        return (tempCountries.getIcon() != null) ? tempCountries.getIcon() : "brak";
+                    } catch (IOException ex) {
+                        Logger.getLogger(CountriesTableModel.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (URISyntaxException ex) {
+                        Logger.getLogger(CountriesTableModel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
 		case COUNTRIES_NAME:
 			return tempCountries.getCountriesName();
 		case COUNTRIES_ISO_CODE_2:

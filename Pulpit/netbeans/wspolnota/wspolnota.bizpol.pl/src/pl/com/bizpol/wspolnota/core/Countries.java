@@ -5,122 +5,63 @@
  */
 package pl.com.bizpol.wspolnota.core;
 
+import pl.com.bizpol.wspolnota.dao.CountriesDAO;
+import java.util.List;
+import javax.swing.JComboBox;
+import pl.com.bizpol.wspolnota.util.CountryComboBoxModel;
+import pl.com.bizpol.wspolnota.util.CountryComboBoxRenderer;
+
 /**
  *
  * @author Archii
  */
 public class Countries {
-    private int id;
-    private String countriesName;
-    private String isoCode2;
-    private String isoCode3;
-    private String addressFormat;
+    private final List<Country> list;
+    private final CountriesDAO countriesDAO;
+    
+    /**
+     *
+     * @throws java.lang.Exception
+     */
+    public Countries() throws Exception{
+        super();
+        countriesDAO = new CountriesDAO();
+        list = countriesDAO.getAllCountries();        
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public List<Country> getCountriesList(){                
+        return list;
+    }
     
     /**
      *
      * @param id
-     * @param countriesName
-     * @param isoCode2
-     * @param isoCode3
-     * @param addressFormat
+     * @return
      */
-    public Countries(int id, String countriesName, String isoCode2, String isoCode3, String addressFormat){
-        super();
-         this.id = id;
-         this.countriesName = countriesName;
-         this.isoCode2 = isoCode2;
-         this.isoCode3 = isoCode3;
-         this.addressFormat = addressFormat;
+    public Country getCountryById(int id){
+        Country country = null;        
+        for (Country item : list) {
+            //if(item.getCountriesId() == 10) {                
+                country = item;
+                break;
+           // }            
+        }
+        return country;
     }
     
     /**
      *
      * @return
      */
-    public int getCountriesId(){
-        return id;
+    public JComboBox getCountriesComboBox(){
+        JComboBox countries = new JComboBox(new CountryComboBoxModel(list));
+        countries.setRenderer(new CountryComboBoxRenderer());
+        //countries.setMaximumRowCount(3);
+        
+        return countries;
     }
-    
-    /**
-     *
-     * @return
-     */
-    public int setCountriesId(){
-        return this.id;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public String getCountriesName(){
-        return countriesName;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public String setCountriesName(){
-        return this.countriesName;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public String getIsoCode2(){
-        return isoCode2;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public String setIsoCode2(){
-        return this.isoCode2;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public String getIsoCode3(){
-        return isoCode3;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public String setIsoCode3(){
-        return this.isoCode3;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public String getAddressFormat(){
-        return addressFormat;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public String setAddressFormat(){
-        return this.addressFormat;
-    }
-    
-    /**
-     *
-     * @return
-     */
-    @Override
-    public String toString() {
-        return String
-                .format("Country [id=%s, countriesName=%s, isoCode2=%s, isoCode3=%s, addressFormat=%s]", id, countriesName, isoCode2, isoCode3, addressFormat);
-    }
-    
 }

@@ -11,12 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import pl.com.bizpol.wspolnota.core.Community;
+import pl.com.bizpol.wspolnota.core.Country;
+import pl.com.bizpol.wspolnota.ui.MainWindow;
 
 /**
  *
  * @author netcom
  */
-public class CommunityDAO {
+public class CommunityDAO extends MainWindow{
 
     private final Connection myConn;
 
@@ -35,6 +37,7 @@ public class CommunityDAO {
         String dburl = props.getProperty("dburl");
 
         // connect to database
+        Class.forName("com.mysql.jdbc.Driver");  
         myConn = DriverManager.getConnection(dburl, user, password);
 
         System.out.println("CommunityDAO - DB connection successful to: " + dburl);
@@ -49,11 +52,11 @@ public class CommunityDAO {
         String street_no = myRs.getString("street_no");
         int city_id = myRs.getInt("city_id");
         int zone_id = myRs.getInt("zone_id");
-        int country_id = myRs.getInt("country_id");
-        int enabled = myRs.getInt("enabled");
+        Country country = getCountries().getCountryById(myRs.getInt("country_id"));
+        boolean enabled = myRs.getBoolean("enabled");
         List<Integer> tenants = getCommunitiyTenantsId(id);
         
-        Community community = new Community(id, name, short_name, street, street_no, city_id, zone_id, country_id, enabled, tenants);
+        Community community = new Community(id, name, short_name, street, street_no, city_id, zone_id, country, enabled, tenants);
 
         return community;
     }
@@ -199,11 +202,16 @@ public class CommunityDAO {
                     myStmt.setString(3, community.getStreet());
                     myStmt.setString(4, community.getStreetNo());
                     myStmt.setInt(5, community.getCityId());
-                    myStmt.setInt(6, community.getCountryId());
-                    myStmt.setInt(7, community.getZoneId());
-                    myStmt.setInt(8, community.getEnabled());
+                    Country country = community.getCountry();
+                    myStmt.setInt(6, community.getZoneId());
+                    myStmt.setInt(7, country.getCountriesId());
+                    
+                    if (community.getEnabled()) {
+                        myStmt.setInt(8, 1);
+                    } else {
+                        myStmt.setInt(8, 0);
+                    }
                     myStmt.setInt(9, community.getId());
-
                     // execute SQL
                     myStmt.executeUpdate();
 

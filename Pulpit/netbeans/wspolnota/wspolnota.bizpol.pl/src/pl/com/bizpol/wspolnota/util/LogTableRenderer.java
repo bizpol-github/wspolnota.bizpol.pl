@@ -5,9 +5,7 @@
  */
 package pl.com.bizpol.wspolnota.util;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Insets;
 import javax.swing.JTable;
@@ -64,9 +62,9 @@ public class LogTableRenderer extends JTextArea implements TableCellRenderer {
         setMargin(m);
         
         
-        //setSize(new Dimension(colWidth, 1));
-// get the text area preferred height and add the row margin
-        //int height = getPreferredSize().height;
+    //setSize(new Dimension(colWidth, 1));
+    // get the text area preferred height and add the row margin
+    //int height = getPreferredSize().height;
         
         FontMetrics fm = getFontMetrics(this.getFont());
     int fontHeight = fm.getHeight() + table.getRowMargin();

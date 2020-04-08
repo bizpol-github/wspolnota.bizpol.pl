@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import pl.com.bizpol.wspolnota.core.Community;
 import javax.swing.tree.TreePath;
+import pl.com.bizpol.wspolnota.core.Countries;
 import pl.com.bizpol.wspolnota.dao.CommunityDAO;
 import pl.com.bizpol.wspolnota.dao.UserDAO;
 import pl.com.bizpol.wspolnota.util.CommunityTreeModel;
@@ -31,25 +32,31 @@ public final class PropertyPanel extends javax.swing.JPanel {
     List<Community> communityList = new ArrayList<>();    
     CommunityTreeModel communityModel;
     MainWindow mainWindow;
+    Countries countries;
     
     /**
      *
      * @param parent
+     * @throws java.lang.Exception
      */
-    public PropertyPanel(java.awt.Frame parent) {     
+    public PropertyPanel(java.awt.Frame parent) throws Exception {   
         
         mainWindow = (MainWindow) parent;
+        countries = mainWindow.getCountries();
         
         initComponents();
         
         //pobieram dane mysql do zmiennej cList
         getTreeMysqlData();
         
+        
         jTree1.setModel(new CommunityTreeModel(communityList));
                 
        // jTree1.setShowsRootHandles(true);
         // ustawianie icon tekstu dla drzewa        
         jTree1.setCellRenderer(new ComunityTreeRenderer());
+        
+        jToolBar1.add(countries.getCountriesComboBox());
         
     }
 
@@ -143,7 +150,12 @@ public final class PropertyPanel extends javax.swing.JPanel {
                 
                 if (!comm.getIsOpened()) {                
                 Rectangle b = jDesktopPane1.getBounds();
-                CommunityIFrame communityIFrame = new CommunityIFrame((Community) obj, mainWindow);                
+                CommunityIFrame communityIFrame = null;
+                    try {
+                        communityIFrame = new CommunityIFrame((Community) obj, mainWindow);
+                    } catch (Exception ex) {
+                        Logger.getLogger(PropertyPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 jDesktopPane1.add(communityIFrame);
                 communityIFrame.setBounds(b);
                 communityIFrame.setLocation(0, 0);

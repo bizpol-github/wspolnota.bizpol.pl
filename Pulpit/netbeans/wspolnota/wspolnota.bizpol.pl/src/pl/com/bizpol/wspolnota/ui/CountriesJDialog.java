@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import pl.com.bizpol.wspolnota.core.Countries;
+import pl.com.bizpol.wspolnota.core.Country;
 import pl.com.bizpol.wspolnota.dao.CountriesDAO;
 
 /**
@@ -71,6 +71,7 @@ public class CountriesJDialog extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Country list");
 
+        searchTable.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         searchTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -81,6 +82,7 @@ public class CountriesJDialog extends javax.swing.JDialog {
         ));
         searchTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
         searchTable.setFillsViewportHeight(true);
+        searchTable.setIntercellSpacing(new java.awt.Dimension(2, 2));
         jScrollPane1.setViewportView(searchTable);
 
         searchLabel.setText("Enter name");
@@ -194,7 +196,7 @@ public class CountriesJDialog extends javax.swing.JDialog {
         
         try {            
             
-            List<Countries> countries = null;
+            List<Country> countries = null;
             
             if (name != null && name.trim().length() > 0) {
                 countries = countriesDAO.searchCountries(name);
@@ -206,10 +208,11 @@ public class CountriesJDialog extends javax.swing.JDialog {
             searchTable.setModel(model);
             
             searchTable.getColumnModel().getColumn(0).setPreferredWidth(20);
-            searchTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-            searchTable.getColumnModel().getColumn(2).setPreferredWidth(30);
+            searchTable.getColumnModel().getColumn(1).setPreferredWidth(20);
+            searchTable.getColumnModel().getColumn(2).setPreferredWidth(100);
             searchTable.getColumnModel().getColumn(3).setPreferredWidth(30);
-            searchTable.getColumnModel().getColumn(4).setPreferredWidth(200);
+            searchTable.getColumnModel().getColumn(4).setPreferredWidth(30);
+            searchTable.getColumnModel().getColumn(5).setPreferredWidth(200);
             
 //            for (Countries temp : countries) {
 //                System.out.println(temp);

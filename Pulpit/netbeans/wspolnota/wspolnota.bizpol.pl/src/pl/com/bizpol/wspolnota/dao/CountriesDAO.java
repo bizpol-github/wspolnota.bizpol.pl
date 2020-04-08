@@ -10,14 +10,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import pl.com.bizpol.wspolnota.core.Countries;
+import java.util.Vector;
+import pl.com.bizpol.wspolnota.core.Country;
 
 /**
  *
  * @author Archii
  */
 public class CountriesDAO {
-    private Connection myConn;
+    private final Connection myConn;
     
     /**
      *
@@ -46,7 +47,7 @@ public class CountriesDAO {
      * @param theCountry
      * @throws SQLException
      */
-    public void addCountry(Countries theCountry) throws SQLException {
+    public void addCountry(Country theCountry) throws SQLException {
         
         PreparedStatement myStmt = null;
         
@@ -59,18 +60,44 @@ public class CountriesDAO {
             myStmt.executeUpdate();            
                         
         } finally {
-            close(myStmt);            
+            DAOUtils.close(myStmt);          
         }    
         
     }
+    /**
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public Country getCountry(int id) throws Exception {
+        
+        Statement myStmt = null;
+        ResultSet myRs = null;
+        
+        
+        try {
+            Country tempCountries = null;
+            myStmt = myConn.createStatement();
+            myRs = myStmt.executeQuery("select * from countries where countries_id=" + id + " limit 1");
+            
+            while (myRs.next()) {
+                tempCountries = convertRowToCountries(myRs);                
+            }                      
+            return tempCountries;
+        } finally {
+            DAOUtils.close(myStmt, myRs);            
+        }    
+    }
+    
     
     /**
      *
      * @return
      * @throws Exception
      */
-    public List<Countries> getAllCountries() throws Exception {
-        List<Countries> list = new ArrayList<>();
+    public List<Country> getAllCountries() throws Exception {
+        List<Country> list = new ArrayList<>();
         
         Statement myStmt = null;
         ResultSet myRs = null;        
@@ -80,15 +107,24 @@ public class CountriesDAO {
             myRs = myStmt.executeQuery("select * from countries");
             
             while (myRs.next()) {
-                Countries tempCountries = convertRowToCountries(myRs);
+                Country tempCountries = convertRowToCountries(myRs);
                 list.add(tempCountries);                
             }
             
             return list;
             
         } finally {
-            close(myStmt, myRs);            
+            DAOUtils.close(myStmt, myRs);            
         }    
+    }
+    
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
+    public Vector getVectorCountries() throws Exception {
+        return convertListToVector(getAllCountries());
     }
     
     /**
@@ -97,8 +133,8 @@ public class CountriesDAO {
      * @return
      * @throws Exception
      */
-    public List<Countries> searchCountries(String countriesName) throws Exception {
-        List<Countries> list = new ArrayList<>();
+    public List<Country> searchCountries(String countriesName) throws Exception {
+        List<Country> list = new ArrayList<>();
         
         PreparedStatement myStmt = null;
         ResultSet myRs = null;        
@@ -110,61 +146,41 @@ public class CountriesDAO {
             myRs = myStmt.executeQuery();
             
             while (myRs.next()) {
-                Countries tempCountries = convertRowToCountries(myRs);
+                Country tempCountries = convertRowToCountries(myRs);
                 list.add(tempCountries);                
             }
             
             return list;
             
         } finally {
-            close(myStmt, myRs);            
+            DAOUtils.close(myStmt, myRs);            
         }    
     }
 
-    private Countries convertRowToCountries(ResultSet myRs) throws SQLException {
+    private Country convertRowToCountries(ResultSet myRs) throws SQLException {
         int id = myRs.getInt("countries_id");
         String countriesName = myRs.getString("countries_name");
         String isoCode2 = myRs.getString("countries_iso_code_2");
         String isoCode3 = myRs.getString("countries_iso_code_3");
         String addressFormat = myRs.getString("address_format");
-    	Countries tempCountries = new Countries(id, countriesName, isoCode2, isoCode3, addressFormat);
+    	Country tempCountries = new Country(id, countriesName, isoCode2, isoCode3, addressFormat);
 		
         return tempCountries;
     }
-
-    private static void close(Connection myConn, Statement myStmt, ResultSet myRs) throws SQLException {
-
-        if (myRs != null) {
-                myRs.close();
-        }
-
-        if (myStmt != null) {
-
-        }
-
-        if (myConn != null) {
-                myConn.close();
-        }
-    }
     
-    private void close(Statement myStmt, ResultSet myRs) throws SQLException {
-        close(null, myStmt, myRs);
-    }
-    
-    private void close(Statement myStmt) throws SQLException {
-		close(null, myStmt, null);		
-	}
-    
-    /**
-     *
-     * @param args
-     * @throws Exception
-     */
-    public static void main(String[] args) throws Exception {
+    private Vector convertListToVector(List list) throws SQLException {
+        
+        Vector model = new Vector();
+        
+        int i=0;
+        
+        for (Object country : list) {
+            
+            model.add(i, country);
+            i++;
+        }
 		
-        CountriesDAO dao = new CountriesDAO();
-        System.out.println(dao.searchCountries("poland"));
+        return model;
+    }   
 
-        System.out.println(dao.getAllCountries());
-    }
 }
